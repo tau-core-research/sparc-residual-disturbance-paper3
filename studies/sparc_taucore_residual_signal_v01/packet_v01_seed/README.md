@@ -14,6 +14,8 @@ paper3_candidate_shortlist.csv
 paper3_residual_onset_catalog.csv
 paper3_environment_observability_stress.csv
 paper3_model_comparator_status.csv
+paper3_rmond_bridge_audit.csv
+paper3_next_gate.csv
 paper3_related_literature_map.csv
 paper3_claim_boundary.csv
 paper3_readiness_table.csv

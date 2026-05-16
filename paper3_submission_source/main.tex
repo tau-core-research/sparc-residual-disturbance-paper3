@@ -134,7 +134,11 @@ InclinationErrorDeg & 0.214 & screening\_correlation\_not\_causal\_attribution \
 
 \section{RMOND and comparator status}
 
-The requested RMOND comparison is not yet a numeric endpoint in this seed packet. The repository contains theory notes relating TPG and RMOND, but it does not yet contain a frozen pointwise RMOND prediction/residual table on the same SPARC radii. Treating RMOND as tested without that table would weaken the paper. The next technical gate is therefore explicit: generate or import a pointwise RMOND residual map and add it to the same comparator table as TPG/projection, MOND-simple, and RAR-like baselines.
+The requested RMOND comparison is not yet a numeric endpoint in this seed packet. The local TPG--RMOND bridge is useful, but it is not the same object as a frozen pointwise velocity law. Its strongest result is structural compatibility: the tau-projection can preserve the leading SZ20 scalar and vector Lagrangian exponents under a channel-normalised kernel. That is theory motivation, not a direct prediction for $V(R)$.
+
+The local RMOND--MTW hybrid analysis also warns against double counting. At $f_{\rm vec}=0$, the hybrid reproduces pure MTW/TPG exactly, so it is not an independent comparator. At nonzero $f_{\rm vec}$, the vector contribution requires a frozen halo/vector prescription and screening rule before any residual table is meaningful. Treating either option as a completed RMOND residual test would weaken the paper.
+
+The next technical gate is therefore sharper than ``find a CSV'': freeze a unique $V_{\rm RMOND}(R)$ prescription, regenerate a derived pointwise residual table on the same SPARC radii, and only then add RMOND beside TPG/projection, MOND-simple, and RAR-like baselines.
 
 \section{Interpretation}
 

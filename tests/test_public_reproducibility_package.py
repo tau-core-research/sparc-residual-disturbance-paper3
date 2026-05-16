@@ -35,7 +35,15 @@ def test_model_comparator_status_tracks_rmond_blocker() -> None:
     rows = read_csv("paper3_model_comparator_status.csv")
     rmond = [row for row in rows if row["Comparator"] == "RMOND"]
     assert rmond
-    assert rmond[0]["ComputationStatus"] == "blocked_no_pointwise_residual_table"
+    assert rmond[0]["ComputationStatus"] == "blocked_no_unique_velocity_law"
+
+
+def test_rmond_bridge_audit_distinguishes_theory_from_velocity_endpoint() -> None:
+    rows = read_csv("paper3_rmond_bridge_audit.csv")
+    statuses = {row["NumericalEndpointStatus"] for row in rows}
+    assert "not_velocity_law" in statuses
+    assert "degenerate_with_tpg" in statuses
+    assert all("not_tau_core_validation" in row["Guardrail"] for row in rows)
 
 
 def test_shortlist_is_reproducible_and_caveated() -> None:

@@ -310,10 +310,10 @@ def model_comparator_status() -> list[dict[str, object]]:
         },
         {
             "Comparator": "RMOND",
-            "ComputationStatus": "blocked_no_pointwise_residual_table",
+            "ComputationStatus": "blocked_no_unique_velocity_law",
             "Role": "requested theory comparator",
-            "CurrentUse": "not used as numeric endpoint",
-            "Blocker": "Need frozen pointwise RMOND prediction/residual table on the same SPARC radii.",
+            "CurrentUse": "bridge audit only",
+            "Blocker": "Current local bridge gives Lagrangian-level compatibility and RMOND-MTW architecture notes, but not a unique frozen V(R) prediction independent of TPG.",
             "Guardrail": GUARDRAIL,
         },
         {
@@ -322,6 +322,72 @@ def model_comparator_status() -> list[dict[str, object]]:
             "Role": "measurement reference",
             "CurrentUse": "residual endpoint reference",
             "Blocker": "Raw rotmod files are not redistributed in this slim repository.",
+            "Guardrail": GUARDRAIL,
+        },
+    ]
+
+
+def rmond_bridge_audit() -> list[dict[str, object]]:
+    return [
+        {
+            "Gate": "RMOND_bridge_theory",
+            "Finding": "TPG-RMOND bridge documents structural compatibility with RMOND/SZ20 leading scalar and vector exponents.",
+            "NumericalEndpointStatus": "not_velocity_law",
+            "ImplicationForPaper3": "Useful theory motivation, but cannot be used as a pointwise residual comparator by itself.",
+            "NextRequirement": "Freeze a V_RMOND(R) prescription before computing residuals.",
+            "Guardrail": GUARDRAIL,
+        },
+        {
+            "Gate": "RMOND_MTW_hybrid_fvec0",
+            "Finding": "Local RMOND-MTW analysis states f_vec=0 reproduces pure MTW/TPG exactly.",
+            "NumericalEndpointStatus": "degenerate_with_tpg",
+            "ImplicationForPaper3": "Not independent evidence; using f_vec=0 as RMOND would double-count TPG.",
+            "NextRequirement": "Do not report as separate comparator.",
+            "Guardrail": GUARDRAIL,
+        },
+        {
+            "Gate": "RMOND_MTW_hybrid_nonzero_fvec",
+            "Finding": "Nonzero vector contribution requires a frozen halo/vector prescription such as f_vec and screening.",
+            "NumericalEndpointStatus": "not_frozen_for_public_packet",
+            "ImplicationForPaper3": "Could become a comparator only after parameter policy and raw-data regeneration are frozen.",
+            "NextRequirement": "Choose no-fit f_vec/screening rule or mark as exploratory grid outside the primary endpoint.",
+            "Guardrail": GUARDRAIL,
+        },
+        {
+            "Gate": "finite_T_scalar_bridge",
+            "Finding": "Finite-T scalar coefficient is positive, monotonic, saturating, and MOND/RMOND-admissible in shape.",
+            "NumericalEndpointStatus": "lagrangian_coefficient_not_speed",
+            "ImplicationForPaper3": "Supports theory motivation but cannot be inserted as V_pred without an additional dynamical map.",
+            "NextRequirement": "Derive or freeze the acceleration/velocity map from the coefficient.",
+            "Guardrail": GUARDRAIL,
+        },
+    ]
+
+
+def next_gate_rows() -> list[dict[str, object]]:
+    return [
+        {
+            "Priority": "P0",
+            "Gate": "RMOND velocity-law freeze",
+            "Action": "Define whether Paper 3 uses no RMOND numeric comparator, f_vec=0 degeneracy documentation, or a predeclared screened-vector RMOND-MTW V(R) law.",
+            "PassCondition": "A single formula produces V_RMOND at every SPARC radius without reading target residual outcomes.",
+            "FailCondition": "Formula requires post-hoc tuning or remains only Lagrangian-level motivation.",
+            "Guardrail": GUARDRAIL,
+        },
+        {
+            "Priority": "P1",
+            "Gate": "raw-to-derived regeneration",
+            "Action": "If a velocity law is frozen, regenerate a derived pointwise RMOND residual table from local raw SPARC rotmod files, but publish only derived residual summaries.",
+            "PassCondition": "Derived table includes galaxy, radius, residual, and source formula hash; raw rotmod files remain excluded.",
+            "FailCondition": "Cannot reproduce without private workspace state.",
+            "Guardrail": GUARDRAIL,
+        },
+        {
+            "Priority": "P2",
+            "Gate": "Tau-specific candidate retest",
+            "Action": "Rerun candidate classes after adding RMOND side-by-side with TPG, MOND-simple, and RAR-like baselines.",
+            "PassCondition": "Tau candidates retain structured excess not shared by MOND/RAR/RMOND and not explained by observability proxies.",
+            "FailCondition": "Candidate excess collapses into RMOND/MOND/RAR or systematics.",
             "Guardrail": GUARDRAIL,
         },
     ]
@@ -444,7 +510,7 @@ def readiness_table(pdf_status: str = "not_run") -> list[dict[str, object]]:
         {
             "Item": "rmond_numeric_endpoint",
             "Status": "blocked",
-            "Detail": "Need frozen pointwise RMOND residual table before RMOND can be used as a numeric comparator.",
+            "Detail": "Need a unique frozen RMOND V(R) law; current bridge is theory-compatible but not an independent pointwise velocity comparator.",
             "Guardrail": GUARDRAIL,
         },
     ]
@@ -787,7 +853,11 @@ STRESS_ROWS
 
 \section{{RMOND and comparator status}}
 
-The requested RMOND comparison is not yet a numeric endpoint in this seed packet. The repository contains theory notes relating TPG and RMOND, but it does not yet contain a frozen pointwise RMOND prediction/residual table on the same SPARC radii. Treating RMOND as tested without that table would weaken the paper. The next technical gate is therefore explicit: generate or import a pointwise RMOND residual map and add it to the same comparator table as TPG/projection, MOND-simple, and RAR-like baselines.
+The requested RMOND comparison is not yet a numeric endpoint in this seed packet. The local TPG--RMOND bridge is useful, but it is not the same object as a frozen pointwise velocity law. Its strongest result is structural compatibility: the tau-projection can preserve the leading SZ20 scalar and vector Lagrangian exponents under a channel-normalised kernel. That is theory motivation, not a direct prediction for $V(R)$.
+
+The local RMOND--MTW hybrid analysis also warns against double counting. At $f_{\rm vec}=0$, the hybrid reproduces pure MTW/TPG exactly, so it is not an independent comparator. At nonzero $f_{\rm vec}$, the vector contribution requires a frozen halo/vector prescription and screening rule before any residual table is meaningful. Treating either option as a completed RMOND residual test would weaken the paper.
+
+The next technical gate is therefore sharper than ``find a CSV'': freeze a unique $V_{\rm RMOND}(R)$ prescription, regenerate a derived pointwise residual table on the same SPARC radii, and only then add RMOND beside TPG/projection, MOND-simple, and RAR-like baselines.
 
 \section{{Interpretation}}
 
@@ -841,6 +911,8 @@ def write_manifest(pdf_status: str) -> None:
             "paper3_residual_onset_catalog.csv",
             "paper3_environment_observability_stress.csv",
             "paper3_model_comparator_status.csv",
+            "paper3_rmond_bridge_audit.csv",
+            "paper3_next_gate.csv",
             "paper3_related_literature_map.csv",
             "paper3_claim_boundary.csv",
             "paper3_readiness_table.csv",
@@ -946,6 +1018,16 @@ def main() -> None:
         PACKET / "paper3_model_comparator_status.csv",
         model_comparator_status(),
         ["Comparator", "ComputationStatus", "Role", "CurrentUse", "Blocker", "Guardrail"],
+    )
+    write_csv(
+        PACKET / "paper3_rmond_bridge_audit.csv",
+        rmond_bridge_audit(),
+        ["Gate", "Finding", "NumericalEndpointStatus", "ImplicationForPaper3", "NextRequirement", "Guardrail"],
+    )
+    write_csv(
+        PACKET / "paper3_next_gate.csv",
+        next_gate_rows(),
+        ["Priority", "Gate", "Action", "PassCondition", "FailCondition", "Guardrail"],
     )
     write_csv(
         PACKET / "paper3_related_literature_map.csv",

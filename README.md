@@ -8,6 +8,8 @@ Paper 3 extends the Paper 1 and Paper 2 audit line. It asks whether the residual
 
 The package is intentionally conservative. It does not claim Tau Core validation, gravity-model selection, or a completed independent external replication.
 
+The current RMOND status is intentionally explicit: the local TPG-RMOND bridge supports theory motivation, but a unique frozen pointwise RMOND velocity law is not yet available in this public seed packet. RMOND is therefore audited as a blocker, not reported as a completed numeric comparator.
+
 ## Main Files
 
 ```text
