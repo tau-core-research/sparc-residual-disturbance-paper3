@@ -1,0 +1,8 @@
+GalaxyName,ClassAuditOnly,NJoinedPoints,MeanRadiusDeltaKpc,MedianS_tau_diagnostic,MeanRankStressDispersionOverVtot,MeanStressDispersionOverVtot,MeanAbsResidualProjection,ControlTierRole
+DDO154,A,12,0.030449746,0.064764183,0.933925724,0.177593305,0.099867441,path_b_nearest_radius_kpc_vtot_diagnostic_join_not_validation
+NGC2366,C,26,0.024393745,0.011961723,0.983989695,0.242651133,0.211342075,path_b_nearest_radius_kpc_vtot_diagnostic_join_not_validation
+NGC2403,A,73,0.017613412,0.260765550,0.693704997,0.075437569,0.074093248,path_b_nearest_radius_kpc_vtot_diagnostic_join_not_validation
+NGC2976,C,27,0.013964537,0.064251538,0.934216855,0.176689695,0.151920645,path_b_nearest_radius_kpc_vtot_diagnostic_join_not_validation
+NGC3198,A,43,0.130743243,0.195830485,0.804018503,0.098476779,0.061692471,path_b_nearest_radius_kpc_vtot_diagnostic_join_not_validation
+NGC5055,C,28,0.056347533,0.367395762,0.640037594,0.087533515,0.116494993,path_b_nearest_radius_kpc_vtot_diagnostic_join_not_validation
+NGC7331,A,36,0.077386560,0.292378674,0.727699932,0.087212688,0.086375731,path_b_nearest_radius_kpc_vtot_diagnostic_join_not_validation

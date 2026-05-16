@@ -1,0 +1,9 @@
+Theme,CitationKey,UseInPaper3,URL
+SPARC/RAR baseline,McGaugh2016RAR,Defines the strongest low-acceleration empirical baseline that Tau Core must distinguish itself from.,https://arxiv.org/abs/1609.05917
+SPARC mass models,Lelli2016SPARC,Provides the rotation-curve and baryonic mass-model context inherited by all residual scores.,https://doi.org/10.3847/0004-6256/152/6/157
+MOND baseline,Milgrom1983MOND,Provides the canonical modified-dynamics low-acceleration comparator family.,https://doi.org/10.1086/161130
+SPARC individual RAR fits,Li2018RARFits,Motivates galaxy-to-galaxy variation in low-acceleration fits and warns against overclaiming uniqueness.,https://arxiv.org/abs/1803.00022
+HI non-circular motions,Trachternach2008THINGS,Defines a key systematics channel that can mimic residual structure.,https://doi.org/10.1088/0004-6256/136/6/2720
+Dwarf rotation-curve systematics,Oman2019NonCircular,Shows how non-circular motions can alter inferred rotation-curve diversity.,https://arxiv.org/abs/1706.07478
+Beam smearing and LSB rotation curves,deBlok1997Beam,Constrains observational failure modes before calling residuals Tau Core signal.,https://arxiv.org/abs/astro-ph/9704274
+JWST Zone of Avoidance,NiloCastellon2025ZoA,Supports the observer/line-of-sight theme: hidden foreground structure and extinction can change what the observer can map.,https://arxiv.org/abs/2510.12488

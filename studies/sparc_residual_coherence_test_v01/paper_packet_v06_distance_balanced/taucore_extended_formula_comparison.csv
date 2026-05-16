@@ -1,0 +1,33 @@
+Score,Description,Class,N,MedianRmsLog,MedianDeltaVsFixedProjection,MedianOldFixedProjection
+projection_fixed,Fixed low-acceleration residual score,A,17,0.124355,0,0.124355
+projection_fixed,Fixed low-acceleration residual score,B,28,0.16468,0,0.16468
+projection_fixed,Fixed low-acceleration residual score,C,28,0.208624,0,0.208624
+projection_fixed,Fixed low-acceleration residual score,all,73,0.165637,0,0.165637
+tau_core_s_class,Tau Core S_tau class-gated,A,17,0.124355,0,0.124355
+tau_core_s_class,Tau Core S_tau class-gated,B,28,0.313989,0.185949,0.16468
+tau_core_s_class,Tau Core S_tau class-gated,C,28,0.616147,0.451798,0.208624
+tau_core_s_class,Tau Core S_tau class-gated,all,73,0.342143,0.144252,0.165637
+tau_core_s_evidence,Tau Core S_tau evidence-gated,A,17,0.124355,0,0.124355
+tau_core_s_evidence,Tau Core S_tau evidence-gated,B,28,0.313989,0.185949,0.16468
+tau_core_s_evidence,Tau Core S_tau evidence-gated,C,28,0.616147,0.451798,0.208624
+tau_core_s_evidence,Tau Core S_tau evidence-gated,all,73,0.342143,0.144252,0.165637
+tau_core_s_continuous,Tau Core S_tau continuous external,A,17,0.132534,0.00817801,0.124355
+tau_core_s_continuous,Tau Core S_tau continuous external,B,28,0.314271,0.185949,0.16468
+tau_core_s_continuous,Tau Core S_tau continuous external,C,28,0.473177,0.21675,0.208624
+tau_core_s_continuous,Tau Core S_tau continuous external,all,73,0.308866,0.0970724,0.165637
+tau_core_s_soft,Tau Core S_tau soft-calibrated,A,17,0.142446,0.0128113,0.124355
+tau_core_s_soft,Tau Core S_tau soft-calibrated,B,28,0.18889,0.0488307,0.16468
+tau_core_s_soft,Tau Core S_tau soft-calibrated,C,28,0.322959,0.0225848,0.208624
+tau_core_s_soft,Tau Core S_tau soft-calibrated,all,73,0.193527,0.0182482,0.165637
+newtonian_baryonic,Newtonian baryonic,A,17,0.57056,0.485633,0.124355
+newtonian_baryonic,Newtonian baryonic,B,28,0.713113,0.5265,0.16468
+newtonian_baryonic,Newtonian baryonic,C,28,0.616147,0.451798,0.208624
+newtonian_baryonic,Newtonian baryonic,all,73,0.648932,0.484299,0.165637
+mond_simple_mu,MOND simple-mu,A,17,0.113658,-0.00311853,0.124355
+mond_simple_mu,MOND simple-mu,B,28,0.169065,0.0067043,0.16468
+mond_simple_mu,MOND simple-mu,C,28,0.232381,0.00563278,0.208624
+mond_simple_mu,MOND simple-mu,all,73,0.166589,0.00236175,0.165637
+rar_mcgaugh,Empirical RAR,A,17,0.113603,-0.00317352,0.124355
+rar_mcgaugh,Empirical RAR,B,28,0.168588,0.00478483,0.16468
+rar_mcgaugh,Empirical RAR,C,28,0.22442,-0.000727908,0.208624
+rar_mcgaugh,Empirical RAR,all,73,0.165313,0.000325352,0.165637

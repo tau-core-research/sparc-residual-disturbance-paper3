@@ -1,0 +1,28 @@
+Covariate,Description,Class,N,Median
+DistanceMpc,SPARC distance [Mpc],A,17,13.8
+DistanceMpc,SPARC distance [Mpc],B,28,12.3
+DistanceMpc,SPARC distance [Mpc],C,28,7.83
+DistanceErrorMpc,SPARC distance uncertainty [Mpc],A,17,2.5
+DistanceErrorMpc,SPARC distance uncertainty [Mpc],B,28,2.8
+DistanceErrorMpc,SPARC distance uncertainty [Mpc],C,28,2.19
+MaxRadiusKpc,maximum fitted rotation-curve radius [kpc],A,17,14.86
+MaxRadiusKpc,maximum fitted rotation-curve radius [kpc],B,28,12.465
+MaxRadiusKpc,maximum fitted rotation-curve radius [kpc],C,28,6.945
+NPoints,rotation-curve point count,A,17,17
+NPoints,rotation-curve point count,B,28,15.5
+NPoints,rotation-curve point count,C,28,13
+MeanErrVobsKms,mean Vobs uncertainty [km/s],A,17,2.63545
+MeanErrVobsKms,mean Vobs uncertainty [km/s],B,28,3.98061
+MeanErrVobsKms,mean Vobs uncertainty [km/s],C,28,3.56033
+InclinationDeg,inclination [deg],A,17,67
+InclinationDeg,inclination [deg],B,28,63.5
+InclinationDeg,inclination [deg],C,28,56.5
+InclinationErrorDeg,inclination uncertainty [deg],A,17,3
+InclinationErrorDeg,inclination uncertainty [deg],B,28,4.5
+InclinationErrorDeg,inclination uncertainty [deg],C,28,3.5
+HubbleType,SPARC Hubble type code,A,17,6
+HubbleType,SPARC Hubble type code,B,28,8
+HubbleType,SPARC Hubble type code,C,28,9
+HecateStellarMassLog,HECATE log stellar mass,A,10,9.956
+HecateStellarMassLog,HECATE log stellar mass,B,9,10.51
+HecateStellarMassLog,HECATE log stellar mass,C,11,8.771

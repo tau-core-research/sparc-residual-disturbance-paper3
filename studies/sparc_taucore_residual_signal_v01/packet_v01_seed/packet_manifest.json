@@ -1,0 +1,16 @@
+{
+  "packet": "sparc_taucore_residual_signal_v01",
+  "version": "paper3_seed_v01",
+  "guardrail": "paper3_seed_candidate_search_not_tau_core_validation",
+  "generated_files": [
+    "paper3_signal_candidate_table.csv",
+    "paper3_candidate_shortlist.csv",
+    "paper3_residual_onset_catalog.csv",
+    "paper3_environment_observability_stress.csv",
+    "paper3_model_comparator_status.csv",
+    "paper3_related_literature_map.csv",
+    "paper3_claim_boundary.csv",
+    "paper3_readiness_table.csv"
+  ],
+  "pdf_status": "ready"
+}

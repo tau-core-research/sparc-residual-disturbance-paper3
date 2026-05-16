@@ -1,0 +1,6 @@
+Item,Status,Detail,Guardrail
+paper3_seed_packet,ready,"Derived candidate, onset, comparator, stress, literature, and claim-boundary tables regenerate.",paper3_seed_candidate_search_not_tau_core_validation
+latex_source,ready,main.tex and references.bib regenerate from the source script.,paper3_seed_candidate_search_not_tau_core_validation
+arxiv_source_zip,ready,"ZIP contains TeX, bibliography, and PDF figures only.",paper3_seed_candidate_search_not_tau_core_validation
+pdf_compile,ready,Tectonic build status for paper3_submission_source/main.pdf.,paper3_seed_candidate_search_not_tau_core_validation
+rmond_numeric_endpoint,blocked,Need frozen pointwise RMOND residual table before RMOND can be used as a numeric comparator.,paper3_seed_candidate_search_not_tau_core_validation

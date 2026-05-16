@@ -1,0 +1,152 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{array}
+
+\title{Searching for Tau Core signal candidates in SPARC residual structure}
+\author{Jozsef Olcsak}
+\date{2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Paper 1 found that externally reviewed structural disturbance is associated with larger low-acceleration residual scatter in SPARC. Paper 2 reversed the question and showed that fixed residual-shape features can recover those A/C labels better than chance, while remaining explicitly non-unique with respect to MOND-simple and empirical RAR-like baselines. This Paper 3 seed asks a narrower follow-up question: where do TPG/projection residuals, MOND-simple residuals, RAR-like residuals, and measured rotation curves point to candidate residual structure that could plausibly carry the missing observer- and environment-dependent Tau Core weight? The current packet identifies candidate galaxies, radial onset categories, and environment/observability stress channels. It does not validate Tau Core, does not numerically test RMOND, and does not claim gravity-model selection.
+\end{abstract}
+
+\section{Purpose and claim boundary}
+
+The working hypothesis is that the TPG/projection baseline already carries part of the local Tau Core weighting, while the remaining TPG residual may carry missing observer- and environment-dependent weights. This is a candidate-search statement, not a proof. A defensible Paper 3 must therefore separate three layers:
+\begin{enumerate}
+\item an operational residual layer, based on frozen TPG/projection, MOND-simple, and RAR-like residual maps;
+\item a systematics layer, based on distance, inclination, point count, H\,I kinematics, beam smearing, and non-circular motions;
+\item a theory layer, where a Tau Core interpretation is allowed only if the residual pattern survives the systematics layer and is more specific than ordinary RAR/MOND behavior.
+\end{enumerate}
+
+The permitted claim is that this packet defines reproducible Tau Core signal candidates. The forbidden claim is that the candidates already prove Tau Core.
+
+\section{Data inherited from Papers 1 and 2}
+
+The packet inherits derived SPARC residual artifacts from the Paper 1 and Paper 2 public packages. Raw SPARC rotmod files and raw H\,I survey products are not redistributed. The retained derived tables include pointwise absolute residuals for TPG/projection, MOND-simple, and empirical RAR-like families; galaxy-level residual features; distance, observability, and environment summaries; and small radial-pilot control summaries.
+
+The main residual quantity is
+\[
+r_{m,gi}=\left|\log V_{{\rm obs},gi}-\log V_{m,gi}\right|,
+\]
+with galaxy-level burden
+\[
+{\rm RMS}_{m,g}=\sqrt{{1\over N_g}\sum_i r_{m,gi}^2}.
+\]
+The TPG-specific excess used for candidate triage is
+\[
+\Delta_{{\rm TPG-low},g}=
+{\rm RMS}_{{\rm TPG},g}-
+\min\left({\rm RMS}_{{\rm MOND},g},{\rm RMS}_{{\rm RAR},g}\right).
+\]
+Positive values mark galaxies where the TPG/projection residual is larger than the best available low-acceleration comparator in this packet. Negative values mark TPG success controls.
+
+\section{Theory motivation}
+
+The relevant external baseline is the SPARC radial acceleration relation \cite{McGaugh2016RAR,Lelli2016SPARC} and the broader MOND/RAR literature \cite{Milgrom1983MOND,Li2018RARFits}. These works are not optional background; they define the strongest ordinary low-acceleration competitor. If Tau Core only reproduces the same residual ordering as RAR/MOND, it is not yet distinguished.
+
+The systematics literature is equally central. Non-circular motions in H\,I velocity fields \cite{Trachternach2008THINGS,Oman2019NonCircular} and beam-smearing/rotation-curve quality effects \cite{deBlok1997Beam} can generate residual structure without new physics. The JWST/NIRCam Zone-of-Avoidance result \cite{NiloCastellon2025ZoA} is used only as an observer/line-of-sight motivation: foreground obscuration and hidden structure can materially affect what an observer can map. It is not evidence for Tau Core by itself.
+
+\section{Candidate construction}
+
+For each galaxy we record TPG/projection RMS, MOND-simple RMS, RAR-like RMS, TPG-specific excess, environment proxy, distance, reconstruction-risk proxy, inclination, and the first radial bin where the TPG/projection absolute residual exceeds 0.15 dex. Candidate classes are assigned by frozen screening rules:
+\begin{itemize}
+\item \textit{clean tau candidate}: high TPG residual, high TPG-specific excess, and non-high reconstruction risk;
+\item \textit{environment tau candidate}: high residual burden with high environment cue;
+\item \textit{TPG divergence follow-up}: positive TPG-specific excess without enough cleanliness for the first two labels;
+\item \textit{TPG success control}: low residual burden where TPG is no worse than MOND/RAR-like baselines.
+\end{itemize}
+
+These classes are triage labels. They are not physical classifications.
+
+\begin{table}[H]
+\centering
+\caption{Candidate shortlist from the regenerated seed packet.}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{llrrrp{0.22\linewidth}p{0.18\linewidth}}
+\toprule
+Galaxy & Class & TPG RMS & TPG excess & Env. & Onset & Candidate class\\
+\midrule
+UGC00731 & C & 0.340 & 0.093 & 0.00 & inner\_R$<$0.33Rmax & clean tau \\
+CamB & A & 0.964 & -0.080 & 1.72 & inner\_R$<$0.33Rmax & environment \\
+UGC05764 & A & 0.329 & 0.076 & 0.00 & inner\_R$<$0.33Rmax & TPG divergence \\
+NGC2403 & A & 0.085 & 0.029 & 1.86 & outer\_R$>$=0.67Rmax & TPG divergence \\
+NGC3741 & C & 0.204 & 0.103 & -0.12 & inner\_R$<$0.33Rmax & TPG divergence \\
+UGC08490 & C & 0.186 & 0.055 & 0.00 & inner\_R$<$0.33Rmax & TPG divergence \\
+NGC3109 & C & 0.176 & 0.039 & 0.20 & middle\_0.33-0.67Rmax & TPG divergence \\
+UGC06446 & C & 0.194 & 0.038 & 0.00 & inner\_R$<$0.33Rmax & TPG divergence \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Residual and environment readouts}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\linewidth]{figures/paper3_environment_residual_scatter.pdf}
+\caption{TPG/projection residual burden versus the inherited environment proxy. Named points are the largest seed-candidate scores.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\linewidth]{figures/paper3_tpg_specific_excess.pdf}
+\caption{Galaxies with the largest TPG/projection residual excess relative to the better of MOND-simple and RAR-like RMS.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\linewidth]{figures/paper3_residual_onset_bins.pdf}
+\caption{Radial bin where the TPG/projection absolute residual first exceeds 0.15 dex. This is a morphology-of-failure diagnostic, not a detection statistic.}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Screening correlations for TPG/projection residual burden.}
+\footnotesize
+\begin{tabular}{lrl}
+\toprule
+Covariate & Pearson $r$ & Interpretation\\
+\midrule
+DistanceMpc & -0.291 & screening\_correlation\_not\_causal\_attribution \\
+EnvMaxTheta & 0.110 & screening\_correlation\_not\_causal\_attribution \\
+W\_tau\_eff\_abs\_v01 & 0.983 & screening\_correlation\_not\_causal\_attribution \\
+ReconstructionRiskChannel\_v01 & 0.317 & screening\_correlation\_not\_causal\_attribution \\
+MeanErrVobsKms & -0.214 & screening\_correlation\_not\_causal\_attribution \\
+InclinationErrorDeg & 0.214 & screening\_correlation\_not\_causal\_attribution \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\linewidth]{figures/paper3_observability_stress.pdf}
+\caption{Screening correlations with the TPG/projection residual burden. These are not causal estimates.}
+\end{figure}
+
+\section{RMOND and comparator status}
+
+The requested RMOND comparison is not yet a numeric endpoint in this seed packet. The repository contains theory notes relating TPG and RMOND, but it does not yet contain a frozen pointwise RMOND prediction/residual table on the same SPARC radii. Treating RMOND as tested without that table would weaken the paper. The next technical gate is therefore explicit: generate or import a pointwise RMOND residual map and add it to the same comparator table as TPG/projection, MOND-simple, and RAR-like baselines.
+
+\section{Interpretation}
+
+The most useful interpretation is modest. TPG success controls show where the local projection baseline is already adequate. TPG divergence follow-ups show where the residual has structure that might encode missing observer/environment weights, but these are exactly the cases where ordinary systematics can also enter. A candidate becomes interesting only when three facts hold together: the TPG residual diverges in a structured radial way, the divergence is not shared by all low-acceleration baselines, and the object has a plausible Tau Core weighting channel that is not reducible to distance, inclination, beam smearing, or non-circular motion.
+
+\section{Conclusion}
+
+This seed opens Paper 3 as a reproducible candidate-search project. It carries forward the discipline learned from Papers 1 and 2: freeze the endpoint, compare against MOND/RAR baselines, name the systematics, and avoid promoting a diagnostic pattern into a physical proof. The current evidence is enough to define targets for Tau Core follow-up, especially TPG-divergence galaxies and TPG-success controls, but it is not enough to claim a detected Tau Core field.
+
+The next paper-grade step is a frozen RMOND residual table plus a held-out environment/line-of-sight validation rule. Only after that can the paper ask whether the residual candidates are truly Tau Core-specific rather than ordinary low-acceleration or H\,I-systematics behavior.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
