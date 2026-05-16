@@ -46,6 +46,22 @@ def test_rmond_bridge_audit_distinguishes_theory_from_velocity_endpoint() -> Non
     assert all("not_tau_core_validation" in row["Guardrail"] for row in rows)
 
 
+def test_required_s_tau_diagnostic_is_inverse_not_validation() -> None:
+    comparison = read_csv("paper3_s_tau_function_family_comparison.csv")
+    summary = read_csv("paper3_s_tau_required_galaxy_summary.csv")
+    points = read_csv("paper3_s_tau_required_points.csv")
+
+    families = {row["Family"] for row in comparison}
+    assert {"fixed_s1", "galaxy_constant", "linear_radius", "linear_acceleration"} <= families
+    assert all("not_tau_core_validation" in row["Guardrail"] for row in comparison)
+    assert all("not_tau_core_validation" in row["Guardrail"] for row in summary)
+    assert all("not_tau_core_validation" in row["Guardrail"] for row in points)
+
+    fixed = next(row for row in comparison if row["Family"] == "fixed_s1")
+    mixed = next(row for row in comparison if row["Family"] == "radius_plus_acceleration")
+    assert float(mixed["MeanRMSLog"]) < float(fixed["MeanRMSLog"])
+
+
 def test_shortlist_is_reproducible_and_caveated() -> None:
     rows = read_csv("paper3_candidate_shortlist.csv")
     assert rows

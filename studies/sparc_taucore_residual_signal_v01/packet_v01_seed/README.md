@@ -13,6 +13,10 @@ paper3_signal_candidate_table.csv
 paper3_candidate_shortlist.csv
 paper3_residual_onset_catalog.csv
 paper3_environment_observability_stress.csv
+paper3_s_tau_required_points.csv
+paper3_s_tau_required_galaxy_summary.csv
+paper3_s_tau_family_fit_long.csv
+paper3_s_tau_function_family_comparison.csv
 paper3_model_comparator_status.csv
 paper3_rmond_bridge_audit.csv
 paper3_next_gate.csv
@@ -21,3 +25,9 @@ paper3_claim_boundary.csv
 paper3_readiness_table.csv
 packet_manifest.json
 ```
+
+The `paper3_s_tau_*` tables are inverse diagnostics. They estimate the local
+`S_tau(R)` required to bridge the TPG/projection baseline and the measured SPARC
+velocities, then compare constant, radial, acceleration, and mixed functional
+families in sample. They are not predictive validation endpoints because they use
+the measured velocities to infer the required shape.

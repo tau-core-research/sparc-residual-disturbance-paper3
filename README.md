@@ -10,6 +10,12 @@ The package is intentionally conservative. It does not claim Tau Core validation
 
 The current RMOND status is intentionally explicit: the local TPG-RMOND bridge supports theory motivation, but a unique frozen pointwise RMOND velocity law is not yet available in this public seed packet. RMOND is therefore audited as a blocker, not reported as a completed numeric comparator.
 
+The packet also includes an inverse required-`S_tau` diagnostic. It asks what local
+`S_tau(R)` would be needed to move the current TPG/projection baseline toward the
+observed SPARC velocities under the extended Tau Core form. Because this diagnostic
+uses the measured endpoint, it is a shape audit for future frozen rules, not a Tau
+Core validation claim.
+
 ## Main Files
 
 ```text
@@ -56,6 +62,10 @@ studies/sparc_radial_s_tau_pilot_v01/packet_v01_seed/
 ```
 
 These inputs provide residual-family scores, pointwise residual maps, distance/observability/environment summaries, and small radial pilot controls.
+
+The required-`S_tau` derived tables can be regenerated from a local SPARC rotmod
+directory by setting `PAPER3_SPARC_ROTMOD_DIR`. Raw SPARC rotmod files are not
+redistributed here; the committed packet keeps only derived diagnostic tables.
 
 ## Data Boundary
 

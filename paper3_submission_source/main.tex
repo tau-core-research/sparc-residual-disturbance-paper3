@@ -132,6 +132,50 @@ InclinationErrorDeg & 0.214 & screening\_correlation\_not\_causal\_attribution \
 \caption{Screening correlations with the TPG/projection residual burden. These are not causal estimates.}
 \end{figure}
 
+\section{Required $S_\tau$ diagnostic}
+
+The extended Tau Core form can be written operationally as
+\[
+F_\tau(a_N,R)=1+S_\tau(R)\,\alpha\ln\left(1+{a_0\over a_N}\right).
+\]
+For each SPARC point with usable baryonic baseline, the required local value is
+\[
+S_{\tau,\mathrm{req}}(R)=
+{V_{\rm obs}(R)/V_N(R)-1\over \alpha\ln\left(1+a_0/a_N(R)\right)}.
+\]
+This is an inverse diagnostic. It uses the measured endpoint and therefore cannot be used as a predictive Tau Core validation. Its role is to ask what kind of future predictive rule would be needed: a galaxy-level constant, a radial function, an acceleration function, or an environment-coupled function.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\linewidth]{figures/paper3_required_s_tau_scatter.pdf}
+\caption{Median required $S_\tau$ versus within-galaxy spread. A low spread near $S_\tau=1$ would support a constant correction; large spread indicates that a function is needed.}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{In-sample required-$S_\tau$ function-family diagnostics. Lower RMS means that family can absorb the measured TPG residual more compactly.}
+\footnotesize
+\begin{tabular}{lrrr}
+\toprule
+Family & Median RMS & Mean RMS & Galaxies\\
+\midrule
+radius + acceleration & 0.143 & 0.152 & 45 \\
+quadratic radius & 0.145 & 0.153 & 45 \\
+linear radius & 0.146 & 0.168 & 45 \\
+quadratic acceleration & 0.165 & 0.160 & 45 \\
+linear acceleration & 0.165 & 0.167 & 45 \\
+galaxy constant & 0.187 & 0.183 & 45 \\
+fixed S=1 & 0.188 & 0.249 & 45 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\linewidth]{figures/paper3_s_tau_family_comparison.pdf}
+\caption{Diagnostic comparison of constant and simple functional $S_\tau$ families. This is not model selection because the measured velocities are used to infer $S_\tau$.}
+\end{figure}
+
 \section{RMOND and comparator status}
 
 The requested RMOND comparison is not yet a numeric endpoint in this seed packet. The local TPG--RMOND bridge is useful, but it is not the same object as a frozen pointwise velocity law. Its strongest result is structural compatibility: the tau-projection can preserve the leading SZ20 scalar and vector Lagrangian exponents under a channel-normalised kernel. That is theory motivation, not a direct prediction for $V(R)$.

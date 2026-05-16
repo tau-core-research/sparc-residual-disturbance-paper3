@@ -6,6 +6,7 @@ from __future__ import annotations
 import csv
 import json
 import math
+import os
 import shutil
 import subprocess
 from pathlib import Path
@@ -24,8 +25,31 @@ PAPER1 = ROOT / "studies/sparc_residual_coherence_test_v01/paper_packet_v06_dist
 PAPER2 = ROOT / "studies/sparc_residual_disturbance_inference_v01/packet_v01_seed"
 RADIAL = ROOT / "studies/sparc_radial_s_tau_pilot_v01/packet_v01_seed"
 ARXIV_ZIP = ROOT / "arxiv_submission_source.zip"
+DEFAULT_LOCAL_SPARC_ROTMOD = ROOT.parent / "tau-core/data/sparc/Rotmod_LTG"
+LOCAL_SPARC_ROTMOD = Path(
+    os.environ.get(
+        "PAPER3_SPARC_ROTMOD_DIR",
+        str(DEFAULT_LOCAL_SPARC_ROTMOD),
+    )
+)
 
 GUARDRAIL = "paper3_seed_candidate_search_not_tau_core_validation"
+KPC_METERS = 3.0856775814913673e19
+KM_PER_SEC_TO_M_PER_SEC = 1000.0
+A0_M_S2 = 1.2e-10
+ALPHA_TPG = 0.360
+UPSILON_DISK = 0.5
+UPSILON_BULGE = 0.7
+
+FAMILY_LABELS = {
+    "fixed_s1": "fixed S=1",
+    "galaxy_constant": "galaxy constant",
+    "linear_radius": "linear radius",
+    "quadratic_radius": "quadratic radius",
+    "linear_acceleration": "linear acceleration",
+    "quadratic_acceleration": "quadratic acceleration",
+    "radius_plus_acceleration": "radius + acceleration",
+}
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
@@ -57,8 +81,51 @@ def as_float(value: object, default: float = 0.0) -> float:
         return default
 
 
+def safe_rms(values: list[float]) -> float:
+    if not values:
+        return float("nan")
+    return math.sqrt(sum(value * value for value in values) / len(values))
+
+
+def solve_least_squares(rows: list[dict[str, float]], feature_keys: list[str]) -> list[float]:
+    n = len(feature_keys)
+    ata = [[0.0 for _ in range(n)] for _ in range(n)]
+    aty = [0.0 for _ in range(n)]
+    for row in rows:
+        features = [row[key] for key in feature_keys]
+        target = row["target_y"]
+        for i in range(n):
+            aty[i] += features[i] * target
+            for j in range(n):
+                ata[i][j] += features[i] * features[j]
+    return gaussian_solve(ata, aty)
+
+
+def gaussian_solve(matrix: list[list[float]], vector: list[float]) -> list[float]:
+    n = len(vector)
+    aug = [row[:] + [vector[i]] for i, row in enumerate(matrix)]
+    ridge = 1e-9
+    for i in range(n):
+        aug[i][i] += ridge
+    for col in range(n):
+        pivot = max(range(col, n), key=lambda row: abs(aug[row][col]))
+        aug[col], aug[pivot] = aug[pivot], aug[col]
+        if abs(aug[col][col]) < 1e-12:
+            return [0.0 for _ in range(n)]
+        div = aug[col][col]
+        for j in range(col, n + 1):
+            aug[col][j] /= div
+        for row in range(n):
+            if row == col:
+                continue
+            factor = aug[row][col]
+            for j in range(col, n + 1):
+                aug[row][j] -= factor * aug[col][j]
+    return [aug[i][n] for i in range(n)]
+
+
 def percentile(values: list[float], q: float) -> float:
-    ordered = sorted(values)
+    ordered = sorted(value for value in values if math.isfinite(value))
     if not ordered:
         return float("nan")
     index = (len(ordered) - 1) * q
@@ -280,6 +347,234 @@ def environment_stress(rows: list[dict[str, object]]) -> list[dict[str, object]]
                 }
             )
     return output
+
+
+def parse_rotmod(path: Path) -> list[dict[str, float]]:
+    rows: list[dict[str, float]] = []
+    for raw_line in path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        tokens = line.split()
+        if len(tokens) < 8:
+            continue
+        rows.append(
+            {
+                "radius_kpc": float(tokens[0]),
+                "vobs_kms": max(0.0, float(tokens[1])),
+                "err_vobs_kms": max(0.0, float(tokens[2])),
+                "vgas_kms": float(tokens[3]),
+                "vdisk_kms": max(0.0, float(tokens[4])),
+                "vbul_kms": max(0.0, float(tokens[5])),
+            }
+        )
+    return rows
+
+
+def baryonic_vn2(row: dict[str, float]) -> float:
+    gas2 = row["vgas_kms"] * abs(row["vgas_kms"])
+    disk2 = UPSILON_DISK * row["vdisk_kms"] * row["vdisk_kms"]
+    bulge2 = UPSILON_BULGE * row["vbul_kms"] * row["vbul_kms"]
+    return max(0.0, gas2 + disk2 + bulge2)
+
+
+def s_tau_point_rows_from_raw(candidate_names: set[str]) -> list[dict[str, object]]:
+    if not LOCAL_SPARC_ROTMOD.exists():
+        existing = PACKET / "paper3_s_tau_required_points.csv"
+        if existing.exists():
+            return read_csv(existing)  # type: ignore[return-value]
+        return []
+
+    output: list[dict[str, object]] = []
+    for path in sorted(LOCAL_SPARC_ROTMOD.glob("*_rotmod.dat")):
+        name = path.name.split("_rotmod", maxsplit=1)[0]
+        if name not in candidate_names:
+            continue
+        raw_rows = parse_rotmod(path)
+        if not raw_rows:
+            continue
+        rmax = max(row["radius_kpc"] for row in raw_rows)
+        for row in raw_rows:
+            vn2 = baryonic_vn2(row)
+            if vn2 <= 0 or row["radius_kpc"] <= 0 or row["vobs_kms"] <= 0:
+                continue
+            vn = math.sqrt(vn2)
+            radius_m = row["radius_kpc"] * KPC_METERS
+            a_n = (vn * KM_PER_SEC_TO_M_PER_SEC) ** 2 / radius_m
+            if a_n <= 0:
+                continue
+            log_kernel = ALPHA_TPG * math.log(1.0 + A0_M_S2 / a_n)
+            if abs(log_kernel) < 1e-12:
+                continue
+            required_s = (row["vobs_kms"] / vn - 1.0) / log_kernel
+            factor_fixed = 1.0 + log_kernel
+            factor_required = 1.0 + required_s * log_kernel
+            if factor_fixed <= 0 or factor_required <= 0:
+                continue
+            v_fixed = vn * factor_fixed
+            output.append(
+                {
+                    "GalaxyName": name,
+                    "RadiusKpc": fnum(row["radius_kpc"], 9),
+                    "RadiusFraction": fnum(row["radius_kpc"] / rmax, 9),
+                    "VnKms": fnum(vn, 9),
+                    "VobsKms": fnum(row["vobs_kms"], 9),
+                    "aN_over_a0": fnum(a_n / A0_M_S2, 9),
+                    "LogKernelAlphaLn": fnum(log_kernel, 9),
+                    "RequiredS_tau": fnum(required_s, 9),
+                    "FixedTPGLogResidual": fnum(math.log(row["vobs_kms"] / v_fixed), 9),
+                    "RequiredSLogResidual": fnum(math.log(row["vobs_kms"] / (vn * factor_required)), 9),
+                    "Source": "local_raw_sparc_rotmod_derived_no_raw_redistribution",
+                    "Guardrail": GUARDRAIL,
+                }
+            )
+    return output
+
+
+def eval_s_tau_family(points: list[dict[str, float]], coeffs: list[float], feature_keys: list[str]) -> float:
+    residuals: list[float] = []
+    for row in points:
+        s_value = sum(coeff * row[key] for coeff, key in zip(coeffs, feature_keys))
+        factor = 1.0 + s_value * row["kernel_x"]
+        if factor <= 0:
+            continue
+        pred = row["vn_kms"] * factor
+        if pred <= 0:
+            continue
+        residuals.append(math.log(row["vobs_kms"] / pred))
+    return safe_rms(residuals)
+
+
+def fit_s_tau_diagnostics(point_rows: list[dict[str, object]], candidates: list[dict[str, object]]) -> tuple[list[dict[str, object]], list[dict[str, object]], list[dict[str, object]]]:
+    class_by_name = {str(row["GalaxyName"]): str(row["Class"]) for row in candidates}
+    grouped: dict[str, list[dict[str, float]]] = {}
+    for row in point_rows:
+        name = str(row["GalaxyName"])
+        radius_fraction = as_float(row["RadiusFraction"])
+        a_ratio = max(as_float(row["aN_over_a0"]), 1e-12)
+        kernel = as_float(row["LogKernelAlphaLn"])
+        vn = as_float(row["VnKms"])
+        vobs = as_float(row["VobsKms"])
+        if kernel <= 0 or vn <= 0 or vobs <= 0:
+            continue
+        target_y = vobs / vn - 1.0
+        grouped.setdefault(name, []).append(
+            {
+                "radius_fraction": radius_fraction,
+                "log_a0_over_aN": math.log10(1.0 / a_ratio),
+                "kernel_x": kernel,
+                "target_y": target_y,
+                "required_s": as_float(row["RequiredS_tau"]),
+                "vn_kms": vn,
+                "vobs_kms": vobs,
+                "const": kernel,
+                "radius": kernel * radius_fraction,
+                "radius2": kernel * radius_fraction * radius_fraction,
+                "accel": kernel * math.log10(1.0 / a_ratio),
+                "accel2": kernel * math.log10(1.0 / a_ratio) * math.log10(1.0 / a_ratio),
+            }
+        )
+
+    summary: list[dict[str, object]] = []
+    long_rows: list[dict[str, object]] = []
+    family_scores: dict[str, list[float]] = {
+        "fixed_s1": [],
+        "galaxy_constant": [],
+        "linear_radius": [],
+        "quadratic_radius": [],
+        "linear_acceleration": [],
+        "quadratic_acceleration": [],
+        "radius_plus_acceleration": [],
+    }
+
+    family_defs = {
+        "galaxy_constant": ["const"],
+        "linear_radius": ["const", "radius"],
+        "quadratic_radius": ["const", "radius", "radius2"],
+        "linear_acceleration": ["const", "accel"],
+        "quadratic_acceleration": ["const", "accel", "accel2"],
+        "radius_plus_acceleration": ["const", "radius", "accel"],
+    }
+
+    for name, rows in sorted(grouped.items()):
+        if len(rows) < 4:
+            continue
+        fixed_rms = eval_s_tau_family(rows, [1.0], ["const"])
+        s_values = [row["required_s"] for row in rows]
+        s_median = median(s_values)
+        s_q25 = percentile(s_values, 0.25)
+        s_q75 = percentile(s_values, 0.75)
+        s_iqr = s_q75 - s_q25
+        out_of_unit = sum(1 for value in s_values if value < 0.0 or value > 1.0) / len(s_values)
+        out_of_two = sum(1 for value in s_values if value < 0.0 or value > 2.0) / len(s_values)
+        best_family = "fixed_s1"
+        best_rms = fixed_rms
+        row_out: dict[str, object] = {
+            "GalaxyName": name,
+            "Class": class_by_name.get(name, ""),
+            "NPoints": len(rows),
+            "MedianRequiredS_tau": fnum(s_median, 9),
+            "IQRRequiredS_tau": fnum(s_iqr, 9),
+            "Q25RequiredS_tau": fnum(s_q25, 9),
+            "Q75RequiredS_tau": fnum(s_q75, 9),
+            "FractionOutside_0_1": fnum(out_of_unit, 9),
+            "FractionOutside_0_2": fnum(out_of_two, 9),
+            "FixedS1_RMSLog": fnum(fixed_rms, 9),
+            "Guardrail": GUARDRAIL,
+        }
+        family_scores["fixed_s1"].append(fixed_rms)
+        for family, keys in family_defs.items():
+            coeffs = solve_least_squares(rows, keys)
+            rms = eval_s_tau_family(rows, coeffs, keys)
+            family_scores[family].append(rms)
+            row_out[f"{family}_RMSLog"] = fnum(rms, 9)
+            row_out[f"{family}_Coefficients"] = ";".join(f"{coeff:.9f}" for coeff in coeffs)
+            if rms < best_rms:
+                best_rms = rms
+                best_family = family
+            long_rows.append(
+                {
+                    "GalaxyName": name,
+                    "Class": class_by_name.get(name, ""),
+                    "Family": family,
+                    "NPoints": len(rows),
+                    "RMSLog": fnum(rms, 9),
+                    "ImprovementVsFixedS1": fnum(fixed_rms - rms, 9),
+                    "Coefficients": row_out[f"{family}_Coefficients"],
+                    "FitUse": "in_sample_shape_diagnostic_not_model_selection",
+                    "Guardrail": GUARDRAIL,
+                }
+            )
+        row_out["BestFamily"] = best_family
+        row_out["BestFamilyRMSLog"] = fnum(best_rms, 9)
+        row_out["BestImprovementVsFixedS1"] = fnum(fixed_rms - best_rms, 9)
+        if s_iqr <= 0.25 and out_of_unit <= 0.25:
+            verdict = "constant_s_tau_plausible"
+        elif row_out.get("linear_radius_RMSLog") and as_float(row_out["linear_radius_RMSLog"]) < fixed_rms * 0.80:
+            verdict = "radial_function_preferred"
+        elif row_out.get("linear_acceleration_RMSLog") and as_float(row_out["linear_acceleration_RMSLog"]) < fixed_rms * 0.80:
+            verdict = "acceleration_function_preferred"
+        else:
+            verdict = "function_or_systematics_needed"
+        row_out["S_tauVerdict"] = verdict
+        summary.append(row_out)
+
+    comparison: list[dict[str, object]] = []
+    for family, values in family_scores.items():
+        if not values:
+            continue
+        comparison.append(
+            {
+                "Family": family,
+                "NGalaxies": len(values),
+                "MedianRMSLog": fnum(median(values), 9),
+                "MeanRMSLog": fnum(sum(values) / len(values), 9),
+                "Interpretation": "in_sample_required_s_tau_shape_diagnostic",
+                "Guardrail": GUARDRAIL,
+            }
+        )
+
+    return summary, long_rows, comparison
 
 
 def model_comparator_status() -> list[dict[str, object]]:
@@ -593,6 +888,45 @@ def make_figures(rows: list[dict[str, object]], stress: list[dict[str, object]])
     save_figure(fig, "paper3_observability_stress")
 
 
+def make_s_tau_figures(summary: list[dict[str, object]], comparison: list[dict[str, object]]) -> None:
+    if not summary or not comparison:
+        return
+
+    fig, ax = plt.subplots(figsize=(6.8, 4.4))
+    colors = {"A": "#2c7fb8", "C": "#d95f0e"}
+    for klass in ["A", "C"]:
+        subset = [row for row in summary if row["Class"] == klass]
+        ax.scatter(
+            [as_float(row["MedianRequiredS_tau"]) for row in subset],
+            [as_float(row["IQRRequiredS_tau"]) for row in subset],
+            s=44,
+            alpha=0.82,
+            label=f"{klass} class",
+            color=colors[klass],
+            edgecolor="white",
+            linewidth=0.5,
+        )
+    ax.axvline(1.0, color="black", linewidth=0.8, linestyle="--")
+    ax.set_xlabel(r"Median required $S_\tau$")
+    ax.set_ylabel(r"Within-galaxy IQR of required $S_\tau$")
+    ax.set_title(r"Does each galaxy need constant or varying $S_\tau$?")
+    ax.grid(alpha=0.25)
+    ax.legend(frameon=False)
+    fig.tight_layout()
+    save_figure(fig, "paper3_required_s_tau_scatter")
+
+    ordered = sorted(comparison, key=lambda row: as_float(row["MedianRMSLog"]))
+    fig, ax = plt.subplots(figsize=(7.4, 4.4))
+    labels = [FAMILY_LABELS.get(str(row["Family"]), str(row["Family"]).replace("_", " ")) for row in ordered]
+    values = [as_float(row["MedianRMSLog"]) for row in ordered]
+    ax.barh(labels[::-1], values[::-1], color="#1b9e77", alpha=0.86)
+    ax.set_xlabel("Median in-sample RMS log residual")
+    ax.set_title(r"Required $S_\tau$ function-family diagnostics")
+    ax.grid(axis="x", alpha=0.25)
+    fig.tight_layout()
+    save_figure(fig, "paper3_s_tau_family_comparison")
+
+
 def save_figure(fig: plt.Figure, stem: str) -> None:
     pdf = SOURCE_FIGURES / f"{stem}.pdf"
     svg = PUBLIC_FIGURES / f"{stem}.svg"
@@ -632,6 +966,18 @@ def latex_stress_rows(stress: list[dict[str, object]]) -> str:
         f"{esc(row['Covariate'])} & {float(row['Pearson']):.3f} & {esc(row['Interpretation'])} \\\\"
         for row in rows
     )
+
+
+def latex_s_tau_comparison_rows(comparison: list[dict[str, object]]) -> str:
+    rows = sorted(comparison, key=lambda row: as_float(row["MedianRMSLog"]))
+    lines = []
+    for row in rows:
+        family = FAMILY_LABELS.get(str(row["Family"]), str(row["Family"]).replace("_", " "))
+        lines.append(
+            f"{family} & {as_float(row['MedianRMSLog']):.3f} & "
+            f"{as_float(row['MeanRMSLog']):.3f} & {row['NGalaxies']} \\\\"
+        )
+    return "\n".join(lines)
 
 
 def write_references() -> None:
@@ -728,7 +1074,11 @@ def write_references() -> None:
     (SOURCE / "references.bib").write_text(text, encoding="utf-8")
 
 
-def write_main_tex(shortlist: list[dict[str, object]], stress: list[dict[str, object]]) -> None:
+def write_main_tex(
+    shortlist: list[dict[str, object]],
+    stress: list[dict[str, object]],
+    s_tau_comparison: list[dict[str, object]],
+) -> None:
     tex = r"""\documentclass[11pt]{{article}}
 \usepackage[margin=1in]{{geometry}}
 \usepackage{{graphicx}}
@@ -851,6 +1201,44 @@ STRESS_ROWS
 \caption{{Screening correlations with the TPG/projection residual burden. These are not causal estimates.}}
 \end{{figure}}
 
+\section{{Required S_tau diagnostic}}
+
+The extended Tau Core form can be written operationally as
+\[
+F_\tau(a_N,R)=1+S_\tau(R)\,\alpha\ln\left(1+{a_0\over a_N}\right).
+\]
+For each SPARC point with usable baryonic baseline, the required local value is
+\[
+S_{\tau,\mathrm{req}}(R)=
+{V_{\rm obs}(R)/V_N(R)-1\over \alpha\ln\left(1+a_0/a_N(R)\right)}.
+\]
+This is an inverse diagnostic. It uses the measured endpoint and therefore cannot be used as a predictive Tau Core validation. Its role is to ask what kind of future predictive rule would be needed: a galaxy-level constant, a radial function, an acceleration function, or an environment-coupled function.
+
+\begin{{figure}}[H]
+\centering
+\includegraphics[width=0.78\linewidth]{{figures/paper3_required_s_tau_scatter.pdf}}
+\caption{{Median required $S_\tau$ versus within-galaxy spread. A low spread near $S_\tau=1$ would support a constant correction; large spread indicates that a function is needed.}}
+\end{{figure}}
+
+\begin{{table}}[H]
+\centering
+\caption{{In-sample required-$S_\tau$ function-family diagnostics. Lower RMS means that family can absorb the measured TPG residual more compactly.}}
+\footnotesize
+\begin{{tabular}}{{lrrr}}
+\toprule
+Family & Median RMS & Mean RMS & Galaxies\\
+\midrule
+S_TAU_COMPARISON_ROWS
+\bottomrule
+\end{{tabular}}
+\end{{table}}
+
+\begin{{figure}}[H]
+\centering
+\includegraphics[width=0.82\linewidth]{{figures/paper3_s_tau_family_comparison.pdf}}
+\caption{{Diagnostic comparison of constant and simple functional $S_\tau$ families. This is not model selection because the measured velocities are used to infer $S_\tau$.}}
+\end{{figure}}
+
 \section{{RMOND and comparator status}}
 
 The requested RMOND comparison is not yet a numeric endpoint in this seed packet. The local TPG--RMOND bridge is useful, but it is not the same object as a frozen pointwise velocity law. Its strongest result is structural compatibility: the tau-projection can preserve the leading SZ20 scalar and vector Lagrangian exponents under a channel-normalised kernel. That is theory motivation, not a direct prediction for $V(R)$.
@@ -895,8 +1283,17 @@ The next paper-grade step is a frozen RMOND residual table plus a held-out envir
         r"\Delta_{\rm TPG-low},g}=",
         r"\Delta_{{\rm TPG-low},g}=",
     )
+    tex = tex.replace(
+        r"\section{Required S_tau diagnostic}",
+        r"\section{Required $S_\tau$ diagnostic}",
+    )
+    tex = tex.replace(
+        r"S_{\tau,\mathrm{req}(R)=",
+        r"S_{\tau,\mathrm{req}}(R)=",
+    )
     tex = tex.replace("SHORTLIST_ROWS", latex_table_shortlist(shortlist))
     tex = tex.replace("STRESS_ROWS", latex_stress_rows(stress))
+    tex = tex.replace("S_TAU_COMPARISON_ROWS", latex_s_tau_comparison_rows(s_tau_comparison))
     (SOURCE / "main.tex").write_text(tex, encoding="utf-8")
 
 
@@ -910,6 +1307,10 @@ def write_manifest(pdf_status: str) -> None:
             "paper3_candidate_shortlist.csv",
             "paper3_residual_onset_catalog.csv",
             "paper3_environment_observability_stress.csv",
+            "paper3_s_tau_required_points.csv",
+            "paper3_s_tau_required_galaxy_summary.csv",
+            "paper3_s_tau_family_fit_long.csv",
+            "paper3_s_tau_function_family_comparison.csv",
             "paper3_model_comparator_status.csv",
             "paper3_rmond_bridge_audit.csv",
             "paper3_next_gate.csv",
@@ -959,6 +1360,8 @@ def main() -> None:
     candidates = signal_candidate_table(onsets)
     shortlist = candidate_shortlist(candidates)
     stress = environment_stress(candidates)
+    s_tau_points = s_tau_point_rows_from_raw({str(row["GalaxyName"]) for row in candidates})
+    s_tau_summary, s_tau_long, s_tau_comparison = fit_s_tau_diagnostics(s_tau_points, candidates)
 
     write_csv(
         PACKET / "paper3_residual_onset_catalog.csv",
@@ -1015,6 +1418,64 @@ def main() -> None:
         ["Metric", "Covariate", "N", "Pearson", "Interpretation", "Guardrail"],
     )
     write_csv(
+        PACKET / "paper3_s_tau_required_points.csv",
+        s_tau_points,
+        [
+            "GalaxyName",
+            "RadiusKpc",
+            "RadiusFraction",
+            "VnKms",
+            "VobsKms",
+            "aN_over_a0",
+            "LogKernelAlphaLn",
+            "RequiredS_tau",
+            "FixedTPGLogResidual",
+            "RequiredSLogResidual",
+            "Source",
+            "Guardrail",
+        ],
+    )
+    s_tau_summary_fields = [
+        "GalaxyName",
+        "Class",
+        "NPoints",
+        "MedianRequiredS_tau",
+        "IQRRequiredS_tau",
+        "Q25RequiredS_tau",
+        "Q75RequiredS_tau",
+        "FractionOutside_0_1",
+        "FractionOutside_0_2",
+        "FixedS1_RMSLog",
+        "galaxy_constant_RMSLog",
+        "galaxy_constant_Coefficients",
+        "linear_radius_RMSLog",
+        "linear_radius_Coefficients",
+        "quadratic_radius_RMSLog",
+        "quadratic_radius_Coefficients",
+        "linear_acceleration_RMSLog",
+        "linear_acceleration_Coefficients",
+        "quadratic_acceleration_RMSLog",
+        "quadratic_acceleration_Coefficients",
+        "radius_plus_acceleration_RMSLog",
+        "radius_plus_acceleration_Coefficients",
+        "BestFamily",
+        "BestFamilyRMSLog",
+        "BestImprovementVsFixedS1",
+        "S_tauVerdict",
+        "Guardrail",
+    ]
+    write_csv(PACKET / "paper3_s_tau_required_galaxy_summary.csv", s_tau_summary, s_tau_summary_fields)
+    write_csv(
+        PACKET / "paper3_s_tau_family_fit_long.csv",
+        s_tau_long,
+        ["GalaxyName", "Class", "Family", "NPoints", "RMSLog", "ImprovementVsFixedS1", "Coefficients", "FitUse", "Guardrail"],
+    )
+    write_csv(
+        PACKET / "paper3_s_tau_function_family_comparison.csv",
+        s_tau_comparison,
+        ["Family", "NGalaxies", "MedianRMSLog", "MeanRMSLog", "Interpretation", "Guardrail"],
+    )
+    write_csv(
         PACKET / "paper3_model_comparator_status.csv",
         model_comparator_status(),
         ["Comparator", "ComputationStatus", "Role", "CurrentUse", "Blocker", "Guardrail"],
@@ -1037,8 +1498,9 @@ def main() -> None:
     write_csv(PACKET / "paper3_claim_boundary.csv", claim_boundary(), ["Status", "Claim", "Guardrail"])
 
     make_figures(candidates, stress)
+    make_s_tau_figures(s_tau_summary, s_tau_comparison)
     write_references()
-    write_main_tex(shortlist, stress)
+    write_main_tex(shortlist, stress, s_tau_comparison)
     build_arxiv_zip()
     pdf_status = compile_pdf()
     write_csv(PACKET / "paper3_readiness_table.csv", readiness_table(pdf_status), ["Item", "Status", "Detail", "Guardrail"])
