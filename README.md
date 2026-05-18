@@ -8,6 +8,16 @@ The manuscript is an exploratory candidate-methodology preprint. It defines a re
 
 The package intentionally does **not** claim a new-gravity detection, model selection, or physical validation of the TPG/projection baseline. In this repository, `TPG/projection` is a frozen operational residual baseline retained as a historical label, not a validated gravity model.
 
+## Theory Context
+
+The broader Tau Core / projection-theory background is maintained separately at:
+
+```text
+https://github.com/jolcsak/tau-core-theory
+```
+
+This Paper 3 repository is a standalone reproducibility package. It does not require accepting the Tau Core theory hub; the manuscript should be read as an exploratory candidate/control framework with a predictive validation gate.
+
 ## Repository contents
 
 ```text
