@@ -13,7 +13,7 @@ The package intentionally does **not** claim a new-gravity detection, model sele
 The broader Tau Core / projection-theory background is maintained separately at:
 
 ```text
-https://github.com/jolcsak/tau-core-theory
+https://github.com/tau-core-research/tau-core-theory
 ```
 
 This Paper 3 repository is a standalone reproducibility package. It does not require accepting the Tau Core theory hub; the manuscript should be read as an exploratory candidate/control framework with a predictive validation gate.
