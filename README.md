@@ -1,38 +1,27 @@
-# SPARC Tau Core Residual Signal Paper 3
+# SPARC projection-sensitive residual candidate paper 3
 
-This is the slim working reproducibility package for:
+This repository is the public reproducibility package for:
 
-**Searching for Tau Core signal candidates in SPARC residual structure: a cautious continuation of the residual-disturbance audit**
+**A reproducible candidate framework for projection-sensitive residual structure in SPARC rotation curves**
 
-Paper 3 extends the Paper 1 and Paper 2 audit line. It asks whether the residual differences between TPG/projection, MOND-simple, empirical RAR-like baselines, and observed SPARC rotation curves contain a candidate signature compatible with the Tau Core observer/environment weighting idea.
+The manuscript is an exploratory candidate-methodology preprint. It defines a reproducible framework for comparing fixed SPARC residual diagnostics, selecting candidate and control objects, and specifying the predictive validation gate needed before any stronger physical claim can be made.
 
-The package is intentionally conservative. It does not claim Tau Core validation, gravity-model selection, or a completed independent external replication.
+The package intentionally does **not** claim a new-gravity detection, model selection, or physical validation of the TPG/projection baseline. In this repository, `TPG/projection` is a frozen operational residual baseline retained as a historical label, not a validated gravity model.
 
-The current RMOND status is intentionally explicit: the local TPG-RMOND bridge supports theory motivation, but a unique frozen pointwise RMOND velocity law is not yet available in this public seed packet. RMOND is therefore audited as a blocker, not reported as a completed numeric comparator.
-
-The packet also includes an inverse required-`S_tau` diagnostic. It asks what local
-`S_tau(R)` would be needed to move the current TPG/projection baseline toward the
-observed SPARC velocities under the extended Tau Core form. Because this diagnostic
-uses the measured endpoint, it is a shape audit for future frozen rules, not a Tau
-Core validation claim.
-
-## Main Files
+## Repository contents
 
 ```text
-LICENSE
-CITATION.cff
-DATA_NOTICE.md
-requirements.txt
-paper3_submission_source/main.tex
-paper3_submission_source/references.bib
-paper3_submission_source/main.pdf
-paper3_submission_source/figures/
-arxiv_submission_source.zip
-figures/
-tests/test_public_reproducibility_package.py
-studies/sparc_taucore_residual_signal_v01/make_paper3_submission_source_v01.py
-studies/sparc_taucore_residual_signal_v01/packet_v01_seed/
+paper3_submission_source/                         LaTeX source, bibliography, figures, and compiled PDF
+figures/                                          Regenerated SVG figures used by the manuscript
+studies/sparc_taucore_residual_signal_v01/        Paper 3 regeneration script and seed packet
+studies/sparc_residual_coherence_test_v01/        Minimal derived Paper 1 input tables
+studies/sparc_residual_disturbance_inference_v01/ Minimal derived Paper 2 input tables
+studies/sparc_radial_s_tau_pilot_v01/             Minimal derived radial-pilot input tables
+tests/                                            Public reproducibility checks
+arxiv_submission_source.zip                       arXiv-ready source package
 ```
+
+Raw SPARC, LITTLE THINGS, or other survey data are not redistributed here. The repository contains only derived tables and paper artifacts needed to regenerate the manuscript package.
 
 ## Reproduce
 
@@ -42,54 +31,30 @@ Install dependencies:
 python -m pip install -r requirements.txt
 ```
 
-Regenerate the Paper 3 source, figures, derived candidate tables, arXiv source ZIP, and PDF:
+Regenerate the paper source, derived tables, figures, arXiv source ZIP, and PDF:
 
 ```bash
 python studies/sparc_taucore_residual_signal_v01/make_paper3_submission_source_v01.py
+```
+
+Run the public reproducibility checks:
+
+```bash
 python -m pytest -q
 ```
 
-The script uses `tectonic` to build `paper3_submission_source/main.pdf`. If `tectonic` is not installed, the TeX source and arXiv ZIP still regenerate, but the PDF readiness gate will report a compile blocker.
+The generator uses `tectonic` for PDF compilation when available. If `tectonic` is missing, the TeX source, figures, derived tables, and arXiv ZIP are still regenerated, but the PDF readiness row records the compiler blocker.
 
-## Included Derived Inputs
+## Main outputs
 
-The retained inherited inputs are derived tables, not raw survey products:
+- `paper3_submission_source/main.tex`
+- `paper3_submission_source/main.pdf`
+- `paper3_submission_source/references.bib`
+- `paper3_submission_source/figures/*.pdf`
+- `figures/*.svg`
+- `arxiv_submission_source.zip`
+- `studies/sparc_taucore_residual_signal_v01/packet_v01_seed/*.csv`
 
-```text
-studies/sparc_residual_coherence_test_v01/paper_packet_v06_distance_balanced/
-studies/sparc_residual_disturbance_inference_v01/packet_v01_seed/
-studies/sparc_radial_s_tau_pilot_v01/packet_v01_seed/
-```
+## Citation
 
-These inputs provide residual-family scores, pointwise residual maps, distance/observability/environment summaries, and small radial pilot controls.
-
-The required-`S_tau` derived tables can be regenerated from a local SPARC rotmod
-directory by setting `PAPER3_SPARC_ROTMOD_DIR`. Raw SPARC rotmod files are not
-redistributed here; the committed packet keeps only derived diagnostic tables.
-
-## Data Boundary
-
-The repository excludes:
-
-- raw SPARC rotmod files,
-- raw FITS cubes or moment maps,
-- raw THINGS/HALOGAS/LITTLE THINGS products,
-- private notes,
-- local caches,
-- API keys or tokens.
-
-## arXiv Source Package
-
-The repository includes:
-
-```text
-arxiv_submission_source.zip
-```
-
-The ZIP contains only:
-
-```text
-main.tex
-references.bib
-figures/*.pdf
-```
+Use `CITATION.cff` for repository citation metadata. The data-use scope and redistribution boundary are documented in `DATA_NOTICE.md`.

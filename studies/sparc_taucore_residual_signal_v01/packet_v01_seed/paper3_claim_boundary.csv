@@ -1,7 +1,7 @@
 Status,Claim,Guardrail
-allowed,TPG/projection residual structure can be triaged against MOND-simple and RAR-like residuals to identify Tau Core-compatible follow-up candidates.,paper3_seed_candidate_search_not_tau_core_validation
-allowed,"Distance, environment, observer geometry, and residual-onset summaries can be inspected as candidate Tau Core weighting channels.",paper3_seed_candidate_search_not_tau_core_validation
-allowed,"The current packet defines a reproducible Paper 3 seed, not a final physical proof.",paper3_seed_candidate_search_not_tau_core_validation
-forbidden,The packet proves Tau Core.,paper3_seed_candidate_search_not_tau_core_validation
+allowed,TPG/projection residual structure can be triaged against MOND-simple and RAR-like residuals to identify projection-sensitive follow-up candidates.,paper3_seed_candidate_search_not_tau_core_validation
+allowed,"Distance, environment, observer geometry, and residual-onset summaries can be inspected as candidate observer/environment-sensitive residual patterns.",paper3_seed_candidate_search_not_tau_core_validation
+allowed,"The current packet defines a reproducible Paper 3 seed, not a final validation result.",paper3_seed_candidate_search_not_tau_core_validation
+forbidden,The packet validates a physical theory.,paper3_seed_candidate_search_not_tau_core_validation
 forbidden,The packet shows TPG/projection is uniquely preferred over MOND/RAR.,paper3_seed_candidate_search_not_tau_core_validation
 forbidden,RMOND has been numerically tested in this packet.,paper3_seed_candidate_search_not_tau_core_validation

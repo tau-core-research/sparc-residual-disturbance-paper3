@@ -1,11 +1,21 @@
-# SPARC Tau Core Residual Signal Candidate Search v01
+# Paper 3 regeneration study
 
-This study extends the Paper 1 and Paper 2 SPARC residual-disturbance audit line.
-
-The endpoint is not a Tau Core proof. The endpoint is a reproducible candidate-search packet that asks where TPG/projection residuals diverge from MOND-simple/RAR-like baselines and whether those divergences align with distance, observer geometry, environment, and radial onset patterns in a way compatible with the Tau Core observer/environment weighting hypothesis.
-
-Run:
+This directory contains the single public regeneration script for Paper 3:
 
 ```bash
 python studies/sparc_taucore_residual_signal_v01/make_paper3_submission_source_v01.py
 ```
+
+The script rebuilds:
+
+- `studies/sparc_taucore_residual_signal_v01/packet_v01_seed/`
+- root-level SVG figures in `figures/`
+- LaTeX/PDF figure copies in `paper3_submission_source/figures/`
+- `paper3_submission_source/main.tex`
+- `paper3_submission_source/references.bib`
+- `paper3_submission_source/main.pdf` when `tectonic` is available
+- `arxiv_submission_source.zip`
+
+Only files required for public reproduction are kept in this repository. Exploratory scripts and intermediate research artifacts from development are intentionally excluded from the public package.
+
+The manuscript treats `TPG/projection` as a frozen operational residual baseline. The outputs are candidate-support and validation-gate artifacts, not physical validation claims.

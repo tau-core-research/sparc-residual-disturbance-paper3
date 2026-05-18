@@ -693,7 +693,7 @@ def literature_map() -> list[dict[str, object]]:
         {
             "Theme": "SPARC/RAR baseline",
             "CitationKey": "McGaugh2016RAR",
-            "UseInPaper3": "Defines the strongest low-acceleration empirical baseline that Tau Core must distinguish itself from.",
+            "UseInPaper3": "Defines the strongest low-acceleration empirical baseline that any projection-sensitive residual interpretation must distinguish itself from.",
             "URL": "https://arxiv.org/abs/1609.05917",
         },
         {
@@ -729,7 +729,7 @@ def literature_map() -> list[dict[str, object]]:
         {
             "Theme": "Beam smearing and LSB rotation curves",
             "CitationKey": "deBlok1997Beam",
-            "UseInPaper3": "Constrains observational failure modes before calling residuals Tau Core signal.",
+            "UseInPaper3": "Constrains observational failure modes before interpreting residuals as projection-sensitive candidates.",
             "URL": "https://arxiv.org/abs/astro-ph/9704274",
         },
         {
@@ -745,22 +745,22 @@ def claim_boundary() -> list[dict[str, object]]:
     return [
         {
             "Status": "allowed",
-            "Claim": "TPG/projection residual structure can be triaged against MOND-simple and RAR-like residuals to identify Tau Core-compatible follow-up candidates.",
+            "Claim": "TPG/projection residual structure can be triaged against MOND-simple and RAR-like residuals to identify projection-sensitive follow-up candidates.",
             "Guardrail": GUARDRAIL,
         },
         {
             "Status": "allowed",
-            "Claim": "Distance, environment, observer geometry, and residual-onset summaries can be inspected as candidate Tau Core weighting channels.",
+            "Claim": "Distance, environment, observer geometry, and residual-onset summaries can be inspected as candidate observer/environment-sensitive residual patterns.",
             "Guardrail": GUARDRAIL,
         },
         {
             "Status": "allowed",
-            "Claim": "The current packet defines a reproducible Paper 3 seed, not a final physical proof.",
+            "Claim": "The current packet defines a reproducible Paper 3 seed, not a final validation result.",
             "Guardrail": GUARDRAIL,
         },
         {
             "Status": "forbidden",
-            "Claim": "The packet proves Tau Core.",
+            "Claim": "The packet validates a physical theory.",
             "Guardrail": GUARDRAIL,
         },
         {
@@ -927,6 +927,103 @@ def make_s_tau_figures(summary: list[dict[str, object]], comparison: list[dict[s
     save_figure(fig, "paper3_s_tau_family_comparison")
 
 
+def rotation_curve_model_rows() -> dict[str, list[dict[str, str]]]:
+    sources = {
+        "DDO126": PACKET / "paper3_tau_signal_ddo126_scoring_pilot_points_v01.csv",
+        "DDO50": PACKET / "paper3_tau_signal_priority_ddo50_scoring_pilot_points_v01.csv",
+    }
+    return {galaxy: read_csv(path) for galaxy, path in sources.items() if path.exists()}
+
+
+def make_rotation_curve_figure() -> None:
+    model_rows = rotation_curve_model_rows()
+    if not {"DDO126", "DDO50"} <= set(model_rows):
+        return
+
+    model_styles = {
+        "NewtonianBaryonic": ("Newtonian baryonic", "#6b7280", "--"),
+        "MONDSimpleMu": ("MOND simple-$\\mu$", "#2563eb", "-."),
+        "EmpiricalRARLike": ("RAR-like", "#0891b2", ":"),
+        "FixedTPG_S1": ("fixed TPG", "#b91c1c", "-"),
+    }
+    fig, axes = plt.subplots(2, 2, figsize=(9.0, 6.6), sharex="col")
+    for col, galaxy in enumerate(["DDO126", "DDO50"]):
+        grouped: dict[float, dict[str, object]] = {}
+        for row in model_rows[galaxy]:
+            radius = as_float(row["RadiusKpc"])
+            grouped.setdefault(
+                radius,
+                {
+                    "RadiusKpc": radius,
+                    "VobsKms": as_float(row["VobsKms"]),
+                    "ErrVobsKms": as_float(row["ErrVobsKms"]),
+                    "RequiredS_tauDiagnostic": as_float(row["RequiredS_tauDiagnostic"]),
+                },
+            )
+            grouped[radius][str(row["Model"])] = as_float(row["VmodelKms"])
+
+        points = [grouped[key] for key in sorted(grouped)]
+        radii = [float(point["RadiusKpc"]) for point in points]
+        vobs = [float(point["VobsKms"]) for point in points]
+        verr = [float(point["ErrVobsKms"]) for point in points]
+        req_s = [float(point["RequiredS_tauDiagnostic"]) for point in points]
+
+        ax_curve = axes[0][col]
+        ax_curve.errorbar(
+            radii,
+            vobs,
+            yerr=verr,
+            fmt="o",
+            ms=3.3,
+            lw=0.8,
+            color="#111827",
+            ecolor="#9ca3af",
+            capsize=1.4,
+            label="$V_{\\rm obs}$",
+            zorder=5,
+        )
+        for model, (label, color, linestyle) in model_styles.items():
+            xs = [float(point["RadiusKpc"]) for point in points if model in point]
+            values = [float(point[model]) for point in points if model in point]
+            ax_curve.plot(xs, values, linestyle=linestyle, color=color, lw=1.35, label=label)
+        ax_curve.set_title(f"{galaxy} rotation curve", fontsize=11)
+        ax_curve.set_ylabel("velocity [km s$^{-1}$]")
+        ax_curve.grid(True, alpha=0.22)
+        if col == 1:
+            ax_curve.legend(frameon=False, fontsize=7.6, loc="best")
+
+        ax_diag = axes[1][col]
+        fixed_points = [point for point in points if "FixedTPG_S1" in point]
+        fixed_x = [float(point["RadiusKpc"]) for point in fixed_points]
+        fixed_residual = [
+            math.log(float(point["VobsKms"]) / float(point["FixedTPG_S1"]))
+            for point in fixed_points
+            if float(point["FixedTPG_S1"]) > 0
+        ]
+        ax_diag.axhline(0.0, color="#111827", lw=0.7, alpha=0.5)
+        ax_diag.plot(
+            fixed_x[: len(fixed_residual)],
+            fixed_residual,
+            color="#b91c1c",
+            lw=1.2,
+            label="fixed TPG log residual",
+        )
+        ax_diag.set_ylabel("log residual")
+        ax_diag.set_xlabel("radius [kpc]")
+        ax_diag.grid(True, alpha=0.22)
+        twin = ax_diag.twinx()
+        twin.plot(radii, req_s, color="#047857", lw=1.1, alpha=0.85, label="required $S_\\tau$")
+        twin.set_ylabel("required $S_\\tau$")
+        if col == 1:
+            lines, labels = ax_diag.get_legend_handles_labels()
+            lines2, labels2 = twin.get_legend_handles_labels()
+            ax_diag.legend(lines + lines2, labels + labels2, frameon=False, fontsize=7.6, loc="best")
+
+    fig.suptitle("Anchor/control rotation-curve diagnostics", fontsize=12)
+    fig.tight_layout(rect=(0, 0, 1, 0.96))
+    save_figure(fig, "paper3_anchor_control_rotation_curves")
+
+
 def save_figure(fig: plt.Figure, stem: str) -> None:
     pdf = SOURCE_FIGURES / f"{stem}.pdf"
     svg = PUBLIC_FIGURES / f"{stem}.svg"
@@ -940,8 +1037,8 @@ def latex_table_shortlist(rows: list[dict[str, object]], limit: int = 8) -> str:
         return str(value).replace("\\", r"\textbackslash{}").replace("_", r"\_").replace("<", r"$<$").replace(">", r"$>$")
 
     display_class = {
-        "clean_tau_candidate": "clean tau",
-        "environment_tau_candidate": "environment",
+        "clean_tau_candidate": "clean projection",
+        "environment_tau_candidate": "environment linked",
         "tpg_divergence_followup": "TPG divergence",
         "tpg_success_control": "TPG success",
         "disturbance_systematics_candidate": "systematics",
@@ -1088,7 +1185,7 @@ def write_main_tex(
 \usepackage{{float}}
 \usepackage{{array}}
 
-\title{{Searching for Tau Core signal candidates in SPARC residual structure}}
+\title{{A reproducible candidate framework for projection-sensitive residual structure in SPARC rotation curves}}
 \author{{Jozsef Olcsak}}
 \date{{2026}}
 
@@ -1096,19 +1193,19 @@ def write_main_tex(
 \maketitle
 
 \begin{{abstract}}
-Paper 1 found that externally reviewed structural disturbance is associated with larger low-acceleration residual scatter in SPARC. Paper 2 reversed the question and showed that fixed residual-shape features can recover those A/C labels better than chance, while remaining explicitly non-unique with respect to MOND-simple and empirical RAR-like baselines. This Paper 3 seed asks a narrower follow-up question: where do TPG/projection residuals, MOND-simple residuals, RAR-like residuals, and measured rotation curves point to candidate residual structure that could plausibly carry the missing observer- and environment-dependent Tau Core weight? The current packet identifies candidate galaxies, radial onset categories, and environment/observability stress channels. It does not validate Tau Core, does not numerically test RMOND, and does not claim gravity-model selection.
+Paper 1 found that externally reviewed structural disturbance is associated with larger low-acceleration residual scatter in SPARC. Paper 2 reversed the question and showed that fixed residual-shape features can recover those A/C labels better than chance, while remaining explicitly non-unique with respect to MOND-simple and empirical RAR-like baselines. This Paper 3 seed asks a narrower follow-up question: where do TPG/projection residuals, MOND-simple residuals, RAR-like residuals, and measured rotation curves point to reproducible projection-sensitive residual candidates? The current packet identifies candidate galaxies, radial onset categories, and environment/observability stress channels. It is a candidate-support methodology and registry paper. It does not validate a physical theory, does not numerically test RMOND, and does not claim gravity-model selection.
 \end{{abstract}}
 
 \section{{Purpose and claim boundary}}
 
-The working hypothesis is that the TPG/projection baseline already carries part of the local Tau Core weighting, while the remaining TPG residual may carry missing observer- and environment-dependent weights. This is a candidate-search statement, not a proof. A defensible Paper 3 must therefore separate three layers:
+The working hypothesis is that the TPG/projection baseline may capture part of a local projection-sensitive residual structure, while the remaining TPG residual may carry missing observer- and environment-dependent structure. In this manuscript, ``TPG/projection'' denotes a frozen operational projection baseline used for residual comparison rather than a validated gravity model; TPG is retained as a historical operational label from earlier work and does not imply a validated gravity theory. This is a candidate-search statement, not a validation result. A defensible Paper 3 must therefore separate three layers:
 \begin{{enumerate}}
 \item an operational residual layer, based on frozen TPG/projection, MOND-simple, and RAR-like residual maps;
 \item a systematics layer, based on distance, inclination, point count, H\,I kinematics, beam smearing, and non-circular motions;
-\item a theory layer, where a Tau Core interpretation is allowed only if the residual pattern survives the systematics layer and is more specific than ordinary RAR/MOND behavior.
+\item an interpretation layer, where any projection-sensitive residual interpretation is allowed only if the residual pattern survives the systematics layer and is more specific than ordinary RAR/MOND behavior.
 \end{{enumerate}}
 
-The permitted claim is that this packet defines reproducible Tau Core signal candidates. The forbidden claim is that the candidates already prove Tau Core.
+The permitted claim is that this packet defines a reproducible candidate-selection and control framework for projection-sensitive residual structures. The forbidden claim is that the candidates already validate any physical theory or gravity model.
 
 \section{{Data inherited from Papers 1 and 2}}
 
@@ -1132,16 +1229,16 @@ Positive values mark galaxies where the TPG/projection residual is larger than t
 
 \section{{Theory motivation}}
 
-The relevant external baseline is the SPARC radial acceleration relation \cite{{McGaugh2016RAR,Lelli2016SPARC}} and the broader MOND/RAR literature \cite{{Milgrom1983MOND,Li2018RARFits}}. These works are not optional background; they define the strongest ordinary low-acceleration competitor. If Tau Core only reproduces the same residual ordering as RAR/MOND, it is not yet distinguished.
+The relevant external baseline is the SPARC radial acceleration relation \cite{{McGaugh2016RAR,Lelli2016SPARC}} and the broader MOND/RAR literature \cite{{Milgrom1983MOND,Li2018RARFits}}. These works are not optional background; they define the strongest ordinary low-acceleration competitor. If a projection-sensitive residual hypothesis only reproduces the same residual ordering as RAR/MOND, it is not yet distinguished.
 
-The systematics literature is equally central. Non-circular motions in H\,I velocity fields \cite{{Trachternach2008THINGS,Oman2019NonCircular}} and beam-smearing/rotation-curve quality effects \cite{{deBlok1997Beam}} can generate residual structure without new physics. The JWST/NIRCam Zone-of-Avoidance result \cite{{NiloCastellon2025ZoA}} is used only as an observer/line-of-sight motivation: foreground obscuration and hidden structure can materially affect what an observer can map. It is not evidence for Tau Core by itself.
+The systematics literature is equally central. Non-circular motions in H\,I velocity fields \cite{{Trachternach2008THINGS,Oman2019NonCircular}} and beam-smearing/rotation-curve quality effects \cite{{deBlok1997Beam}} can generate residual structure without new physics. The JWST/NIRCam Zone-of-Avoidance result \cite{{NiloCastellon2025ZoA}} is used only as an observer/line-of-sight motivation: foreground obscuration and hidden structure can materially affect what an observer can map. It is not evidence for the projection-sensitive residual interpretation by itself.
 
 \section{{Candidate construction}}
 
 For each galaxy we record TPG/projection RMS, MOND-simple RMS, RAR-like RMS, TPG-specific excess, environment proxy, distance, reconstruction-risk proxy, inclination, and the first radial bin where the TPG/projection absolute residual exceeds 0.15 dex. Candidate classes are assigned by frozen screening rules:
 \begin{{itemize}}
-\item \textit{{clean tau candidate}}: high TPG residual, high TPG-specific excess, and non-high reconstruction risk;
-\item \textit{{environment tau candidate}}: high residual burden with high environment cue;
+\item \textit{{clean projection-sensitive candidate}}: high TPG residual, high TPG-specific excess, and non-high reconstruction risk;
+\item \textit{{environment-linked projection candidate}}: high residual burden with high environment cue;
 \item \textit{{TPG divergence follow-up}}: positive TPG-specific excess without enough cleanliness for the first two labels;
 \item \textit{{TPG success control}}: low residual burden where TPG is no worse than MOND/RAR-like baselines.
 \end{{itemize}}
@@ -1201,18 +1298,20 @@ STRESS_ROWS
 \caption{{Screening correlations with the TPG/projection residual burden. These are not causal estimates.}}
 \end{{figure}}
 
-\section{{Required S_tau diagnostic}}
+One covariate in this table, W\_tau\_eff\_abs\_v01, is intentionally treated as an internal diagnostic rather than independent evidence. Its correlation with projection residual burden is very high, and the variable is not allowed to support any validation claim until a leakage audit proves that it is not partly defined from the same residual endpoint. In the present manuscript it is therefore a bookkeeping stress term only.
 
-The extended Tau Core form can be written operationally as
+\section{{Endpoint-conditioned $S_\tau$ diagnostic}}
+
+The descriptive projection-sensitive residual form can be written operationally as
 \[
 F_\tau(a_N,R)=1+S_\tau(R)\,\alpha\ln\left(1+{a_0\over a_N}\right).
 \]
-For each SPARC point with usable baryonic baseline, the required local value is
+For each SPARC point with usable baryonic baseline, the endpoint-conditioned descriptive value is
 \[
 S_{\tau,\mathrm{req}}(R)=
 {V_{\rm obs}(R)/V_N(R)-1\over \alpha\ln\left(1+a_0/a_N(R)\right)}.
 \]
-This is an inverse diagnostic. It uses the measured endpoint and therefore cannot be used as a predictive Tau Core validation. Its role is to ask what kind of future predictive rule would be needed: a galaxy-level constant, a radial function, an acceleration function, or an environment-coupled function.
+This is an inverse residual-absorption diagnostic. It is descriptive and endpoint-conditioned. It uses the measured endpoint and therefore is not a predictive field reconstruction, not independent evidence for a physical theory, and not a validation of the projection ansatz. Its role is only to ask what kind of future predictive rule would be needed: a galaxy-level constant, a radial function, an acceleration function, or an environment-coupled function.
 
 \begin{{figure}}[H]
 \centering
@@ -1239,23 +1338,80 @@ S_TAU_COMPARISON_ROWS
 \caption{{Diagnostic comparison of constant and simple functional $S_\tau$ families. This is not model selection because the measured velocities are used to infer $S_\tau$.}}
 \end{{figure}}
 
-\section{{RMOND and comparator status}}
+\section{{Small-residual controls}}
 
-The requested RMOND comparison is not yet a numeric endpoint in this seed packet. The local TPG--RMOND bridge is useful, but it is not the same object as a frozen pointwise velocity law. Its strongest result is structural compatibility: the tau-projection can preserve the leading SZ20 scalar and vector Lagrangian exponents under a channel-normalised kernel. That is theory motivation, not a direct prediction for $V(R)$.
+The same diagnostic can be read from the opposite direction. The lowest-quartile TPG/projection RMS objects form a small-residual control set of 12 galaxies, with median projection RMS $0.099854397$ and median required $S_\tau=1.126924435$. These objects ask why the TPG/projection baseline can remain close to the measured curve, rather than why it fails.
 
-The local RMOND--MTW hybrid analysis also warns against double counting. At $f_{\rm vec}=0$, the hybrid reproduces pure MTW/TPG exactly, so it is not an independent comparator. At nonzero $f_{\rm vec}$, the vector contribution requires a frozen halo/vector prescription and screening rule before any residual table is meaningful. Treating either option as a completed RMOND residual test would weaken the paper.
+The audit gives a cautious answer. One object is classified as a possible local-capture case, where the local TPG/projection baseline may already absorb the dominant local projection-sensitive structure. Three objects are better described as cases where the broader low-acceleration family tracks the measurement well. The remaining eight small-residual objects still carry unresolved radial or external residual structure. Thus good TPG agreement is useful control context, not validation. These rows must remain paired with the high-residual candidates in any future source-native endpoint test.
 
-The next technical gate is therefore sharper than ``find a CSV'': freeze a unique $V_{\rm RMOND}(R)$ prescription, regenerate a derived pointwise residual table on the same SPARC radii, and only then add RMOND beside TPG/projection, MOND-simple, and RAR-like baselines.
+\section{{Heuristic residual-pattern decomposition}}
+
+The DDO75/Sextans A stress case motivates a compact heuristic decomposition of the unknown residual pattern. This subsection is not a model-building result and is not used as evidence in the present packet. It is included only to state what a future nonleaky predictor might have to separate. In the working form above, the logarithmic low-acceleration kernel is universal, while the remaining factor $S_\tau(R)$ is allowed to carry source and observer dependence:
+\[
+S_\tau(R)=S_0
++\beta_{\rm src}C_{\rm src}(R)
++\beta_{\rm path}C_{\rm path}(D)
++\beta_{\rm proj}C_{\rm proj}(B,R_{\max})
++\beta_{\rm drift}C_{\rm drift}(R).
+\]
+Here $C_{\rm src}$ is source-side radial structure, $C_{\rm path}$ is observer path length or distance, $C_{\rm proj}$ is projection/resolution, and $C_{\rm drift}$ is radial-drift or outer-curve morphology. All four terms are placeholders for future preregistered predictors. None is allowed to use target residuals, required $S_\tau$, or post-hoc endpoint gains as an input.
+
+\section{{RMOND comparator status}}
+
+RMOND is retained only as a roadmap comparator. The current packet does not contain a frozen pointwise $V_{\rm RMOND}(R)$ law, and therefore it does not contain an RMOND residual endpoint. Local bridge notes show theory-level compatibility and also warn about double counting: at $f_{\rm vec}=0$ the hybrid reduces to the TPG/MTW case, while nonzero vector terms require an independently frozen halo/vector prescription. A future version may add RMOND only after a unique velocity law is preregistered and evaluated on the same SPARC radii as TPG/projection, MOND-simple, and RAR-like baselines.
+
+\section{{Post-repair status and next gate}}
+
+After the initial seed construction, one repaired branch, DDO168, was rescored under frozen rules as a ladder-consistency example rather than as a primary endpoint. The repaired DDO168 input layer removes the previous mass-closure caveat and gives a single-object specificity-support result: empirical RAR-like remains the best low-acceleration score, but fixed TPG lies within the frozen tie tolerance of the best low-acceleration baseline, with $\Delta_{\rm TPG-best}=0.001509618$ in RMS-log units. The Newtonian baryonic score is worse than fixed TPG by $0.089064802$, and the inverse required-$S_\tau$ diagnostic remains strongly radial, with Pearson $r=0.927628669$.
+
+This result is useful only in context because it places DDO168 beside visible anchors and controls. DDO126 is a positive fixed-TPG public endpoint, DDO50 is a quiet Newtonian-best control with near-zero required-$S_\tau$, DDO154 is a near-one control/countercontrol, and NGC2366 is a caveated lower-amplitude radial candidate. DDO168 therefore serves as one rung in the candidate ladder, not as a hero object. It is not validation evidence by itself, and it does not select TPG over RAR/MOND as a gravity model.
+
+The next gate is therefore two-track. The paper can now be written as a narrow status or seed paper whose claim is candidate specificity support in context. Any stronger claim requires the already frozen eight-object clean endpoint expansion: DDO154, DDO168, NGC2366, WLM, IC1613, DDO47, DDO50, and DDO126, with auditable component-velocity inputs or frozen reconstructions before running the LOGO TPG/MOND/RAR/radial-$S_\tau$ endpoint.
+
+\section{{Post-external-support status}}
+
+The later external-support branch adds a useful but deliberately limited result. A preregistered external-only screen is directionally positive: the candidate side has larger endpoint burden than the mandatory controls and countercases under the frozen readout. This supports the idea that the residual candidates are not purely random bookkeeping artifacts. However, the same branch remains observability-caveated. Distance, inclination, point count, H\,I resolution, and source visibility remain possible ordinary explanations, and the external branch cannot substitute for accepted baryonic component data.
+
+For this reason, the current Paper 3 claim is bounded as follows. The manuscript may report a coherent candidate-support pattern in residual and external-proxy diagnostics. It may also report that a future external-plus-component readout has been frozen as a nonexecuted contract. It may not claim that a physical theory has been validated, that TPG has been selected over MOND/RAR, or that the missing source-native component endpoint has been satisfied.
+
+The frozen combined contract compares three future predictors only after accepted component inputs pass intake: an external-only predictor, a component-only predictor, and an external-plus-component predictor. Endpoint outputs and diagnostics such as Vobs residuals, FunctionGain, ProjectionRMS\_TPG, and required $S_\tau$ are forbidden as predictor inputs. This keeps the validation route alive without allowing endpoint-driven retuning.
+
+\section{{Anchor/control rotation curves}}
+
+Figure~\ref{{fig:anchor-control-rotation}} shows the two most important current visual endpoints. DDO126 is the positive public-only anchor candidate, and DDO50 is the required control. The panels are diagnostic visualizations of the frozen candidate/control ladder. They are not independent validation and they do not replace the component-input gate.
+
+\begin{{figure}}[ht]
+\centering
+\includegraphics[width=0.94\linewidth]{{figures/paper3_anchor_control_rotation_curves.pdf}}
+\caption{{Anchor/control rotation-curve diagnostics. Top panels compare observed rotation speeds with the frozen Newtonian baryonic, MOND-simple, empirical RAR-like, and fixed-TPG curves. Bottom panels show the fixed-TPG log residual and the inverse required-$S_\tau$ diagnostic. The figure is a visual check on the candidate/control ladder, not a validation endpoint.}}
+\label{{fig:anchor-control-rotation}}
+\end{{figure}}
+
+\section{{Current candidate-ladder status}}
+
+The later DDO126/DDO50 and held-out readiness audits sharpen the current claim boundary. The manuscript can report a reproducible candidate ladder, not a validation result. DDO126 is the strongest public-only positive anchor candidate in the present packet, while DDO50 is the required control branch. WLM is retained as a geometry/observability stress context. NGC2366 remains caveated radial support and must be reported with DDO154 as its countercontrol. IC1613 and DDO47 remain sensitivity and failure-mode objects until their stellar or component-input blockers are repaired.
+
+This status does not add a new endpoint score. It is a claim-control layer. The input watchlist defines what would be needed for a future upgrade: schema-clean component intake for DDO126/DDO50, or a broader component-confirmed held-out pool. Any new file must pass provenance, column-schema, unit/radius, geometry/systematics, and control-visibility checks before model scores are rerun.
+
+Therefore the current paper-level claim remains deliberately narrow. The result is not a physical validation, not gravity-model selection, and not evidence that the residual pattern is unique to a projection-sensitive interpretation. Additional scoring without new accepted component or stellar inputs is not a claim-upgrade path.
+
+\section{{Predictive validation gate}}
+
+The present manuscript is intentionally weaker than a validation paper. It defines where a projection-sensitive residual signal might be looked for, but it does not yet supply a predictive residual-pattern rule. A validation-oriented version must pass a stricter gate before any discovery language is appropriate.
+
+First, the residual-pattern rule must be frozen before reading the endpoint residuals. The rule may use source-side structure, distance or line-of-sight information, projection/observability quantities, and preregistered radial-shape information, but it may not use Vobs residuals, FunctionGain, ProjectionRMS\_TPG, or the inverse required-$S_\tau$ diagnostic as predictor inputs. Second, the rule must be evaluated on a predeclared clean candidate/control set, including both positive anchors and controls. Third, the result must improve the frozen endpoint relative to TPG/projection, MOND-simple, and empirical RAR-like baselines, not merely reproduce a generic low-acceleration ordering. Fourth, the improvement must survive the ordinary observability nulls: distance, inclination, point count, beam smearing, H\,I resolution, and non-circular motion.
+
+This predictive gate is the main upgrade path from a seed paper to a validation paper. In practical terms, the next claim-raising experiment is: freeze a predictive projection-sensitive residual rule, then test whether it improves the predeclared clean candidate/control set beyond TPG/projection, MOND-simple, and RAR-like baselines. Until that experiment is passed, the correct status is candidate-support methodology rather than physical evidence.
 
 \section{{Interpretation}}
 
-The most useful interpretation is modest. TPG success controls show where the local projection baseline is already adequate. TPG divergence follow-ups show where the residual has structure that might encode missing observer/environment weights, but these are exactly the cases where ordinary systematics can also enter. A candidate becomes interesting only when three facts hold together: the TPG residual diverges in a structured radial way, the divergence is not shared by all low-acceleration baselines, and the object has a plausible Tau Core weighting channel that is not reducible to distance, inclination, beam smearing, or non-circular motion.
+The most useful interpretation is modest. TPG success controls show where the local projection baseline is already adequate. TPG divergence follow-ups show where the residual has structure that might encode missing observer/environment-sensitive information, but these are exactly the cases where ordinary systematics can also enter. A candidate becomes interesting only when three facts hold together: the TPG residual diverges in a structured radial way, the divergence is not shared by all low-acceleration baselines, and the object has a plausible projection-sensitive residual pattern that is not reducible to distance, inclination, beam smearing, or non-circular motion.
 
 \section{{Conclusion}}
 
-This seed opens Paper 3 as a reproducible candidate-search project. It carries forward the discipline learned from Papers 1 and 2: freeze the endpoint, compare against MOND/RAR baselines, name the systematics, and avoid promoting a diagnostic pattern into a physical proof. The current evidence is enough to define targets for Tau Core follow-up, especially TPG-divergence galaxies and TPG-success controls, but it is not enough to claim a detected Tau Core field.
+This seed opens Paper 3 as a reproducible candidate-search project. It carries forward the discipline learned from Papers 1 and 2: freeze the endpoint, compare against MOND/RAR baselines, name the systematics, and avoid promoting a diagnostic pattern into physical evidence. The repaired DDO168 branch, the later external-support branch, and the DDO126/DDO50 candidate-ladder lock strengthen the candidate-specificity story in context, but the current evidence is still not enough to claim a detected physical field.
 
-The next paper-grade step is a frozen RMOND residual table plus a held-out environment/line-of-sight validation rule. Only after that can the paper ask whether the residual candidates are truly Tau Core-specific rather than ordinary low-acceleration or H\,I-systematics behavior.
+The next paper-grade step is the eight-object clean endpoint expansion, with source-native component tables or frozen public reconstructions wherever source-native tables are unavailable. The immediate action is therefore write-or-wait: update the manuscript with candidate-support language, or wait for source-native component input and run the intake gate. A frozen RMOND residual table and a held-out environment/line-of-sight validation rule remain important parallel upgrades. Only after those gates can the paper ask whether the residual candidates are truly projection-sensitive rather than ordinary low-acceleration or H\,I-systematics behavior.
 
 \bibliographystyle{{plain}}
 \bibliography{{references}}
@@ -1499,6 +1655,7 @@ def main() -> None:
 
     make_figures(candidates, stress)
     make_s_tau_figures(s_tau_summary, s_tau_comparison)
+    make_rotation_curve_figure()
     write_references()
     write_main_tex(shortlist, stress, s_tau_comparison)
     build_arxiv_zip()

@@ -9,3 +9,5 @@ __pycache__/
 *.fls
 *.fdb_latexmk
 paper3_submission_source/tectonic_build.log
+local_data/
+outputs/
