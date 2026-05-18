@@ -1306,12 +1306,12 @@ The descriptive projection-sensitive residual form can be written operationally 
 \[
 F_\tau(a_N,R)=1+S_\tau(R)\,\alpha\ln\left(1+{a_0\over a_N}\right).
 \]
-For each SPARC point with usable baryonic baseline, the endpoint-conditioned descriptive value is
+In this section we do not fit a new model. We algebraically invert this expression after substituting the observed-to-baryonic velocity ratio at each radius. For each SPARC point with a usable baryonic baseline, the endpoint-conditioned descriptive value is therefore
 \[
 S_{\tau,\mathrm{req}}(R)=
 {V_{\rm obs}(R)/V_N(R)-1\over \alpha\ln\left(1+a_0/a_N(R)\right)}.
 \]
-This is an inverse residual-absorption diagnostic. It is descriptive and endpoint-conditioned. It uses the measured endpoint and therefore is not a predictive field reconstruction, not independent evidence for a physical theory, and not a validation of the projection ansatz. Its role is only to ask what kind of future predictive rule would be needed: a galaxy-level constant, a radial function, an acceleration function, or an environment-coupled function.
+Here $S_{{\tau,\mathrm{{req}}}}$ is the value that would be required for the operational form above to absorb the local residual. This is an inverse residual-absorption diagnostic. It is descriptive and endpoint-conditioned. It uses the measured endpoint and therefore is not a predictive field reconstruction, not independent evidence for a physical theory, and not a validation of the projection ansatz. Its role is only to ask what kind of future predictive rule would be needed: a galaxy-level constant, a radial function, an acceleration function, or an environment-coupled function.
 
 \begin{{figure}}[H]
 \centering
