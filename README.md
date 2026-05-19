@@ -8,6 +8,12 @@ The manuscript is an exploratory candidate-methodology preprint. It defines a re
 
 The package intentionally does **not** claim a new-gravity detection, model selection, or physical validation of the TPG/projection baseline. In this repository, `TPG/projection` is a frozen operational residual baseline retained as a historical label, not a validated gravity model.
 
+## Author And Research Workflow
+
+I am an independent researcher using an AI-assisted workflow to develop reproducible diagnostic tests around projection-sensitive residual hypotheses. I am not claiming expert-level validation. I would value criticism on whether the proposed gate/falsification structure is scientifically meaningful.
+
+AI systems are used for drafting, mathematical organization, code generation, literature triage, and internal consistency checks. Numerical and symbolic audits can support reproducibility and error-finding, but they do not replace independent expert review or physical validation.
+
 ## Theory Context
 
 The broader Tau Core / projection-theory background is maintained separately at:
