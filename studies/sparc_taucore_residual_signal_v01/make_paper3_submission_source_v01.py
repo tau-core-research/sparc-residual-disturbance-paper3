@@ -11,7 +11,7 @@ import shutil
 import subprocess
 from pathlib import Path
 from statistics import median
-from zipfile import ZIP_DEFLATED, ZipFile
+from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 
 import matplotlib.pyplot as plt
 
@@ -821,6 +821,7 @@ def make_figures(rows: list[dict[str, object]], stress: list[dict[str, object]])
             "axes.labelsize": 10,
             "legend.fontsize": 9,
             "figure.dpi": 160,
+            "svg.hashsalt": "paper3_submission_v01",
         }
     )
 
@@ -1027,8 +1028,8 @@ def make_rotation_curve_figure() -> None:
 def save_figure(fig: plt.Figure, stem: str) -> None:
     pdf = SOURCE_FIGURES / f"{stem}.pdf"
     svg = PUBLIC_FIGURES / f"{stem}.svg"
-    fig.savefig(pdf)
-    fig.savefig(svg)
+    fig.savefig(pdf, metadata={"CreationDate": None, "ModDate": None})
+    fig.savefig(svg, metadata={"Date": None})
     plt.close(fig)
 
 
@@ -1501,10 +1502,17 @@ def build_arxiv_zip() -> None:
     if ARXIV_ZIP.exists():
         ARXIV_ZIP.unlink()
     with ZipFile(ARXIV_ZIP, "w", compression=ZIP_DEFLATED) as zf:
-        zf.write(SOURCE / "main.tex", "main.tex")
-        zf.write(SOURCE / "references.bib", "references.bib")
+        write_zip_entry(zf, SOURCE / "main.tex", "main.tex")
+        write_zip_entry(zf, SOURCE / "references.bib", "references.bib")
         for figure in sorted(SOURCE_FIGURES.glob("*.pdf")):
-            zf.write(figure, f"figures/{figure.name}")
+            write_zip_entry(zf, figure, f"figures/{figure.name}")
+
+
+def write_zip_entry(zf: ZipFile, path: Path, arcname: str) -> None:
+    info = ZipInfo(arcname)
+    info.date_time = (2026, 5, 19, 0, 0, 0)
+    info.compress_type = ZIP_DEFLATED
+    zf.writestr(info, path.read_bytes())
 
 
 def main() -> None:
