@@ -1212,6 +1212,8 @@ The permitted claim is that this packet defines a reproducible candidate-selecti
 
 The packet inherits derived SPARC residual artifacts from the Paper 1 and Paper 2 public packages. Raw SPARC rotmod files and raw H\,I survey products are not redistributed. The retained derived tables include pointwise absolute residuals for TPG/projection, MOND-simple, and empirical RAR-like families; galaxy-level residual features; distance, observability, and environment summaries; and small radial-pilot control summaries.
 
+The full Paper 3 reproducibility package, including the candidate/control tables, figures, regeneration script, compiled PDF, and arXiv source package, is archived at \href{{https://doi.org/10.5281/zenodo.20285908}}{{\nolinkurl{{doi:10.5281/zenodo.20285908}}}}. The package can be regenerated with the commands listed in the repository README.
+
 The main residual quantity is
 \[
 r_{{m,gi}}=\left|\log V_{{\rm obs},gi}-\log V_{{m,gi}}\right|,

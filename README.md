@@ -4,6 +4,8 @@ This repository is the public reproducibility package for:
 
 **A reproducible candidate framework for projection-sensitive residual structure in SPARC rotation curves**
 
+Archived reproducibility package DOI: [10.5281/zenodo.20285908](https://doi.org/10.5281/zenodo.20285908)
+
 The manuscript is an exploratory candidate-methodology preprint. It defines a reproducible framework for comparing fixed SPARC residual diagnostics, selecting candidate and control objects, and specifying the predictive validation gate needed before any stronger physical claim can be made.
 
 The package intentionally does **not** claim a new-gravity detection, model selection, or physical validation of the TPG/projection baseline. In this repository, `TPG/projection` is a frozen operational residual baseline retained as a historical label, not a validated gravity model.

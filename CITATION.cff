@@ -5,7 +5,8 @@ type: software
 authors:
   - family-names: Olcsak
     given-names: Jozsef
+doi: "10.5281/zenodo.20285908"
 repository-code: "https://github.com/tau-core-research/sparc-residual-disturbance-paper3"
-date-released: "2026-05-16"
+date-released: "2026-05-19"
 license: "MIT"
 abstract: "Slim reproducibility package for a cautious Paper 3 seed manuscript searching for Tau Core-compatible residual signal candidates in SPARC rotation-curve residual structure."
