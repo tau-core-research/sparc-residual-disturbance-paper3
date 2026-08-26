@@ -26,6 +26,12 @@ https://github.com/tau-core-research/tau-core-theory
 
 This Paper 3 repository is a standalone reproducibility package. It does not require accepting the Tau Core theory hub; the manuscript should be read as an exploratory candidate/control framework with a predictive validation gate.
 
+The inverse required-`S_tau` curves are treated as effective terminal
+discrepancies, not as unique reconstructions of gravity, time distortion,
+spatial distortion, or a full observer-source coframe. The full-4D Tau branch
+does not alter the frozen candidate ladder; it can become a new endpoint only
+after a nonzero radial coframe law is fixed without rotation-residual input.
+
 ## Repository contents
 
 ```text
@@ -40,6 +46,13 @@ arxiv_submission_source.zip                       arXiv-ready source package
 ```
 
 Raw SPARC, LITTLE THINGS, or other survey data are not redistributed here. The repository contains only derived tables and paper artifacts needed to regenerate the manuscript package.
+
+## Full-4D Score Boundary
+
+The candidate ladder does not supply the source-frozen standard excess
+`E_K = (K_HH - K_std) - C K_VV^-1 C^dagger` or its co-registered terminal
+packet. Existing candidate scores remain unchanged and cannot be promoted to
+a physical full-4D Tau score.
 
 ## Reproduce
 
