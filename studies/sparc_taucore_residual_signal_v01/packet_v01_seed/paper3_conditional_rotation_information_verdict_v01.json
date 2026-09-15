@@ -1,0 +1,25 @@
+{
+  "class_counts": {
+    "A": 17,
+    "C": 28
+  },
+  "full_baseline_auc_at_C_0p3": 0.8739495798319328,
+  "generic_projection_increment_stable_all_baselines_and_regularizations": false,
+  "guardrail": "retrospective_conditional_audit_not_tau_validation_not_independent_replication",
+  "interpretation": "The frozen residual association remains an unconditional prevalidation result. In this frozen A/C packet, the declared projection contrast does not supply a stable positive increment beyond observability, baryonic source summaries, and the MOND/RAR-common residual block. This is not a test of all projection-sensitive rotation information or of Tau Core.",
+  "n_galaxies": 45,
+  "permutation_escalation_reason": "The predeclared directional proper-score gate failed; a one-sided positive-increment permutation claim was therefore not opened.",
+  "permutation_escalation_run": false,
+  "primary_unique_projection_delta_auc": -0.018907563025210017,
+  "primary_unique_projection_delta_brier_improvement": -0.01188683121184489,
+  "primary_unique_projection_delta_log_loss_improvement": -0.03994320610764324,
+  "projection_contrast_increment_pass_all_baselines_and_regularizations": false,
+  "remaining_blockers": [
+    "A/C labels are not an independent survey-level replication endpoint.",
+    "Label evidence and rotation data share a broad H I/kinematic observational ecosystem.",
+    "The 45-galaxy sample is too small for a universal conditional-information claim.",
+    "A new source-frozen external matched-tracer cohort is required.",
+    "The public 17-galaxy Levy KSS is kinematically selected and can serve only as a conditioned replication or stress packet, not as an independent blind endpoint."
+  ],
+  "status": "RETROSPECTIVE_PROJECTION_CONTRAST_INCREMENT_FAIL_IN_FROZEN_AC_PACKET"
+}

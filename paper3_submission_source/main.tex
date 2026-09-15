@@ -9,13 +9,13 @@
 
 \title{A reproducible candidate framework for projection-sensitive residual structure in SPARC rotation curves}
 \author{Jozsef Olcsak}
-\date{2026\\Last revised: 26 August 2026}
+\date{2026\\Last revised: 30 August 2026}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-Paper 1 found that externally reviewed structural disturbance is associated with larger low-acceleration residual scatter in SPARC. Paper 2 reversed the question and showed that fixed residual-shape features can recover those A/C labels better than chance, while remaining explicitly non-unique with respect to MOND-simple and empirical RAR-like baselines. This Paper 3 seed asks a narrower follow-up question: where do TPG/projection residuals, MOND-simple residuals, RAR-like residuals, and measured rotation curves point to reproducible projection-sensitive residual candidates? The current packet identifies candidate galaxies, radial onset categories, environment/observability stress channels, and a frozen candidate/control ladder anchored by DDO126 and DDO50. It is a positive candidate-support methodology and registry paper: it turns the Paper 1--2 residual association into a concrete, auditable target list for the next predictive test. It does not validate a physical theory, does not numerically test RMOND, and does not claim gravity-model selection.
+Paper 1 found that externally reviewed structural disturbance is associated with larger low-acceleration residual scatter in SPARC. Paper 2 reversed the question and showed that fixed residual-shape features can recover those A/C labels better than chance, while remaining explicitly non-unique with respect to MOND-simple and empirical RAR-like baselines. This Paper 3 seed asks a narrower follow-up question: where do TPG/projection residuals, MOND-simple residuals, RAR-like residuals, and measured rotation curves point to reproducible projection-sensitive residual candidates? The packet identifies candidate galaxies, radial onset categories, environment/observability stress channels, and a frozen candidate/control ladder anchored by DDO126 and DDO50. A retrospective fixed-packet audit gives one narrow negative result: after a source-only observability and baryonic baseline and the MOND/RAR-common residual descriptor are supplied, the declared projection contrast worsens cross-fitted proper scores under both baselines and all fixed regularization strengths. The unconditioned projection block is itself not stable across that grid. Later EDGE--CALIFA, LITTLE THINGS, and PHANGS routes fail external promotion through negative, mixed, non-specific, source-integrity, or support-gate outcomes. These results constrain their declared finite morphology representations; they neither establish a source-complete body falsification nor permit post-open repair. The paper therefore remains a candidate registry and falsification framework, not conditional-information evidence, physical validation, or gravity-model selection.
 \end{abstract}
 
 \section{Purpose and claim boundary}
@@ -208,7 +208,7 @@ After the initial seed construction, one repaired branch, DDO168, was rescored u
 
 This result is useful because it places DDO168 beside visible anchors and controls rather than treating it as an isolated success. DDO126 is a positive fixed-TPG public endpoint, DDO50 is a quiet Newtonian-best control with near-zero required-$S_\tau$, DDO154 is a near-one control/countercontrol, and NGC2366 is a caveated lower-amplitude radial candidate. DDO168 therefore strengthens the candidate ladder as a specificity-support example. It is not validation evidence by itself, and it does not select TPG over RAR/MOND as a gravity model.
 
-The next gate is therefore two-track. The paper can now be written as a narrow status or seed paper whose claim is candidate specificity support in context. Any stronger claim requires the already frozen eight-object clean endpoint expansion: DDO154, DDO168, NGC2366, WLM, IC1613, DDO47, DDO50, and DDO126, with auditable component-velocity inputs or frozen reconstructions before running the LOGO TPG/MOND/RAR/radial-$S_\tau$ endpoint.
+The paper can now be written as a narrow candidate-registry paper with a frozen local negative result for the declared projection contrast. The eight-object clean endpoint remains a complementary candidate/control branch, but another rescore of the same labels cannot raise the claim. A stronger result requires a source-frozen external matched-tracer endpoint with an explicit common velocity convention and without treating a kinematically selected cohort as independent blind validation.
 
 \section{Post-external-support status}
 
@@ -235,27 +235,96 @@ The later DDO126/DDO50 and held-out readiness audits sharpen the current claim b
 
 This status does not add a new endpoint score. It is a claim-control layer. The input watchlist defines what would be needed for a future upgrade: schema-clean component intake for DDO126/DDO50, or a broader component-confirmed held-out pool. Any new file must pass provenance, column-schema, unit/radius, geometry/systematics, and control-visibility checks before model scores are rerun.
 
-Therefore the current paper-level claim is bounded but nontrivial. The packet establishes a reproducible projection-sensitive candidate/control ladder and freezes the component-intake route required to test it. The result is not a physical validation, not gravity-model selection, and not evidence that the residual pattern is unique to a projection-sensitive interpretation. Additional scoring without new accepted component or stellar inputs is not a claim-upgrade path.
+Therefore the current paper-level claim is bounded but nontrivial. The packet records a reproducible operational candidate/control ladder and freezes the component-intake route required to test it. The result is not a physical validation, not gravity-model selection, and not evidence that the residual pattern is unique to a projection-sensitive interpretation. Additional scoring without new accepted component, stellar, or external matched-tracer inputs is not a claim-upgrade path.
 
 The inverse required-$S_\tau$ and related correction curves are effective terminal discrepancies.  They do not uniquely reconstruct a force law, a clock distortion, a spatial-metric distortion, or a full observer-source coframe.  The later companion full-4D descent therefore changes the interpretation but not the numerical candidate ladder: a new 4D endpoint may be scored only after a radial relative coframe and its photon-transfer map are derived and frozen independently of the target residual.  The exact inherited score must use the complete standard excess $E_K=(K_{HH}-K_{\rm std})-CK_{VV}^{-1}C^\dagger$, not the positive Schur term alone, and must retain the full covariance of all jointly scored terminal images.  The present candidate ladder supplies none of those frozen physical inputs.
 
+\section{Retrospective projection-contrast audit}
+
+The original residual association is an unconditional prevalidation result. We therefore added a stricter retrospective audit on the same frozen 45-galaxy A/C sample. The baseline contains seven endpoint-free observability variables: distance, fractional distance error, inclination, inclination error, point count, mean velocity uncertainty, and angular radial coverage. A second baseline adds seven source-side baryonic or morphology summaries derived from the public SPARC component tables without using $V_{\rm obs}$: Hubble type, median baryonic speed, gas and bulge fractions, median disk surface brightness, and two radial-shape ratios. Every raw component file is represented by a SHA-256 hash in the derived source packet.
+
+For each residual family we use the same five-dimensional block: RMS, outer/inner ratio, radius correlation, low-acceleration mean, and fraction above the fixed 0.15 threshold. Predictions are produced by repeated stratified five-fold cross-validation. Three regularization strengths, $C\in\{0.03,0.3,3\}$, are reported without selecting the best one. The key specificity comparison first supplies the MOND/RAR-common descriptor
+\[
+Z_{\rm std}={1\over2}(Z_{\rm MOND}+Z_{\rm RAR})
+\]
+and then asks whether the projection contrast
+\[
+Z_{\rm proj\perp}=Z_{\rm projection}-Z_{\rm std}
+\]
+improves held-out prediction. This is an operational de-overlap test: naming three residual families does not make them independent information channels.
+
+At $C=0.3$, the observability-plus-baryonic baseline has cross-fitted AUC 0.874. Adding $Z_{\rm proj\perp}$ after $Z_{\rm std}$ changes AUC by -0.019, changes log-loss improvement by -0.040, and changes Brier improvement by -0.012, where positive proper-score differences would favor the enlarged model. Both proper scores therefore worsen. More importantly, the declared contrast comparison worsens both proper scores under both baselines and all three fixed regularization strengths. The generic projection block shows a small improvement only under the strongest shrinkage and fails stability across the grid. Because the directional gate failed, no one-sided positive-increment permutation claim was opened. The packet verdict is therefore a failure of the declared projection-contrast increment in this frozen A/C packet, not a universal no-information verdict.
+
+This audit does not prove that rotation residuals contain no additional information. It shows only that the declared projection contrast does not isolate a stable positive increment in this 45-galaxy label experiment once the source/observability packet and common MOND/RAR residual structure are retained. The generic projection block has positive proper-score increments at the strongest shrinkage, so the result cannot be promoted to an absence claim for projection information in general. The A/C labels also remain within the same broad H\,I/kinematic observational ecosystem and are not an independent survey-level replication.
+
+A later Paper 8 endpoint completed the source-frozen EDGE--CALIFA route using seven untouched confirmatory galaxies after source-only development. The matched-minus-wrong contrast was $\overline D=-0.0586793$, with median $+0.110202$, four of seven positive galaxies, and exact one-sided $p=0.6015625$. All declared max-$T$ controls also failed. An independent implementation rebuilt all 140 terminal coefficients from the common-grid database \cite{Wong2024EDGEDatabase} to a maximum absolute difference of $3.553\times10^{-15}\,{\rm km\,s^{-1}}$. This is a reproducible negative for the declared morphology-alignment proxy, not an independent Tau-specific test or a direct reproduction of the published 17-galaxy kinematic subsample \cite{Levy2018EDGEKinematics}.
+
+The subsequent public-data ladder remains non-promotable. LITTLE THINGS \cite{Oh2015LITTLETHINGS} transfers one frozen scale-tail family to 14 galaxies and 313 points; it improves mean RMSE over TPG/v6 by only $0.101\,{\rm km\,s^{-1}}$ and is $0.649\,{\rm km\,s^{-1}}$ worse than MOND. In PHANGS \cite{Lang2020PHANGSKinematics,Emsellem2022PHANGSMUSE,Querejeta2021PHANGSStructures}, a three-galaxy low-order differential route is null ($p=0.8082$); a two-galaxy $m=2$ route is non-specific because its $m=1$ control is also non-null and the source-label audit fails; and a four-galaxy radial-body confirmation stops at its predeclared 12-sector occupancy gate before any score is released. NGC4254 retains an internally controlled source-coordinate candidate, but a free terminal gain exactly saturates the scalar endpoint and the primitive gain remains non-identifiable.
+
 \section{Predictive validation gate}
 
-The present manuscript is not a validation paper, but it does more than list curiosities. It defines where a projection-sensitive residual signal should be looked for, which controls must travel with the candidates, and what predictor inputs are forbidden. It does not yet supply a predictive residual-pattern rule. A validation-oriented version must pass a stricter gate before any discovery language is appropriate.
+The present manuscript is not a validation paper, but it does more than list curiosities. It defines where a projection-sensitive residual signal should be looked for, which controls must travel with the candidates, and what predictor inputs are forbidden. The retrospective audit above is not the missing prospective rule and it failed only the declared contrast-increment gate in the frozen A/C packet. A validation-oriented version must pass a stricter independent gate before any discovery language is appropriate.
 
 First, the residual-pattern rule must be frozen before reading the endpoint residuals. The rule may use source-side structure, distance or line-of-sight information, projection/observability quantities, and preregistered radial-shape information, but it may not use Vobs residuals, FunctionGain, ProjectionRMS\_TPG, or the inverse required-$S_\tau$ diagnostic as predictor inputs. Second, the rule must be evaluated on a predeclared clean candidate/control set, including both positive anchors and controls. Third, the result must improve the frozen endpoint relative to TPG/projection, MOND-simple, and empirical RAR-like baselines, not merely reproduce a generic low-acceleration ordering. Fourth, the improvement must survive the ordinary observability nulls: distance, inclination, point count, beam smearing, H\,I resolution, and non-circular motion.
 
 This predictive gate is the main upgrade path from a seed paper to a validation paper. In practical terms, the next claim-raising experiment is: freeze a predictive projection-sensitive residual rule, then test whether it improves the predeclared clean candidate/control set beyond TPG/projection, MOND-simple, and RAR-like baselines. Until that experiment is passed, the correct status is candidate-support methodology rather than physical evidence.
 
+The morphology representation itself is now part of that freeze. Let $\Phi_k$ be the finite source record and $T_k$ the complete body--channel--observer-resolution--terminal map. A terminal rule can factor as $T_k=f_k\circ\Phi_k$ only if $T_k$ is constant on every $\Phi_k$ fibre. A failure can therefore expose an imprecise or lossy $\Phi_k$ without falsifying every richer body representation. This qualification has a strict anti-leakage partner: after endpoint $y$ is known, adding $y$ to the source span forces its projected residual to zero. Accordingly, a refined $\Phi_{k+1}$ must be derived from source-only information and tested on a new untouched packet; the opened SPARC, EDGE--CALIFA, LITTLE THINGS, and PHANGS packets cannot be repaired into confirmation.
+
 \section{Interpretation}
 
 The most useful interpretation is modest. TPG success controls show where the local projection baseline is already adequate. TPG divergence follow-ups show where the residual has structure that might encode missing observer/environment-sensitive information, but these are exactly the cases where ordinary systematics can also enter. A candidate becomes interesting only when three facts hold together: the TPG residual diverges in a structured radial way, the divergence is not shared by all low-acceleration baselines, and the object has a plausible projection-sensitive residual pattern that is not reducible to distance, inclination, beam smearing, or non-circular motion.
 
+% BEGIN OBSERVER UPDATE 20260914
+\section{Observer realization: inherited results and physical boundary}
+\label{sec:observer-update-20260914}
+The current observer programme distinguishes a conditional mathematical
+construction from an occupied physical measuring system. The source order
+remains base plus one universal seed, stabilized morphological response,
+observer--source restriction, shared descriptor, and resolved terminal
+readouts. Neither a detector nor an empirical residual constructs the parent
+body backwards. Dynamics below concern downstream subsystems only.
+
+The canonical observer-origin derivation, Sections 22--26, owns the following
+results. The existing joint source action fixes static and frequency-dependent
+response together. Variation of the BRAC potential couples to the field
+square; a linear field coupling is a distinct comparator unless derived by
+expansion about an occupied background. Fixed canonical means select a unique
+coherent state in a finite positive harmonic packet only if there is no excess
+fluctuation energy. This is a free/asymptotic preparation statement, not the
+ground state of an interacting detector. For the existing coupled harmonic
+pair, the joint ground is pure but either local subsystem is mixed, with its
+covariance fixed by the complete joint Hamiltonian.
+
+These are conditional derivations and internal numerical checks. The actual
+observer--source context, physical preparation process, kinetic/energy
+calibration and stable operational resolution remain unproved. The existing
+ORA-T1 selector conditionally chooses stable quantizers when the occupied
+context, admissible partition family and positive closure barrier are supplied;
+it does not establish those physical premises. A computed ground state is not
+a preparation mechanism, and a covariance or optimal abstract measurement is
+not an implemented stable quantizer $Q_{OS}$.
+
+\paragraph{Ownership and use.}
+The central observer-origin note owns the new contact, state and covariance
+derivations; the body-readout technical companion carries the consolidated
+mathematics. Foundation Papers IV, V and VI retain physical-selection,
+clock-descent and quantum-readout ownership, respectively. This paper imports
+only the consequences within its scope. No observational dataset, baseline,
+frozen coefficient, score or empirical conclusion is revised by this update.
+The reproducibility supplement records the source hashes and the exact
+conditional/physical distinction.
+
+
+\paragraph{Consequence for this paper.}
+For galactic inference, these observer constructions do not derive a rotation-curve correction or identify a measured residual as a parent effect. Existing endpoint freezes and scores are unchanged.
+% END OBSERVER UPDATE 20260914
+
 \section{Conclusion}
 
-This paper establishes a reproducible candidate-search framework rather than merely proposing one. It carries forward the discipline learned from Papers 1 and 2: freeze the endpoint, compare against MOND/RAR baselines, name the systematics, and avoid promoting a diagnostic pattern into physical evidence. The repaired DDO168 branch, the external-support branch, and the DDO126/DDO50 candidate-ladder lock strengthen the candidate-specificity story in context: the residual candidates are now organized into a falsifiable target set with controls and blockers. The current evidence is still not enough to claim a detected physical field.
+This paper establishes a reproducible candidate-search framework rather than merely proposing one. It carries forward the discipline learned from Papers 1 and 2: freeze the endpoint, compare against MOND/RAR baselines, name the systematics, and avoid promoting a diagnostic pattern into physical evidence. The repaired DDO168 branch, the external-support branch, and the DDO126/DDO50 candidate-ladder lock organize the residual candidates into a falsifiable target set. The retrospective audit adds a narrow negative result: the declared projection contrast supplies no stable positive predictive increment in the frozen 45-galaxy A/C packet. It does not establish that all projection-sensitive rotation information is absent.
 
-The next paper-grade step is the eight-object clean endpoint expansion, with source-native component tables or frozen public reconstructions wherever source-native tables are unavailable. The immediate action is therefore write-or-wait: update the manuscript with candidate-support language, or wait for source-native component input and run the intake gate. A frozen RMOND residual table and a held-out environment/line-of-sight validation rule remain important parallel upgrades. Only after those gates can the paper ask whether the residual candidates are truly projection-sensitive rather than ordinary low-acceleration or H\,I-systematics behavior.
+The EDGE--CALIFA, LITTLE THINGS and PHANGS continuations have now been run far enough to show that none raises the claim under its frozen gate. The next claim-raising step is therefore not a re-analysis of those opened packets. It is a source-frozen, signed, unit-calibrated forward prediction from a richer endpoint-blind morphology representation, evaluated in a new independent survey or release with a complete standard comparator and predefined observability controls. Only after that gate can the paper ask whether the residual candidates are truly projection-sensitive rather than ordinary low-acceleration or H\,I-systematics behavior.
 
 \bibliographystyle{plain}
 \bibliography{references}

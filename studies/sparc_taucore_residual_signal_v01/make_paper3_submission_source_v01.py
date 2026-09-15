@@ -57,10 +57,19 @@ def read_csv(path: Path) -> list[dict[str, str]]:
         return list(csv.DictReader(handle))
 
 
-def write_csv(path: Path, rows: list[dict[str, object]], fieldnames: list[str]) -> None:
+def write_csv(
+    path: Path,
+    rows: list[dict[str, object]],
+    fieldnames: list[str],
+    *,
+    lineterminator: str | None = None,
+) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer_kwargs = {}
+        if lineterminator is not None:
+            writer_kwargs["lineterminator"] = lineterminator
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, **writer_kwargs)
         writer.writeheader()
         for row in rows:
             writer.writerow({field: row.get(field, "") for field in fieldnames})
@@ -679,10 +688,10 @@ def next_gate_rows() -> list[dict[str, object]]:
         },
         {
             "Priority": "P2",
-            "Gate": "Tau-specific candidate retest",
-            "Action": "Rerun candidate classes after adding RMOND side-by-side with TPG, MOND-simple, and RAR-like baselines.",
-            "PassCondition": "Tau candidates retain structured excess not shared by MOND/RAR/RMOND and not explained by observability proxies.",
-            "FailCondition": "Candidate excess collapses into RMOND/MOND/RAR or systematics.",
+            "Gate": "new source-family morphology-representation freeze",
+            "Action": "Derive a richer finite morphology representation, observer-source resolution, signed terminal law, units, and complete standard comparator from source-only data, then freeze them before opening a new independent survey or release.",
+            "PassCondition": "The representation is endpoint-blind, its terminal map is fibre-sufficient on the declared model class, and an untouched N>=15 packet is scored without galaxy-level retuning.",
+            "FailCondition": "Same-packet EDGE/PHANGS/SPARC repair, endpoint-informed feature addition, or a freely fitted terminal gain.",
             "Guardrail": GUARDRAIL,
         },
     ]
@@ -733,6 +742,42 @@ def literature_map() -> list[dict[str, object]]:
             "URL": "https://arxiv.org/abs/astro-ph/9704274",
         },
         {
+            "Theme": "EDGE-CALIFA matched-tracer kinematics",
+            "CitationKey": "Levy2018EDGEKinematics",
+            "UseInPaper3": "Defines the exact 17-galaxy kinematically selected CO/Halpha cohort and the published 6-arcsec rotation-curve comparison used as a conditioned replication control.",
+            "URL": "https://arxiv.org/abs/1804.05853",
+        },
+        {
+            "Theme": "EDGE-CALIFA public common-grid database",
+            "CitationKey": "Wong2024EDGEDatabase",
+            "UseInPaper3": "Provides the public 7-arcsec common-grid packet used by the later source-frozen seven-galaxy negative morphology-proxy endpoint.",
+            "URL": "https://arxiv.org/abs/2401.13181",
+        },
+        {
+            "Theme": "LITTLE THINGS mass models",
+            "CitationKey": "Oh2015LITTLETHINGS",
+            "UseInPaper3": "Provides the external dwarf-galaxy mass models used by the later one-family transfer stress test.",
+            "URL": "https://doi.org/10.1088/0004-6256/149/6/180",
+        },
+        {
+            "Theme": "PHANGS molecular kinematics",
+            "CitationKey": "Lang2020PHANGSKinematics",
+            "UseInPaper3": "Provides the resolved CO kinematic source family used in later low-order and radial-body proxy tests.",
+            "URL": "https://arxiv.org/abs/2005.11709",
+        },
+        {
+            "Theme": "PHANGS MUSE ionized-gas maps",
+            "CitationKey": "Emsellem2022PHANGSMUSE",
+            "UseInPaper3": "Provides the ionized-gas terminal family used in later PHANGS differential tests.",
+            "URL": "https://doi.org/10.1051/0004-6361/202141727",
+        },
+        {
+            "Theme": "PHANGS stellar structures",
+            "CitationKey": "Querejeta2021PHANGSStructures",
+            "UseInPaper3": "Provides residual-blind structural masks and labels used in the later PHANGS source-integrity audit.",
+            "URL": "https://arxiv.org/abs/2109.04491",
+        },
+        {
             "Theme": "JWST Zone of Avoidance",
             "CitationKey": "NiloCastellon2025ZoA",
             "UseInPaper3": "Supports the observer/line-of-sight theme: hidden foreground structure and extinction can change what the observer can map.",
@@ -743,6 +788,11 @@ def literature_map() -> list[dict[str, object]]:
 
 def claim_boundary() -> list[dict[str, object]]:
     return [
+        {
+            "Status": "allowed",
+            "Claim": "In the frozen 45-galaxy A/C packet, the declared projection contrast fails the positive incremental proper-score gate under both baselines and all three fixed regularization strengths.",
+            "Guardrail": GUARDRAIL,
+        },
         {
             "Status": "allowed",
             "Claim": "TPG/projection residual structure can be triaged against MOND-simple and RAR-like residuals to identify projection-sensitive follow-up candidates.",
@@ -759,6 +809,16 @@ def claim_boundary() -> list[dict[str, object]]:
             "Guardrail": GUARDRAIL,
         },
         {
+            "Status": "allowed",
+            "Claim": "The later source-frozen seven-galaxy EDGE-CALIFA morphology proxy failed its directional gate, while LITTLE THINGS and PHANGS routes remain mixed, null, non-specific, source-integrity-limited, or support-gated.",
+            "Guardrail": GUARDRAIL,
+        },
+        {
+            "Status": "allowed",
+            "Claim": "Those failures constrain their frozen finite morphology representations; any richer representation must be source-only and tested on a new untouched packet.",
+            "Guardrail": GUARDRAIL,
+        },
+        {
             "Status": "forbidden",
             "Claim": "The packet validates a physical theory.",
             "Guardrail": GUARDRAIL,
@@ -771,6 +831,26 @@ def claim_boundary() -> list[dict[str, object]]:
         {
             "Status": "forbidden",
             "Claim": "RMOND has been numerically tested in this packet.",
+            "Guardrail": GUARDRAIL,
+        },
+        {
+            "Status": "forbidden",
+            "Claim": "The retrospective contrast failure proves that all projection-sensitive rotation information is absent, or falsifies the broader parent theory.",
+            "Guardrail": GUARDRAIL,
+        },
+        {
+            "Status": "forbidden",
+            "Claim": "The kinematically selected 17-galaxy KSS is an independent blind validation cohort, or the public 7-arcsec HDF5 packet exactly reproduces the 2018 6-arcsec analysis.",
+            "Guardrail": GUARDRAIL,
+        },
+        {
+            "Status": "forbidden",
+            "Claim": "Raw CO moment-1 and Halpha velocity fields may be subtracted before an explicit common frame, velocity convention, and systemic treatment are frozen.",
+            "Guardrail": GUARDRAIL,
+        },
+        {
+            "Status": "forbidden",
+            "Claim": "An opened terminal residual may be used to enlarge or relabel the morphology representation and then be counted as confirmation on the same packet.",
             "Guardrail": GUARDRAIL,
         },
     ]
@@ -806,6 +886,24 @@ def readiness_table(pdf_status: str = "not_run") -> list[dict[str, object]]:
             "Item": "rmond_numeric_endpoint",
             "Status": "blocked",
             "Detail": "Need a unique frozen RMOND V(R) law; current bridge is theory-compatible but not an independent pointwise velocity comparator.",
+            "Guardrail": GUARDRAIL,
+        },
+        {
+            "Item": "retrospective_projection_contrast_ac_packet",
+            "Status": "negative_result_frozen",
+            "Detail": "RETROSPECTIVE_PROJECTION_CONTRAST_INCREMENT_FAIL_IN_FROZEN_AC_PACKET; the verdict is local to the declared contrast, baselines, regularization grid, and 45 A/C labels.",
+            "Guardrail": GUARDRAIL,
+        },
+        {
+            "Item": "edge_califa_17_matched_tracer_packet",
+            "Status": "superseded_by_frozen_seven_galaxy_negative_proxy",
+            "Detail": "The later source-frozen seven-galaxy morphology-alignment endpoint failed its declared directional and max-T gates; the opened packet is now a negative/control record only.",
+            "Guardrail": GUARDRAIL,
+        },
+        {
+            "Item": "edge_califa_velocity_convention_freeze",
+            "Status": "completed_in_later_paper8_endpoint",
+            "Detail": "The later endpoint applied the frozen frame and velocity conversions; its negative result does not authorize another same-packet score.",
             "Guardrail": GUARDRAIL,
         },
     ]
@@ -1157,6 +1255,28 @@ def write_references() -> None:
   archivePrefix = {arXiv}
 }
 
+@article{Levy2018EDGEKinematics,
+  author = {Levy, Rebecca C. and Bolatto, Alberto D. and Teuben, Peter and Sanchez, Sebastian F. and Barrera-Ballesteros, Jorge K. and others},
+  title = {The {EDGE-CALIFA} Survey: Molecular and Ionized Gas Kinematics in Nearby Galaxies},
+  journal = {The Astrophysical Journal},
+  volume = {860},
+  pages = {92},
+  year = {2018},
+  doi = {10.3847/1538-4357/aac2e5},
+  eprint = {1804.05853},
+  archivePrefix = {arXiv}
+}
+
+@article{Wong2024EDGEDatabase,
+  author = {Wong, Tony and Cao, Yixian and Luo, Yufeng and Bolatto, Alberto D. and Sanchez, Sebastian F. and others},
+  title = {The {EDGE-CALIFA} Survey: An Extragalactic Database for Galaxy Evolution Studies},
+  journal = {The Astrophysical Journal Supplement Series},
+  year = {2024},
+  doi = {10.3847/1538-4365/ad20c9},
+  eprint = {2401.13181},
+  archivePrefix = {arXiv}
+}
+
 @article{NiloCastellon2025ZoA,
   author = {Nilo-Castellon, J. L. and Alonso, M. V. and Baravalle, L. D. and Villalon, C. and Willmer, C. N. A. and Valotto, C. and Soto, M. and Minniti, D. and Sgro, M. A. and others},
   title = {Faint galaxies in the Zone of Avoidance revealed by {JWST}/{NIRCam}},
@@ -1168,6 +1288,46 @@ def write_references() -> None:
   eprint = {2510.12488},
   archivePrefix = {arXiv}
 }
+
+@article{Oh2015LITTLETHINGS,
+  author = {Oh, Se-Heon and Hunter, Deidre A. and Brinks, Elias and others},
+  title = {High-resolution Mass Models of Dwarf Galaxies from {LITTLE THINGS}},
+  journal = {The Astronomical Journal},
+  volume = {149},
+  pages = {180},
+  year = {2015},
+  doi = {10.1088/0004-6256/149/6/180}
+}
+
+@article{Lang2020PHANGSKinematics,
+  author = {Lang, Philipp and Meidt, Sharon E. and Rosolowsky, Erik and others},
+  title = {{PHANGS} {CO} Kinematics: Disk Orientations and Rotation Curves at 150 pc Resolution},
+  journal = {The Astrophysical Journal},
+  volume = {897},
+  pages = {122},
+  year = {2020},
+  doi = {10.3847/1538-4357/ab9953}
+}
+
+@article{Emsellem2022PHANGSMUSE,
+  author = {Emsellem, Eric and Schinnerer, Eva and Santoro, Francesco and others},
+  title = {The {PHANGS-MUSE} Survey: Probing the Chemo-dynamical Evolution of Disc Galaxies},
+  journal = {Astronomy and Astrophysics},
+  volume = {659},
+  pages = {A191},
+  year = {2022},
+  doi = {10.1051/0004-6361/202141727}
+}
+
+@article{Querejeta2021PHANGSStructures,
+  author = {Querejeta, Miguel and Schinnerer, Eva and Meidt, Sharon and others},
+  title = {Stellar Structures, Molecular Gas, and Star Formation across the {PHANGS} Sample of Nearby Galaxies},
+  journal = {Astronomy and Astrophysics},
+  volume = {656},
+  pages = {A133},
+  year = {2021},
+  doi = {10.1051/0004-6361/202140695}
+}
 """
     (SOURCE / "references.bib").write_text(text, encoding="utf-8")
 
@@ -1177,6 +1337,11 @@ def write_main_tex(
     stress: list[dict[str, object]],
     s_tau_comparison: list[dict[str, object]],
 ) -> None:
+    audit = json.loads(
+        (PACKET / "paper3_conditional_rotation_information_verdict_v01.json").read_text(
+            encoding="utf-8"
+        )
+    )
     tex = r"""\documentclass[11pt]{{article}}
 \usepackage[margin=1in]{{geometry}}
 \usepackage{{graphicx}}
@@ -1188,13 +1353,13 @@ def write_main_tex(
 
 \title{{A reproducible candidate framework for projection-sensitive residual structure in SPARC rotation curves}}
 \author{{Jozsef Olcsak}}
-\date{{2026\\Last revised: 26 August 2026}}
+\date{{2026\\Last revised: 30 August 2026}}
 
 \begin{{document}}
 \maketitle
 
 \begin{{abstract}}
-Paper 1 found that externally reviewed structural disturbance is associated with larger low-acceleration residual scatter in SPARC. Paper 2 reversed the question and showed that fixed residual-shape features can recover those A/C labels better than chance, while remaining explicitly non-unique with respect to MOND-simple and empirical RAR-like baselines. This Paper 3 seed asks a narrower follow-up question: where do TPG/projection residuals, MOND-simple residuals, RAR-like residuals, and measured rotation curves point to reproducible projection-sensitive residual candidates? The current packet identifies candidate galaxies, radial onset categories, environment/observability stress channels, and a frozen candidate/control ladder anchored by DDO126 and DDO50. It is a positive candidate-support methodology and registry paper: it turns the Paper 1--2 residual association into a concrete, auditable target list for the next predictive test. It does not validate a physical theory, does not numerically test RMOND, and does not claim gravity-model selection.
+Paper 1 found that externally reviewed structural disturbance is associated with larger low-acceleration residual scatter in SPARC. Paper 2 reversed the question and showed that fixed residual-shape features can recover those A/C labels better than chance, while remaining explicitly non-unique with respect to MOND-simple and empirical RAR-like baselines. This Paper 3 seed asks a narrower follow-up question: where do TPG/projection residuals, MOND-simple residuals, RAR-like residuals, and measured rotation curves point to reproducible projection-sensitive residual candidates? The packet identifies candidate galaxies, radial onset categories, environment/observability stress channels, and a frozen candidate/control ladder anchored by DDO126 and DDO50. A retrospective fixed-packet audit gives one narrow negative result: after a source-only observability and baryonic baseline and the MOND/RAR-common residual descriptor are supplied, the declared projection contrast worsens cross-fitted proper scores under both baselines and all fixed regularization strengths. The unconditioned projection block is itself not stable across that grid. Later EDGE--CALIFA, LITTLE THINGS, and PHANGS routes fail external promotion through negative, mixed, non-specific, source-integrity, or support-gate outcomes. These results constrain their declared finite morphology representations; they neither establish a source-complete body falsification nor permit post-open repair. The paper therefore remains a candidate registry and falsification framework, not conditional-information evidence, physical validation, or gravity-model selection.
 \end{{abstract}}
 
 \section{{Purpose and claim boundary}}
@@ -1369,7 +1534,7 @@ After the initial seed construction, one repaired branch, DDO168, was rescored u
 
 This result is useful because it places DDO168 beside visible anchors and controls rather than treating it as an isolated success. DDO126 is a positive fixed-TPG public endpoint, DDO50 is a quiet Newtonian-best control with near-zero required-$S_\tau$, DDO154 is a near-one control/countercontrol, and NGC2366 is a caveated lower-amplitude radial candidate. DDO168 therefore strengthens the candidate ladder as a specificity-support example. It is not validation evidence by itself, and it does not select TPG over RAR/MOND as a gravity model.
 
-The next gate is therefore two-track. The paper can now be written as a narrow status or seed paper whose claim is candidate specificity support in context. Any stronger claim requires the already frozen eight-object clean endpoint expansion: DDO154, DDO168, NGC2366, WLM, IC1613, DDO47, DDO50, and DDO126, with auditable component-velocity inputs or frozen reconstructions before running the LOGO TPG/MOND/RAR/radial-$S_\tau$ endpoint.
+The paper can now be written as a narrow candidate-registry paper with a frozen local negative result for the declared projection contrast. The eight-object clean endpoint remains a complementary candidate/control branch, but another rescore of the same labels cannot raise the claim. A stronger result requires a source-frozen external matched-tracer endpoint with an explicit common velocity convention and without treating a kinematically selected cohort as independent blind validation.
 
 \section{{Post-external-support status}}
 
@@ -1396,17 +1561,41 @@ The later DDO126/DDO50 and held-out readiness audits sharpen the current claim b
 
 This status does not add a new endpoint score. It is a claim-control layer. The input watchlist defines what would be needed for a future upgrade: schema-clean component intake for DDO126/DDO50, or a broader component-confirmed held-out pool. Any new file must pass provenance, column-schema, unit/radius, geometry/systematics, and control-visibility checks before model scores are rerun.
 
-Therefore the current paper-level claim is bounded but nontrivial. The packet establishes a reproducible projection-sensitive candidate/control ladder and freezes the component-intake route required to test it. The result is not a physical validation, not gravity-model selection, and not evidence that the residual pattern is unique to a projection-sensitive interpretation. Additional scoring without new accepted component or stellar inputs is not a claim-upgrade path.
+Therefore the current paper-level claim is bounded but nontrivial. The packet records a reproducible operational candidate/control ladder and freezes the component-intake route required to test it. The result is not a physical validation, not gravity-model selection, and not evidence that the residual pattern is unique to a projection-sensitive interpretation. Additional scoring without new accepted component, stellar, or external matched-tracer inputs is not a claim-upgrade path.
 
 The inverse required-$S_\tau$ and related correction curves are effective terminal discrepancies.  They do not uniquely reconstruct a force law, a clock distortion, a spatial-metric distortion, or a full observer-source coframe.  The later companion full-4D descent therefore changes the interpretation but not the numerical candidate ladder: a new 4D endpoint may be scored only after a radial relative coframe and its photon-transfer map are derived and frozen independently of the target residual.  The exact inherited score must use the complete standard excess $E_K=(K_{HH}-K_{\rm std})-CK_{VV}^{-1}C^\dagger$, not the positive Schur term alone, and must retain the full covariance of all jointly scored terminal images.  The present candidate ladder supplies none of those frozen physical inputs.
 
+\section{{Retrospective projection-contrast audit}}
+
+The original residual association is an unconditional prevalidation result. We therefore added a stricter retrospective audit on the same frozen 45-galaxy A/C sample. The baseline contains seven endpoint-free observability variables: distance, fractional distance error, inclination, inclination error, point count, mean velocity uncertainty, and angular radial coverage. A second baseline adds seven source-side baryonic or morphology summaries derived from the public SPARC component tables without using $V_{\rm obs}$: Hubble type, median baryonic speed, gas and bulge fractions, median disk surface brightness, and two radial-shape ratios. Every raw component file is represented by a SHA-256 hash in the derived source packet.
+
+For each residual family we use the same five-dimensional block: RMS, outer/inner ratio, radius correlation, low-acceleration mean, and fraction above the fixed 0.15 threshold. Predictions are produced by repeated stratified five-fold cross-validation. Three regularization strengths, $C\in\{{0.03,0.3,3\}}$, are reported without selecting the best one. The key specificity comparison first supplies the MOND/RAR-common descriptor
+\[
+Z_{\rm std}={1\over2}(Z_{\rm MOND}+Z_{\rm RAR})
+\]
+and then asks whether the projection contrast
+\[
+Z_{\rm proj\perp}=Z_{\rm projection}-Z_{\rm std}
+\]
+improves held-out prediction. This is an operational de-overlap test: naming three residual families does not make them independent information channels.
+
+At $C=0.3$, the observability-plus-baryonic baseline has cross-fitted AUC AUDIT_BASELINE_AUC. Adding $Z_{\rm proj\perp}$ after $Z_{\rm std}$ changes AUC by AUDIT_DELTA_AUC, changes log-loss improvement by AUDIT_DELTA_LOGLOSS, and changes Brier improvement by AUDIT_DELTA_BRIER, where positive proper-score differences would favor the enlarged model. Both proper scores therefore worsen. More importantly, the declared contrast comparison worsens both proper scores under both baselines and all three fixed regularization strengths. The generic projection block shows a small improvement only under the strongest shrinkage and fails stability across the grid. Because the directional gate failed, no one-sided positive-increment permutation claim was opened. The packet verdict is therefore a failure of the declared projection-contrast increment in this frozen A/C packet, not a universal no-information verdict.
+
+This audit does not prove that rotation residuals contain no additional information. It shows only that the declared projection contrast does not isolate a stable positive increment in this 45-galaxy label experiment once the source/observability packet and common MOND/RAR residual structure are retained. The generic projection block has positive proper-score increments at the strongest shrinkage, so the result cannot be promoted to an absence claim for projection information in general. The A/C labels also remain within the same broad H\,I/kinematic observational ecosystem and are not an independent survey-level replication.
+
+A later Paper 8 endpoint completed the source-frozen EDGE--CALIFA route using seven untouched confirmatory galaxies after source-only development. The matched-minus-wrong contrast was $\overline D=-0.0586793$, with median $+0.110202$, four of seven positive galaxies, and exact one-sided $p=0.6015625$. All declared max-$T$ controls also failed. An independent implementation rebuilt all 140 terminal coefficients from the common-grid database \cite{{Wong2024EDGEDatabase}} to a maximum absolute difference of $3.553\times10^{{-15}}\,{{\rm km\,s^{{-1}}}}$. This is a reproducible negative for the declared morphology-alignment proxy, not an independent Tau-specific test or a direct reproduction of the published 17-galaxy kinematic subsample \cite{{Levy2018EDGEKinematics}}.
+
+The subsequent public-data ladder remains non-promotable. LITTLE THINGS \cite{{Oh2015LITTLETHINGS}} transfers one frozen scale-tail family to 14 galaxies and 313 points; it improves mean RMSE over TPG/v6 by only $0.101\,{{\rm km\,s^{{-1}}}}$ and is $0.649\,{{\rm km\,s^{{-1}}}}$ worse than MOND. In PHANGS \cite{{Lang2020PHANGSKinematics,Emsellem2022PHANGSMUSE,Querejeta2021PHANGSStructures}}, a three-galaxy low-order differential route is null ($p=0.8082$); a two-galaxy $m=2$ route is non-specific because its $m=1$ control is also non-null and the source-label audit fails; and a four-galaxy radial-body confirmation stops at its predeclared 12-sector occupancy gate before any score is released. NGC4254 retains an internally controlled source-coordinate candidate, but a free terminal gain exactly saturates the scalar endpoint and the primitive gain remains non-identifiable.
+
 \section{{Predictive validation gate}}
 
-The present manuscript is not a validation paper, but it does more than list curiosities. It defines where a projection-sensitive residual signal should be looked for, which controls must travel with the candidates, and what predictor inputs are forbidden. It does not yet supply a predictive residual-pattern rule. A validation-oriented version must pass a stricter gate before any discovery language is appropriate.
+The present manuscript is not a validation paper, but it does more than list curiosities. It defines where a projection-sensitive residual signal should be looked for, which controls must travel with the candidates, and what predictor inputs are forbidden. The retrospective audit above is not the missing prospective rule and it failed only the declared contrast-increment gate in the frozen A/C packet. A validation-oriented version must pass a stricter independent gate before any discovery language is appropriate.
 
 First, the residual-pattern rule must be frozen before reading the endpoint residuals. The rule may use source-side structure, distance or line-of-sight information, projection/observability quantities, and preregistered radial-shape information, but it may not use Vobs residuals, FunctionGain, ProjectionRMS\_TPG, or the inverse required-$S_\tau$ diagnostic as predictor inputs. Second, the rule must be evaluated on a predeclared clean candidate/control set, including both positive anchors and controls. Third, the result must improve the frozen endpoint relative to TPG/projection, MOND-simple, and empirical RAR-like baselines, not merely reproduce a generic low-acceleration ordering. Fourth, the improvement must survive the ordinary observability nulls: distance, inclination, point count, beam smearing, H\,I resolution, and non-circular motion.
 
 This predictive gate is the main upgrade path from a seed paper to a validation paper. In practical terms, the next claim-raising experiment is: freeze a predictive projection-sensitive residual rule, then test whether it improves the predeclared clean candidate/control set beyond TPG/projection, MOND-simple, and RAR-like baselines. Until that experiment is passed, the correct status is candidate-support methodology rather than physical evidence.
+
+The morphology representation itself is now part of that freeze. Let $\Phi_k$ be the finite source record and $T_k$ the complete body--channel--observer-resolution--terminal map. A terminal rule can factor as $T_k=f_k\circ\Phi_k$ only if $T_k$ is constant on every $\Phi_k$ fibre. A failure can therefore expose an imprecise or lossy $\Phi_k$ without falsifying every richer body representation. This qualification has a strict anti-leakage partner: after endpoint $y$ is known, adding $y$ to the source span forces its projected residual to zero. Accordingly, a refined $\Phi_{{k+1}}$ must be derived from source-only information and tested on a new untouched packet; the opened SPARC, EDGE--CALIFA, LITTLE THINGS, and PHANGS packets cannot be repaired into confirmation.
 
 \section{{Interpretation}}
 
@@ -1414,9 +1603,9 @@ The most useful interpretation is modest. TPG success controls show where the lo
 
 \section{{Conclusion}}
 
-This paper establishes a reproducible candidate-search framework rather than merely proposing one. It carries forward the discipline learned from Papers 1 and 2: freeze the endpoint, compare against MOND/RAR baselines, name the systematics, and avoid promoting a diagnostic pattern into physical evidence. The repaired DDO168 branch, the external-support branch, and the DDO126/DDO50 candidate-ladder lock strengthen the candidate-specificity story in context: the residual candidates are now organized into a falsifiable target set with controls and blockers. The current evidence is still not enough to claim a detected physical field.
+This paper establishes a reproducible candidate-search framework rather than merely proposing one. It carries forward the discipline learned from Papers 1 and 2: freeze the endpoint, compare against MOND/RAR baselines, name the systematics, and avoid promoting a diagnostic pattern into physical evidence. The repaired DDO168 branch, the external-support branch, and the DDO126/DDO50 candidate-ladder lock organize the residual candidates into a falsifiable target set. The retrospective audit adds a narrow negative result: the declared projection contrast supplies no stable positive predictive increment in the frozen 45-galaxy A/C packet. It does not establish that all projection-sensitive rotation information is absent.
 
-The next paper-grade step is the eight-object clean endpoint expansion, with source-native component tables or frozen public reconstructions wherever source-native tables are unavailable. The immediate action is therefore write-or-wait: update the manuscript with candidate-support language, or wait for source-native component input and run the intake gate. A frozen RMOND residual table and a held-out environment/line-of-sight validation rule remain important parallel upgrades. Only after those gates can the paper ask whether the residual candidates are truly projection-sensitive rather than ordinary low-acceleration or H\,I-systematics behavior.
+The EDGE--CALIFA, LITTLE THINGS and PHANGS continuations have now been run far enough to show that none raises the claim under its frozen gate. The next claim-raising step is therefore not a re-analysis of those opened packets. It is a source-frozen, signed, unit-calibrated forward prediction from a richer endpoint-blind morphology representation, evaluated in a new independent survey or release with a complete standard comparator and predefined observability controls. Only after that gate can the paper ask whether the residual candidates are truly projection-sensitive rather than ordinary low-acceleration or H\,I-systematics behavior.
 
 \bibliographystyle{{plain}}
 \bibliography{{references}}
@@ -1455,6 +1644,20 @@ The next paper-grade step is the eight-object clean endpoint expansion, with sou
     tex = tex.replace("SHORTLIST_ROWS", latex_table_shortlist(shortlist))
     tex = tex.replace("STRESS_ROWS", latex_stress_rows(stress))
     tex = tex.replace("S_TAU_COMPARISON_ROWS", latex_s_tau_comparison_rows(s_tau_comparison))
+    tex = tex.replace("AUDIT_BASELINE_AUC", f"{audit['full_baseline_auc_at_C_0p3']:.3f}")
+    tex = tex.replace("AUDIT_DELTA_AUC", f"{audit['primary_unique_projection_delta_auc']:+.3f}")
+    tex = tex.replace(
+        "AUDIT_DELTA_LOGLOSS",
+        f"{audit['primary_unique_projection_delta_log_loss_improvement']:+.3f}",
+    )
+    tex = tex.replace(
+        "AUDIT_DELTA_BRIER",
+        f"{audit['primary_unique_projection_delta_brier_improvement']:+.3f}",
+    )
+    # Source-owned publication update, kept during legacy regeneration.
+    if "% BEGIN OBSERVER UPDATE 20260914" not in tex:
+        block = (SOURCE / "observer_update_20260914.tex").read_text(encoding="utf-8")
+        tex = tex.replace(r"\end{document}", block + "\n" + r"\end{document}")
     (SOURCE / "main.tex").write_text(tex, encoding="utf-8")
 
 
@@ -1477,6 +1680,12 @@ def write_manifest(pdf_status: str) -> None:
             "paper3_next_gate.csv",
             "paper3_related_literature_map.csv",
             "paper3_claim_boundary.csv",
+            "paper3_sparc_baryonic_source_summary_v01.csv",
+            "paper3_conditional_rotation_information_protocol_v01.json",
+            "paper3_conditional_rotation_information_metrics_v01.csv",
+            "paper3_conditional_rotation_information_predictions_v01.csv",
+            "paper3_conditional_rotation_information_verdict_v01.json",
+            "paper3_label_source_overlap_audit_v01.csv",
             "paper3_readiness_table.csv",
         ],
         "pdf_status": pdf_status,
@@ -1523,6 +1732,18 @@ def main() -> None:
     SOURCE.mkdir(parents=True, exist_ok=True)
     SOURCE_FIGURES.mkdir(parents=True, exist_ok=True)
     PACKET.mkdir(parents=True, exist_ok=True)
+
+    subprocess.run(
+        [
+            "python3",
+            str(
+                ROOT
+                / "studies/sparc_taucore_residual_signal_v01/run_conditional_rotation_information_audit_v01.py"
+            ),
+        ],
+        cwd=ROOT,
+        check=True,
+    )
 
     onsets = residual_onset_catalog()
     candidates = signal_candidate_table(onsets)
@@ -1657,13 +1878,20 @@ def main() -> None:
         PACKET / "paper3_next_gate.csv",
         next_gate_rows(),
         ["Priority", "Gate", "Action", "PassCondition", "FailCondition", "Guardrail"],
+        lineterminator="\n",
     )
     write_csv(
         PACKET / "paper3_related_literature_map.csv",
         literature_map(),
         ["Theme", "CitationKey", "UseInPaper3", "URL"],
+        lineterminator="\n",
     )
-    write_csv(PACKET / "paper3_claim_boundary.csv", claim_boundary(), ["Status", "Claim", "Guardrail"])
+    write_csv(
+        PACKET / "paper3_claim_boundary.csv",
+        claim_boundary(),
+        ["Status", "Claim", "Guardrail"],
+        lineterminator="\n",
+    )
 
     make_figures(candidates, stress)
     make_s_tau_figures(s_tau_summary, s_tau_comparison)
@@ -1672,7 +1900,12 @@ def main() -> None:
     write_main_tex(shortlist, stress, s_tau_comparison)
     build_arxiv_zip()
     pdf_status = compile_pdf()
-    write_csv(PACKET / "paper3_readiness_table.csv", readiness_table(pdf_status), ["Item", "Status", "Detail", "Guardrail"])
+    write_csv(
+        PACKET / "paper3_readiness_table.csv",
+        readiness_table(pdf_status),
+        ["Item", "Status", "Detail", "Guardrail"],
+        lineterminator="\n",
+    )
     write_manifest(pdf_status)
 
 

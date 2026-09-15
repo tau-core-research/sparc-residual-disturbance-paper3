@@ -1,0 +1,58 @@
+{
+  "schema": "lab-paper-update-20260915",
+  "ledger": [
+    [
+      "finite compatible source",
+      "seed-body companion and lab source_law/expanded_graph",
+      "supplied quartic action and coherent node prior",
+      "exact conditional finite minimum, not Nature selection"
+    ],
+    [
+      "ordered access",
+      "body-readout companion and observer_descent",
+      "frozen body, supplied mu/beta/aperture/quantizer",
+      "conditional stationarity, not total source derivative"
+    ],
+    [
+      "nonlinear contact",
+      "body/terminal companions and nonlinear_contact",
+      "positive quadratic polynomial completion",
+      "conditional positivity; static jets do not select full law"
+    ],
+    [
+      "propagation",
+      "terminal companion and propagation",
+      "supplied spatial/time and kinetic forms",
+      "conditional characteristic speed; physical units open"
+    ],
+    [
+      "calibration/search",
+      "lab provenance and public-data packets",
+      "supplied recipe and historical instrument model",
+      "internal tests or instrument diagnostics, not Tau-specific evidence"
+    ]
+  ],
+  "source_hashes": {
+    "source_law.py": "cc03d3fd2b70c2603eb47e50ee52bc17468f731e2b56638781b77d3c950d73d9",
+    "observer_descent.py": "4eb32a693203612639536e012fea08687acc7c78fd942efb5cbbd1fadca26204",
+    "expanded_graph.py": "50b3df1bd4741da4f2a0cf47106e1066b88fc8df423b1466dd078e95e4c4360d",
+    "propagation.py": "7c29ca1dc471239c144e7f428efcbb89ea5449b9a231d126f0a37721e3eae14f",
+    "calibrated_observation.py": "41378b10dba454f06fad12570faba423f01ae09110c2b03aa9432db33976774e",
+    "nonlinear_contact.py": "16f74a366289e34d77190e2bc5062aaca147a4129fa667f7d9bb8d78448227b0",
+    "nonlinear_calibration.py": "908cfb1ea2edee5e3d8191945810a4bcb605b364ed329ab66bd915337baeb520",
+    "EXPANDED_GRAPH.md": "986f64f51e50946ddef1037959eebe0d3db732e50698144da32e2b31b77afcac",
+    "PROPAGATION.md": "74cc0aeb3d538046be21ab852a4391ea6a8b71481689524de67fb9d75bc69e5f"
+  },
+  "manuscripts": [
+    {
+      "source": "paper3_submission_source/main.tex",
+      "role": null,
+      "status": "reviewed_no_new_lab_theorem"
+    }
+  ],
+  "physical_source_selected": false,
+  "physical_observer_selected": false,
+  "si_constants_derived": false,
+  "tau_specific_signal": false,
+  "empirical_scores_changed": false
+}

@@ -1,0 +1,103 @@
+{
+  "analysis_kind": "retrospective_fixed_block_conditional_predictive_audit",
+  "baselines": {
+    "O7B7_observability_plus_baryonic": [
+      "LogDistanceMpc",
+      "DistanceFractionalError",
+      "InclinationDeg",
+      "InclinationErrorDeg",
+      "LogNPoints",
+      "LogMeanErrVobsKms",
+      "LogAngularRadiusProxy_KpcPerMpc",
+      "HubType",
+      "LogVbarMedian",
+      "GasFractionMedian",
+      "BulgeFractionMedian",
+      "LogSBdiskMedian",
+      "VbarOuterInnerRatio",
+      "SBdiskOuterInnerLogRatio"
+    ],
+    "O7_observability": [
+      "LogDistanceMpc",
+      "DistanceFractionalError",
+      "InclinationDeg",
+      "InclinationErrorDeg",
+      "LogNPoints",
+      "LogMeanErrVobsKms",
+      "LogAngularRadiusProxy_KpcPerMpc"
+    ]
+  },
+  "candidate_blocks": {
+    "mond_block": [
+      "MOND_RMS",
+      "MOND_OuterInnerRatio",
+      "MOND_RadiusPearson",
+      "MOND_LowAccelerationMean",
+      "MOND_OutlierFraction_gt_0p15"
+    ],
+    "projection_block": [
+      "Projection_RMS",
+      "Projection_OuterInnerRatio",
+      "Projection_RadiusPearson",
+      "Projection_LowAccelerationMean",
+      "Projection_OutlierFraction_gt_0p15"
+    ],
+    "projection_contrast_only": [
+      "ProjectionContrast_RMS",
+      "ProjectionContrast_OuterInnerRatio",
+      "ProjectionContrast_RadiusPearson",
+      "ProjectionContrast_LowAccelerationMean",
+      "ProjectionContrast_OutlierFraction_gt_0p15"
+    ],
+    "rar_block": [
+      "RAR_RMS",
+      "RAR_OuterInnerRatio",
+      "RAR_RadiusPearson",
+      "RAR_LowAccelerationMean",
+      "RAR_OutlierFraction_gt_0p15"
+    ],
+    "standard_mean_block": [
+      "StandardMean_RMS",
+      "StandardMean_OuterInnerRatio",
+      "StandardMean_RadiusPearson",
+      "StandardMean_LowAccelerationMean",
+      "StandardMean_OutlierFraction_gt_0p15"
+    ],
+    "standard_plus_projection_contrast": [
+      "StandardMean_RMS",
+      "StandardMean_OuterInnerRatio",
+      "StandardMean_RadiusPearson",
+      "StandardMean_LowAccelerationMean",
+      "StandardMean_OutlierFraction_gt_0p15",
+      "ProjectionContrast_RMS",
+      "ProjectionContrast_OuterInnerRatio",
+      "ProjectionContrast_RadiusPearson",
+      "ProjectionContrast_LowAccelerationMean",
+      "ProjectionContrast_OutlierFraction_gt_0p15"
+    ]
+  },
+  "claim_rule": "A positive claim for the declared projection-contrast increment requires the comparison to pass under both baselines and all fixed regularization strengths. Failure is local to this frozen A/C packet and does not establish absence of all projection-sensitive rotation information.",
+  "cross_validation": {
+    "prediction_aggregation": "mean of 20 out-of-fold probabilities per galaxy",
+    "scheme": "20x repeated stratified five-fold",
+    "seed": 240826
+  },
+  "guardrail": "retrospective_conditional_audit_not_tau_validation_not_independent_replication",
+  "model": "median imputation + z scaling + L2 logistic regression",
+  "primary_projection_contrast_comparison": "O7B7 + standard_mean_block versus O7B7 + standard_mean_block + projection_contrast_only",
+  "projection_contrast_definition": "Projection feature minus mean(MOND feature, RAR feature)",
+  "proper_score_pass": "DeltaLogLossImprovement > 0 and DeltaBrierImprovement > 0",
+  "regularization_grid_fixed_not_selected": [
+    0.03,
+    0.3,
+    3.0
+  ],
+  "sample": "frozen Paper 1--2 A/C sample; N=45 (A=17, C=28)",
+  "source_dataset": {
+    "derived_baryonic_summary": "paper3_sparc_baryonic_source_summary_v01.csv",
+    "doi": "10.5281/zenodo.16284118",
+    "raw_data_redistributed": false,
+    "rotmod_archive_md5": "e4c8b92766026770ed35e5889064e12b"
+  },
+  "version": "v01"
+}

@@ -16,6 +16,12 @@
     "paper3_next_gate.csv",
     "paper3_related_literature_map.csv",
     "paper3_claim_boundary.csv",
+    "paper3_sparc_baryonic_source_summary_v01.csv",
+    "paper3_conditional_rotation_information_protocol_v01.json",
+    "paper3_conditional_rotation_information_metrics_v01.csv",
+    "paper3_conditional_rotation_information_predictions_v01.csv",
+    "paper3_conditional_rotation_information_verdict_v01.json",
+    "paper3_label_source_overlap_audit_v01.csv",
     "paper3_readiness_table.csv"
   ],
   "pdf_status": "ready"

@@ -6,4 +6,10 @@ SPARC individual RAR fits,Li2018RARFits,Motivates galaxy-to-galaxy variation in 
 HI non-circular motions,Trachternach2008THINGS,Defines a key systematics channel that can mimic residual structure.,https://doi.org/10.1088/0004-6256/136/6/2720
 Dwarf rotation-curve systematics,Oman2019NonCircular,Shows how non-circular motions can alter inferred rotation-curve diversity.,https://arxiv.org/abs/1706.07478
 Beam smearing and LSB rotation curves,deBlok1997Beam,Constrains observational failure modes before interpreting residuals as projection-sensitive candidates.,https://arxiv.org/abs/astro-ph/9704274
+EDGE-CALIFA matched-tracer kinematics,Levy2018EDGEKinematics,Defines the exact 17-galaxy kinematically selected CO/Halpha cohort and the published 6-arcsec rotation-curve comparison used as a conditioned replication control.,https://arxiv.org/abs/1804.05853
+EDGE-CALIFA public common-grid database,Wong2024EDGEDatabase,Provides the public 7-arcsec common-grid packet used by the later source-frozen seven-galaxy negative morphology-proxy endpoint.,https://arxiv.org/abs/2401.13181
+LITTLE THINGS mass models,Oh2015LITTLETHINGS,Provides the external dwarf-galaxy mass models used by the later one-family transfer stress test.,https://doi.org/10.1088/0004-6256/149/6/180
+PHANGS molecular kinematics,Lang2020PHANGSKinematics,Provides the resolved CO kinematic source family used in later low-order and radial-body proxy tests.,https://arxiv.org/abs/2005.11709
+PHANGS MUSE ionized-gas maps,Emsellem2022PHANGSMUSE,Provides the ionized-gas terminal family used in later PHANGS differential tests.,https://doi.org/10.1051/0004-6361/202141727
+PHANGS stellar structures,Querejeta2021PHANGSStructures,Provides residual-blind structural masks and labels used in the later PHANGS source-integrity audit.,https://arxiv.org/abs/2109.04491
 JWST Zone of Avoidance,NiloCastellon2025ZoA,Supports the observer/line-of-sight theme: hidden foreground structure and extinction can change what the observer can map.,https://arxiv.org/abs/2510.12488

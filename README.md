@@ -8,6 +8,23 @@ Archived reproducibility package DOI: [10.5281/zenodo.20285908](https://doi.org/
 
 The manuscript is an exploratory candidate-methodology preprint. It defines a reproducible framework for comparing fixed SPARC residual diagnostics, selecting candidate and control objects, and specifying the predictive validation gate needed before any stronger physical claim can be made.
 
+The latest retrospective audit has the narrow machine-readable status `RETROSPECTIVE_PROJECTION_CONTRAST_INCREMENT_FAIL_IN_FROZEN_AC_PACKET`. On the frozen 45-galaxy A/C sample, an endpoint-free observability baseline already predicts the labels strongly. The declared projection contrast beyond the MOND/RAR-common residual descriptor worsens cross-fitted log loss and Brier score under both declared baselines and every fixed regularization value; the unconditioned projection block is not stable across that grid. The earlier residual association is therefore retained as unconditional prevalidation evidence. This verdict does not state that all projection-sensitive rotation information is absent and does not falsify the broader parent theory.
+
+The EDGE-CALIFA continuation has now been executed as a source-frozen
+seven-galaxy confirmatory proxy and failed its directional gate: mean
+`D=-0.0586793`, exact one-sided `p=0.6015625`, and `4/7` positive. Later
+LITTLE THINGS and PHANGS routes are likewise mixed, null, non-specific, blocked
+by source-label integrity, or stopped at a predeclared support gate. They do
+not provide external promotion.
+
+These outcomes constrain the finite morphology representations that were
+actually frozen. A terminal law factors through such a representation only if
+the terminal is constant on every representation fibre. They do not directly
+falsify an unconstructed source-complete body, but they also cannot be repaired
+after endpoint access: appending the observed terminal to a source span makes
+its residual vanish by construction. Any successor representation must be
+source-only and tested on a new untouched packet.
+
 The package intentionally does **not** claim a new-gravity detection, model selection, or physical validation of the TPG/projection baseline. In this repository, `TPG/projection` is a frozen operational residual baseline retained as a historical label, not a validated gravity model.
 
 ## Author And Research Workflow
@@ -85,7 +102,27 @@ The generator uses `tectonic` for PDF compilation when available. If `tectonic` 
 - `figures/*.svg`
 - `arxiv_submission_source.zip`
 - `studies/sparc_taucore_residual_signal_v01/packet_v01_seed/*.csv`
+- `studies/sparc_taucore_residual_signal_v01/packet_v01_seed/paper3_conditional_rotation_information_verdict_v01.json`
+
+The conditional audit can also be run directly:
+
+```bash
+python studies/sparc_taucore_residual_signal_v01/run_conditional_rotation_information_audit_v01.py
+```
+
+The repository contains the derived baryonic source summary, with one raw-file SHA-256 per galaxy. To reconstruct that summary from the public SPARC archive, supply the extracted rotmod directory and compact Table 1 explicitly; raw survey files remain outside the repository.
 
 ## Citation
 
 Use `CITATION.cff` for repository citation metadata. The data-use scope and redistribution boundary are documented in `DATA_NOTICE.md`.
+
+<!-- BEGIN OBSERVER UPDATE 20260914 -->
+## Observer realization update (2026-09-14)
+
+For galactic inference, these observer constructions do not derive a rotation-curve correction or identify a measured residual as a parent effect. Existing endpoint freezes and scores are unchanged.
+
+The manuscript distinguishes inherited BRAC contact, conditional coherent-state
+selection and interacting local covariance from physical observer identification,
+preparation and stable resolution. Those physical claims remain open. No
+empirical score was changed. The [dependency and source-result ledger](data/derived/observer_update_2026_09_14.json) records the assumptions and controls.
+<!-- END OBSERVER UPDATE 20260914 -->

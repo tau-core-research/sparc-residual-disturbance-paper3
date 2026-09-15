@@ -1,7 +1,14 @@
 Status,Claim,Guardrail
+allowed,"In the frozen 45-galaxy A/C packet, the declared projection contrast fails the positive incremental proper-score gate under both baselines and all three fixed regularization strengths.",paper3_seed_candidate_search_not_tau_core_validation
 allowed,TPG/projection residual structure can be triaged against MOND-simple and RAR-like residuals to identify projection-sensitive follow-up candidates.,paper3_seed_candidate_search_not_tau_core_validation
 allowed,"Distance, environment, observer geometry, and residual-onset summaries can be inspected as candidate observer/environment-sensitive residual patterns.",paper3_seed_candidate_search_not_tau_core_validation
 allowed,"The current packet defines a reproducible Paper 3 seed, not a final validation result.",paper3_seed_candidate_search_not_tau_core_validation
+allowed,"The later source-frozen seven-galaxy EDGE-CALIFA morphology proxy failed its directional gate, while LITTLE THINGS and PHANGS routes remain mixed, null, non-specific, source-integrity-limited, or support-gated.",paper3_seed_candidate_search_not_tau_core_validation
+allowed,Those failures constrain their frozen finite morphology representations; any richer representation must be source-only and tested on a new untouched packet.,paper3_seed_candidate_search_not_tau_core_validation
 forbidden,The packet validates a physical theory.,paper3_seed_candidate_search_not_tau_core_validation
 forbidden,The packet shows TPG/projection is uniquely preferred over MOND/RAR.,paper3_seed_candidate_search_not_tau_core_validation
 forbidden,RMOND has been numerically tested in this packet.,paper3_seed_candidate_search_not_tau_core_validation
+forbidden,"The retrospective contrast failure proves that all projection-sensitive rotation information is absent, or falsifies the broader parent theory.",paper3_seed_candidate_search_not_tau_core_validation
+forbidden,"The kinematically selected 17-galaxy KSS is an independent blind validation cohort, or the public 7-arcsec HDF5 packet exactly reproduces the 2018 6-arcsec analysis.",paper3_seed_candidate_search_not_tau_core_validation
+forbidden,"Raw CO moment-1 and Halpha velocity fields may be subtracted before an explicit common frame, velocity convention, and systemic treatment are frozen.",paper3_seed_candidate_search_not_tau_core_validation
+forbidden,An opened terminal residual may be used to enlarge or relabel the morphology representation and then be counted as confirmation on the same packet.,paper3_seed_candidate_search_not_tau_core_validation

@@ -1,0 +1,326 @@
+{
+  "schema": "observer-paper-update-20260914",
+  "ledger": [
+    [
+      "BRAC contact",
+      "observer-origin sections 23--24",
+      "conditional real-field/context/state",
+      "contact type and threshold boundary"
+    ],
+    [
+      "coherent state",
+      "observer-origin section 25",
+      "fixed means and zero excess energy",
+      "state choice is not preparation"
+    ],
+    [
+      "joint local covariance",
+      "observer-origin section 26",
+      "supplied harmonic joint ground and units",
+      "local mixedness and localization control"
+    ],
+    [
+      "stable quantizer",
+      "observer-specific descent ORA-T1",
+      "occupied context and positive barrier",
+      "physical premises remain open"
+    ]
+  ],
+  "sources": [
+    "paper3_submission_source/main.tex"
+  ],
+  "physical_observer_identified": false,
+  "physical_preparation_derived": false,
+  "physical_stable_quantizer_derived": false,
+  "empirical_scores_changed": false,
+  "canonical_note": "tau-core-theory/docs/tau_core_observer_carrier_local_4d_descent_origin_001.md",
+  "source_results": {
+    "chdf_brac_reservoir_support": {
+      "status": "conditional existing-branch continuum support test; no physical bath selection",
+      "I_K": 0.061007875193259134,
+      "threshold": 0.24699772305278267,
+      "control": {
+        "forward_gaps": [
+          0.35,
+          0.15
+        ],
+        "rates_per_g2": [
+          0.03711284015729877,
+          0.0
+        ],
+        "allowed": [
+          true,
+          false
+        ],
+        "asymptotic_capture": 0.5
+      },
+      "all_roots_threshold": [
+        0.24699772305278267,
+        0.24699772305278117,
+        0.24699772305278114,
+        0.2469977230527816
+      ],
+      "massless_comparison": {
+        "forward_gaps": [
+          0.35,
+          0.15
+        ],
+        "rates_per_g2": [
+          0.049281861284020366,
+          0.023342091377030357
+        ],
+        "allowed": [
+          true,
+          true
+        ],
+        "asymptotic_capture": 1.0
+      },
+      "lower_gap_sufficient_condition": "epsilon/hbar - Omega > sqrt(m0^2 + I_K/ell_H^2)",
+      "static_moment_per_g2": [
+        0.0297113079992907,
+        0.02971130799929062
+      ],
+      "shared_bath_controls": [
+        {
+          "clock_Gamma_plus_t": 0.0,
+          "capture": 0.0,
+          "formula": 0.0,
+          "trace": 0.9999999999999998
+        },
+        {
+          "clock_Gamma_plus_t": 1.0,
+          "capture": 0.19673467014037405,
+          "formula": 0.1967346701436833,
+          "trace": 0.9999999999999996
+        },
+        {
+          "clock_Gamma_plus_t": 10.0,
+          "capture": 0.49663102649580987,
+          "formula": 0.49663102650045726,
+          "trace": 0.9999999999999998
+        },
+        {
+          "clock_Gamma_plus_t": 40.0,
+          "capture": 0.49999999896941805,
+          "formula": 0.4999999989694232,
+          "trace": 1.0
+        }
+      ],
+      "hashes": {
+        "verify_ffl_hrc_calibrated_hodge_defect_parent_functional.py": "16aeb9e5edd1cd2c165ad285c509a68bd97911323c2a9ea13d800bd2573fc973",
+        "chdf_brac_reservoir_support.py": "f9c2b6e839b6b8bc768aaef97bc309a7002ee7df912297118503c2d9afa3236e",
+        "chdf_terminal_bridge_audit.py": "05a702d1b70dbf5b4562bf1780a512aa54e349c81fdd5ee14dcab6cd9cb0c2bc",
+        "chdf_latched_bath_descent.py": "ac9dc6334d271db7ec08c10287482ffb4889235820c6860b8e719b311d18b88f"
+      },
+      "numpy_version": "2.2.6",
+      "premises": [
+        "selected JCSEL/EBRP/BRAC field branch, not merely the static CHDF reduct",
+        "flat noncompact 3D stationary inertial comparison, c=hbar=ell_H=1, m0=0",
+        "canonical vacuum connected fluctuations, no coupled mean-field drive",
+        "linear smeared field coupling and resolved weak-coupling secular limit",
+        "old declared apparatus gaps .35 and .15, not physical Tau predictions"
+      ],
+      "nonclaims": [
+        "nonzero EBRP field fixes its connected two-point state",
+        "compact spatial domains automatically have continuous spectrum",
+        "finite-time switching, acceleration or driven states obey this same cutoff",
+        "50 percent measured efficiency or exact finite-coupling asymptote",
+        "Nature-selected bath, physical coupling, apparatus gap or Q_OS"
+      ]
+    },
+    "chdf_brac_contact_descent": {
+      "status": "conditional BRAC contact variation and vacuum pair-support audit",
+      "I_K": 0.061007875193259134,
+      "shape_derivative": -1.063413770249088,
+      "scale_derivative": 5.551115123125783e-16,
+      "root_shape_derivatives": [
+        -1.063413770249088,
+        -1.0634137702490833,
+        -1.0634137702490827,
+        -1.0634137702490847
+      ],
+      "single_threshold": 0.24699772305278267,
+      "pair_threshold": 0.49399544610556534,
+      "spectrum": [
+        {
+          "omega": 0.15,
+          "rate_per_b0_squared": 0.0
+        },
+        {
+          "omega": 0.35,
+          "rate_per_b0_squared": 0.0
+        },
+        {
+          "omega": 0.49399544610556534,
+          "rate_per_b0_squared": 0.0
+        },
+        {
+          "omega": 0.6,
+          "rate_per_b0_squared": 4.581477090951655e-06
+        },
+        {
+          "omega": 1.0,
+          "rate_per_b0_squared": 0.00010088497305854218
+        }
+      ],
+      "old_latch_bands_supported": [
+        false,
+        false
+      ],
+      "premises": [
+        "selected BRAC real scalar component at fixed metric and Z",
+        "source-owned observer displacement into K remains required",
+        "flat stationary vacuum, Wick square, c=hbar=ell_H=1, m0=0",
+        "Gaussian spatial profile is a comparison, not a source result"
+      ],
+      "nonclaims": [
+        "LG shape coordinate is the physical latch coordinate",
+        "nonzero classical EBRP field selects a quantum state",
+        "pair threshold applies to driven or occupied states",
+        "physical rates, dispersive renormalization or Q_OS selected"
+      ],
+      "hashes": {
+        "verify_ffl_hrc_calibrated_hodge_defect_parent_functional.py": "16aeb9e5edd1cd2c165ad285c509a68bd97911323c2a9ea13d800bd2573fc973",
+        "chdf_brac_contact_descent.py": "de0d6d16e53b3ff77dffc612dbf29ab7c90980db37423d56f9cfe9428f84b9f9",
+        "chdf_terminal_bridge_audit.py": "05a702d1b70dbf5b4562bf1780a512aa54e349c81fdd5ee14dcab6cd9cb0c2bc",
+        "chdf_brac_reservoir_support.py": "f9c2b6e839b6b8bc768aaef97bc309a7002ee7df912297118503c2d9afa3236e"
+      }
+    },
+    "chdf_coherent_observer_resolution": {
+      "status": "conditional minimum-fluctuation state and optimal information bound",
+      "source_action_in_declared_unit": 0.08038198210311276,
+      "occupation_at_declared_unit_ratio_one": 0.08038198210311276,
+      "coherent_encoding_success": 0.517917802567921,
+      "mean_only_ambiguity": "displaced vacuum and displaced number state have same mean, different excess energy",
+      "certificate_smallest_slack": 0.0,
+      "loss_controls": [
+        {
+          "transmission": 0.0,
+          "success": 0.25
+        },
+        {
+          "transmission": 0.25,
+          "success": 0.3806479919722277
+        },
+        {
+          "transmission": 0.5,
+          "success": 0.4374988902434646
+        },
+        {
+          "transmission": 1.0,
+          "success": 0.517917802567921
+        }
+      ],
+      "finite_state_controls": [
+        {
+          "excitation": 0,
+          "mean_real": 0.29999999999999993,
+          "mean_imag": 0.2,
+          "energy": 0.13,
+          "excess": 1.993096074626562e-33,
+          "fidelity_to_coherent": 1.0
+        },
+        {
+          "excitation": 1,
+          "mean_real": 0.29999999999999993,
+          "mean_imag": 0.19999999999999993,
+          "energy": 1.13,
+          "excess": 1.0,
+          "fidelity_to_coherent": 3.0814879110195774e-33
+        },
+        {
+          "excitation": 2,
+          "mean_real": 0.29999999999999977,
+          "mean_imag": 0.20000000000000018,
+          "energy": 2.13,
+          "excess": 2.0,
+          "fidelity_to_coherent": 1.2307896050849679e-33
+        }
+      ],
+      "premises": [
+        "positive finite harmonic mode packet and fixed canonical means",
+        "free/asymptotic preparation, not the ground state of the interacting observer-field Hamiltonian",
+        "no excess fluctuation energy is an additional quantum-lift premise",
+        "one common degenerate mode/phase frame and four equal-prior local role signals",
+        "uniform pure loss is a comparison, not the derived physical observer channel",
+        "mode/clock energy calibration is not fixed by static CHDF action"
+      ],
+      "nonclaims": [
+        "four independent universe seeds",
+        "coherent code equals one-particle leaf code",
+        "optimal POVM has a physical stable implementation",
+        "measured accuracy, physical Q_OS, Nature-selected state or detector"
+      ],
+      "hashes": {
+        "verify_ffl_hrc_calibrated_hodge_defect_parent_functional.py": "16aeb9e5edd1cd2c165ad285c509a68bd97911323c2a9ea13d800bd2573fc973",
+        "chdf_coherent_observer_resolution.py": "d5b74c7c551581b7a911d0b8b63e42b5c541d55f1441e87857a083e091d3c252",
+        "chdf_leaf_observer_candidate.py": "50527a58c39df67c04342383ee6cb568a23af9ecd908ae4b78352c08907b7793"
+      }
+    },
+    "chdf_joint_ground_observer": {
+      "status": "conditional interacting harmonic state; no actual observer or multiwell ground claim",
+      "radial": {
+        "position_variance": 0.1865952800338323,
+        "momentum_variance": 1.9120326476671234,
+        "symplectic_nu": 0.5973075148742704,
+        "purity": 0.8370897528474038
+      },
+      "tangent": {
+        "position_variance": 0.16666666666666666,
+        "momentum_variance": 2.0,
+        "symplectic_nu": 0.5773502691896257,
+        "purity": 0.8660254037844387
+      },
+      "local_three_mode_purity": 0.627817314635553,
+      "global_purity_identity_error": 2.220446049250313e-16,
+      "position_cross_block": [
+        [
+          0.10207985456098062,
+          0.0,
+          0.0
+        ],
+        [
+          -6.866557053438818e-38,
+          0.0833333333333333,
+          -5.3488928190167e-20
+        ],
+        [
+          -1.2791522031911032e-20,
+          5.688754044076408e-20,
+          0.08333333333333336
+        ]
+      ],
+      "locality_controls": [
+        {
+          "hbar_in_declared_units": 1.0,
+          "probability_in_comparison_ball": 0.18974552836899916
+        },
+        {
+          "hbar_in_declared_units": 0.1,
+          "probability_in_comparison_ball": 0.9777474928464973
+        },
+        {
+          "hbar_in_declared_units": 0.01,
+          "probability_in_comparison_ball": 1.0
+        }
+      ],
+      "premises": [
+        "existing two-copy action at an already aligned root, ratio 16",
+        "positive kinetic/energy/clock bridge and canonical quantization",
+        "ground state of local quadratic Hamiltonian, not full multiwell potential",
+        "ball radius is a preexisting geometric comparison, not physical quantizer selection"
+      ],
+      "nonclaims": [
+        "local observer state is an independent pure vacuum",
+        "ground state preparation, permanent record or Q_OS derived",
+        "unit-scale harmonic control validates its own localization",
+        "parent M_tau is a dynamical coupled oscillator"
+      ],
+      "hashes": {
+        "verify_ffl_hrc_calibrated_hodge_defect_parent_functional.py": "16aeb9e5edd1cd2c165ad285c509a68bd97911323c2a9ea13d800bd2573fc973",
+        "chdf_joint_ground_observer.py": "e46d6f5d1dd8a2c2dcde7689be4ff87236241312b2f3e0674e88d2ddd372f188",
+        "chdf_finite_anchor_spectral_descent.py": "9296dcdf57b625510b2e5b7e87b9614566a37ff3c7ea2e3099529602ea281403"
+      }
+    }
+  }
+}
