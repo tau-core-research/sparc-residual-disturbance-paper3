@@ -1,0 +1,51 @@
+{
+  "date": "2026-09-18",
+  "ledger": [
+    [
+      "joint instrument",
+      "RQM59; Foundation VI and TD-II",
+      "supplied joint state, unitary, complete Kraus family, stable Q_OS",
+      "representation and correlated-input boundary"
+    ],
+    [
+      "source selection",
+      "RQM70--72; Foundation IV/TD-0",
+      "single-copy full symmetry plus explicit loading",
+      "conditional restriction, not common-source necessity"
+    ],
+    [
+      "finite observer",
+      "RQM74; Foundation VI/TD-II",
+      "declared Pauli incidence, preparation and calibration",
+      "proof, symmetric countermodel, access and noise"
+    ],
+    [
+      "external mechanism",
+      "RQM62--73,75",
+      "photonic/QILGST audits and acoustic primary paper",
+      "standard-compatible precedent, not Tau validation"
+    ],
+    [
+      "temporal completion",
+      "temporal628--630; Foundation V/seed-body",
+      "specified drag/inertia/outgoing support",
+      "distinct laws and approximation controls"
+    ]
+  ],
+  "inputs": {
+    "docs/tau_rqm_instrument_to_record_bridge_001.md": "41e5a81af4bd777819e2108ee94cad48eb8e58ebebed743bd6eb74f3e8456271",
+    "docs/tau_core_temporal_seed_base_morphogenesis_branch_001.md": "25b07abd9761d3a02c4e0a98458329f46d5101ba5c7a9d44f3e5ef3b15edf6d8",
+    "scripts/tau_complete_observer_toy.py": "4675a9d944a4a84d18972720684ee8f8f8bd23bccb1beafeedc239c467ec0752",
+    "tests/test_tau_observer_swap.py": "b541e8c9ed2505418987ed5e599f513c1a8c5f441fcbfcbc2bea03d0ffbf9983"
+  },
+  "tau_specific_evidence": false,
+  "empirical_scores_changed": false,
+  "manuscripts": [
+    {
+      "path": "paper3_submission_source/main.tex",
+      "roles": [
+        "scope"
+      ]
+    }
+  ]
+}
