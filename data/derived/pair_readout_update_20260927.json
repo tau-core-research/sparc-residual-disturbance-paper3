@@ -1,0 +1,586 @@
+{
+  "date": "2026-09-27",
+  "ledger": [
+    [
+      "scalar/Dirac rates",
+      "P4 common-source assembly",
+      "canonical ungauged scalar and stipulated Dirac module; g=1 benchmark",
+      "no physical species or occupation"
+    ],
+    [
+      "relative coherence and access",
+      "P4; Foundation VI; TD-II",
+      "isolated resonant RWA, ideal access or declared Markov loss",
+      "finite-window visibility, not detector selection"
+    ],
+    [
+      "physical realization",
+      "Foundation IV; TD-0; Foundation V",
+      "preparation, reservoir, calibration and Q_OS open",
+      "no Nature or empirical promotion"
+    ]
+  ],
+  "source_sha256": {
+    "docs/tau_core_p4_nonabelian_particle_common_source_assembly_001.md": "5d29352b88a506327220cdc9d2e6169da92ea6c02e24e295dcb1c8b4a9fea1b5",
+    "source_material/tau_core_foundations/numerical_checks/tau_core_p4_pair_preparation_kinematics_v01.json": "7e9a7f7835bff0c8eae29cb77d869bb9d71264942a641a3c4192309654c18bc7",
+    "source_material/tau_core_foundations/numerical_checks/tau_core_p4_pair_preparation_kinematics_v01.py": "195fe8113231581db6078b7d11cf58349930e172f6478d895d792e465ac58286"
+  },
+  "empirical_scores_changed": false,
+  "tau_specific_evidence": false,
+  "pump_widths": [
+    {
+      "mass": 1.014534783126991,
+      "fermion_partial_width": 0.10031706880073649,
+      "width_over_mass": 0.09887987131554032,
+      "scope": "Sum of all retained fermion final blocks at g=1, not a total width including scalar channels or measured detector efficiency."
+    },
+    {
+      "mass": 1.2495698647916826,
+      "fermion_partial_width": 0.12080077086656821,
+      "width_over_mass": 0.09667388296588526,
+      "scope": "Sum of all retained fermion final blocks at g=1, not a total width including scalar channels or measured detector efficiency."
+    },
+    {
+      "mass": 1.3236106083447678,
+      "fermion_partial_width": 0.15789991219818472,
+      "width_over_mass": 0.11929483732050575,
+      "scope": "Sum of all retained fermion final blocks at g=1, not a total width including scalar channels or measured detector efficiency."
+    },
+    {
+      "mass": 1.56738627516703,
+      "fermion_partial_width": 0.1482601449273456,
+      "width_over_mass": 0.09459068723282403,
+      "scope": "Sum of all retained fermion final blocks at g=1, not a total width including scalar channels or measured detector efficiency."
+    }
+  ],
+  "finite_window_control": {
+    "maximum_integral_identity_error": 5.470735904407893e-16,
+    "windows": [
+      {
+        "gamma_over_G": 0.1,
+        "G_times_T": 0.25,
+        "coherent_emission_probability": 0.015369096179294495,
+        "dephased_emission_probability": 0.012346638052960157,
+        "effect_real": [
+          [
+            0.00050957406596297,
+            0.0
+          ],
+          [
+            0.0,
+            0.024183702039957344
+          ]
+        ],
+        "effect_imag": [
+          [
+            0.0,
+            0.0030224581263343375
+          ],
+          [
+            -0.0030224581263343375,
+            0.0
+          ]
+        ]
+      },
+      {
+        "gamma_over_G": 0.1,
+        "G_times_T": 0.5,
+        "coherent_emission_probability": 0.03561914251058418,
+        "dephased_emission_probability": 0.02440985580400279,
+        "effect_real": [
+          [
+            0.0038901861384779135,
+            0.0
+          ],
+          [
+            0.0,
+            0.044929525469527665
+          ]
+        ],
+        "effect_imag": [
+          [
+            0.0,
+            0.01120928670658139
+          ],
+          [
+            -0.01120928670658139,
+            0.0
+          ]
+        ]
+      },
+      {
+        "gamma_over_G": 0.1,
+        "G_times_T": 1.0,
+        "coherent_emission_probability": 0.08161300926750237,
+        "dephased_emission_probability": 0.047928461812921375,
+        "effect_real": [
+          [
+            0.026291755669650696,
+            0.0
+          ],
+          [
+            0.0,
+            0.06956516795619205
+          ]
+        ],
+        "effect_imag": [
+          [
+            0.0,
+            0.03368454745458099
+          ],
+          [
+            -0.03368454745458099,
+            0.0
+          ]
+        ]
+      },
+      {
+        "gamma_over_G": 0.1,
+        "G_times_T": 2.0,
+        "coherent_emission_probability": 0.13167805207699967,
+        "dephased_emission_probability": 0.09422628785857978,
+        "effect_real": [
+          [
+            0.11133271604783479,
+            0.0
+          ],
+          [
+            0.0,
+            0.07711985966932478
+          ]
+        ],
+        "effect_imag": [
+          [
+            0.0,
+            0.03745176421841989
+          ],
+          [
+            -0.03745176421841989,
+            0.0
+          ]
+        ]
+      },
+      {
+        "gamma_over_G": 0.1,
+        "G_times_T": 4.0,
+        "coherent_emission_probability": 0.20409437798276153,
+        "dephased_emission_probability": 0.1806839871512299,
+        "effect_real": [
+          [
+            0.16041981986308995,
+            0.0
+          ],
+          [
+            0.0,
+            0.20094815443936986
+          ]
+        ],
+        "effect_imag": [
+          [
+            0.0,
+            0.023410390831531624
+          ],
+          [
+            -0.023410390831531624,
+            0.0
+          ]
+        ]
+      },
+      {
+        "gamma_over_G": 1.0,
+        "G_times_T": 0.25,
+        "coherent_emission_probability": 0.13778578642745143,
+        "dephased_emission_probability": 0.11074220107805555,
+        "effect_real": [
+          [
+            0.004688939159591565,
+            0.0
+          ],
+          [
+            0.0,
+            0.21679546299651953
+          ]
+        ],
+        "effect_imag": [
+          [
+            0.0,
+            0.027043585349395882
+          ],
+          [
+            -0.027043585349395882,
+            0.0
+          ]
+        ]
+      },
+      {
+        "gamma_over_G": 1.0,
+        "G_times_T": 0.5,
+        "coherent_emission_probability": 0.2886829831098732,
+        "dephased_emission_probability": 0.19870462820150242,
+        "effect_real": [
+          [
+            0.03303173119948144,
+            0.0
+          ],
+          [
+            0.0,
+            0.3643775252035234
+          ]
+        ],
+        "effect_imag": [
+          [
+            0.0,
+            0.0899783549083708
+          ],
+          [
+            -0.0899783549083708,
+            0.0
+          ]
+        ]
+      },
+      {
+        "gamma_over_G": 1.0,
+        "G_times_T": 1.0,
+        "coherent_emission_probability": 0.5581543930936204,
+        "dephased_emission_probability": 0.33857432268528204,
+        "effect_real": [
+          [
+            0.19232426928611124,
+            0.0
+          ],
+          [
+            0.0,
+            0.48482437608445283
+          ]
+        ],
+        "effect_imag": [
+          [
+            0.0,
+            0.21958007040833827
+          ],
+          [
+            -0.21958007040833827,
+            0.0
+          ]
+        ]
+      },
+      {
+        "gamma_over_G": 1.0,
+        "G_times_T": 2.0,
+        "coherent_emission_probability": 0.7604550275441196,
+        "dephased_emission_probability": 0.5893424025900369,
+        "effect_real": [
+          [
+            0.6527840975172218,
+            0.0
+          ],
+          [
+            0.0,
+            0.525900707662852
+          ]
+        ],
+        "effect_imag": [
+          [
+            0.0,
+            0.1711126249540828
+          ],
+          [
+            -0.1711126249540828,
+            0.0
+          ]
+        ]
+      },
+      {
+        "gamma_over_G": 1.0,
+        "G_times_T": 4.0,
+        "coherent_emission_probability": 0.8888138086947912,
+        "dephased_emission_probability": 0.8566150194529192,
+        "effect_real": [
+          [
+            0.8218752478775326,
+            0.0
+          ],
+          [
+            0.0,
+            0.8913547910283058
+          ]
+        ],
+        "effect_imag": [
+          [
+            0.0,
+            0.03219878924187192
+          ],
+          [
+            -0.03219878924187192,
+            0.0
+          ]
+        ]
+      },
+      {
+        "gamma_over_G": 4.0,
+        "G_times_T": 0.25,
+        "coherent_emission_probability": 0.3934693402873665,
+        "dephased_emission_probability": 0.31765300782328737,
+        "effect_real": [
+          [
+            0.014387677966970602,
+            0.0
+          ],
+          [
+            0.0,
+            0.6209183376796041
+          ]
+        ],
+        "effect_imag": [
+          [
+            0.0,
+            0.07581633246407916
+          ],
+          [
+            -0.07581633246407916,
+            0.0
+          ]
+        ]
+      },
+      {
+        "gamma_over_G": 4.0,
+        "G_times_T": 0.5,
+        "coherent_emission_probability": 0.6321205588285577,
+        "dephased_emission_probability": 0.4481808382428365,
+        "effect_real": [
+          [
+            0.08030139707139416,
+            0.0
+          ],
+          [
+            0.0,
+            0.8160602794142788
+          ]
+        ],
+        "effect_imag": [
+          [
+            0.0,
+            0.18393972058572117
+          ],
+          [
+            -0.18393972058572117,
+            0.0
+          ]
+        ]
+      },
+      {
+        "gamma_over_G": 4.0,
+        "G_times_T": 1.0,
+        "coherent_emission_probability": 0.8646647167633873,
+        "dephased_emission_probability": 0.593994150290162,
+        "effect_real": [
+          [
+            0.3233235838169366,
+            0.0
+          ],
+          [
+            0.0,
+            0.8646647167633873
+          ]
+        ],
+        "effect_imag": [
+          [
+            0.0,
+            0.27067056647322535
+          ],
+          [
+            -0.27067056647322535,
+            0.0
+          ]
+        ]
+      },
+      {
+        "gamma_over_G": 4.0,
+        "G_times_T": 2.0,
+        "coherent_emission_probability": 0.9816843611112658,
+        "dephased_emission_probability": 0.8351592500013925,
+        "effect_real": [
+          [
+            0.7618966944464558,
+            0.0
+          ],
+          [
+            0.0,
+            0.9084218055563291
+          ]
+        ],
+        "effect_imag": [
+          [
+            0.0,
+            0.14652511110987337
+          ],
+          [
+            -0.14652511110987337,
+            0.0
+          ]
+        ]
+      },
+      {
+        "gamma_over_G": 4.0,
+        "G_times_T": 4.0,
+        "coherent_emission_probability": 0.9996645373720975,
+        "dephased_emission_probability": 0.9889297332792171,
+        "effect_real": [
+          [
+            0.986246032255997,
+            0.0
+          ],
+          [
+            0.0,
+            0.9916134343024372
+          ]
+        ],
+        "effect_imag": [
+          [
+            0.0,
+            0.010734804092880376
+          ],
+          [
+            -0.010734804092880376,
+            0.0
+          ]
+        ]
+      },
+      {
+        "gamma_over_G": 8.0,
+        "G_times_T": 0.25,
+        "coherent_emission_probability": 0.5342569386384111,
+        "dephased_emission_probability": 0.4363933184482645,
+        "effect_real": [
+          [
+            0.020773395806885975,
+            0.0
+          ],
+          [
+            0.0,
+            0.852013241089643
+          ]
+        ],
+        "effect_imag": [
+          [
+            0.0,
+            0.0978636201901466
+          ],
+          [
+            -0.0978636201901466,
+            0.0
+          ]
+        ]
+      },
+      {
+        "gamma_over_G": 8.0,
+        "G_times_T": 0.5,
+        "coherent_emission_probability": 0.6919247966669619,
+        "dephased_emission_probability": 0.5191848765705365,
+        "effect_real": [
+          [
+            0.09136661604997776,
+            0.0
+          ],
+          [
+            0.0,
+            0.9470031370910952
+          ]
+        ],
+        "effect_imag": [
+          [
+            0.0,
+            0.17273992009642536
+          ],
+          [
+            -0.17273992009642536,
+            0.0
+          ]
+        ]
+      },
+      {
+        "gamma_over_G": 8.0,
+        "G_times_T": 1.0,
+        "coherent_emission_probability": 0.7986558970764293,
+        "dephased_emission_probability": 0.6156274330415925,
+        "effect_real": [
+          [
+            0.27812574570456383,
+            0.0
+          ],
+          [
+            0.0,
+            0.9531291203786211
+          ]
+        ],
+        "effect_imag": [
+          [
+            0.0,
+            0.18302846403483683
+          ],
+          [
+            -0.18302846403483683,
+            0.0
+          ]
+        ]
+      },
+      {
+        "gamma_over_G": 8.0,
+        "G_times_T": 2.0,
+        "coherent_emission_probability": 0.8857571484167561,
+        "dephased_emission_probability": 0.7718497594614147,
+        "effect_real": [
+          [
+            0.5741693950748216,
+            0.0
+          ],
+          [
+            0.0,
+            0.9695301238480076
+          ]
+        ],
+        "effect_imag": [
+          [
+            0.0,
+            0.11390738895534158
+          ],
+          [
+            -0.11390738895534158,
+            0.0
+          ]
+        ]
+      },
+      {
+        "gamma_over_G": 8.0,
+        "G_times_T": 4.0,
+        "coherent_emission_probability": 0.9609223610008092,
+        "dephased_emission_probability": 0.9218448345367929,
+        "effect_real": [
+          [
+            0.8541604433226974,
+            0.0
+          ],
+          [
+            0.0,
+            0.9895292257508884
+          ]
+        ],
+        "effect_imag": [
+          [
+            0.0,
+            0.03907752646401625
+          ],
+          [
+            -0.03907752646401625,
+            0.0
+          ]
+        ]
+      }
+    ],
+    "late_effect": "identity on occupied sector for finite G>0 and Gamma>0",
+    "scope": "Conditional emission probabilities, not registered clicks; Markov reservoir, constant G/Gamma and RWA assumed, no source-selected detector or timing."
+  },
+  "manuscripts": [
+    "paper3_submission_source/main.tex"
+  ]
+}
