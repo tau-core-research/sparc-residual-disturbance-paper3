@@ -1346,14 +1346,18 @@ def write_main_tex(
 \usepackage[margin=1in]{{geometry}}
 \usepackage{{graphicx}}
 \usepackage{{booktabs}}
+\PassOptionsToPackage{{hyphens}}{{url}}
 \usepackage{{hyperref}}
+\IfFileExists{{xurl.sty}}{{\usepackage{{xurl}}}}{{}}
 \usepackage{{amsmath}}
+\usepackage{{amssymb}}
 \usepackage{{float}}
 \usepackage{{array}}
+\emergencystretch=2em
 
 \title{{A reproducible candidate framework for projection-sensitive residual structure in SPARC rotation curves}}
 \author{{Jozsef Olcsak}}
-\date{{2026\\Last revised: 30 August 2026}}
+\date{{2026\\Last revised: 14 November 2026}}
 
 \begin{{document}}
 \maketitle
@@ -1385,7 +1389,7 @@ r_{{m,gi}}=\left|\log V_{{\rm obs},gi}-\log V_{{m,gi}}\right|,
 \]
 with galaxy-level burden
 \[
-{\rm RMS}_{{m,g}}=\sqrt{{1\over N_g}\sum_i r_{{m,gi}}^2}.
+{\rm RMS}_{{m,g}}=\sqrt{{\frac{{1}}{{N_g}}\sum_i r_{{m,gi}}^2}}.
 \]
 The TPG-specific excess used for candidate triage is
 \[
@@ -1468,16 +1472,16 @@ STRESS_ROWS
 
 One covariate in this table, W\_tau\_eff\_abs\_v01, is intentionally treated as an internal diagnostic rather than independent evidence. Its correlation with projection residual burden is very high, and the variable is not allowed to support any validation claim until a leakage audit proves that it is not partly defined from the same residual endpoint. In the present manuscript it is therefore a bookkeeping stress term only.
 
-\section{{Endpoint-conditioned $S_\tau$ diagnostic}}
+\section{{Endpoint-conditioned \texorpdfstring{{$S_\tau$}}{{S\_tau}} diagnostic}}
 
 The descriptive projection-sensitive residual form can be written operationally as
 \[
-F_\tau(a_N,R)=1+S_\tau(R)\,\alpha\ln\left(1+{a_0\over a_N}\right).
+F_\tau(a_N,R)=1+S_\tau(R)\,\alpha\ln\!\left(1+\frac{{a_0}}{{a_N}}\right).
 \]
-In this section we do not fit a new model. We algebraically invert this expression after substituting the observed-to-baryonic velocity ratio at each radius. For each SPARC point with a usable baryonic baseline, the endpoint-conditioned descriptive value is therefore
+Here $\alpha = 0.360$ is the pre-frozen empirical benchmark inherited from Paper~1, which in the subsequent upstream Three-Pillar canonical reduction is derived parameter-freely ($k = 0$) from $K_4$/Clifford projector geometry ($r_{{\mathrm{{seed}}}} = 1/4$) as $\alpha_{{\mathrm{{OCSR}}}} = \frac{{5\sqrt{{3}}}}{{24}} \approx 0.360844$. In this section we do not fit a new model. We algebraically invert this expression after substituting the observed-to-baryonic velocity ratio at each radius. For each SPARC point with a usable baryonic baseline, the endpoint-conditioned descriptive value is therefore
 \[
-S_{\tau,\mathrm{req}}(R)=
-{V_{\rm obs}(R)/V_N(R)-1\over \alpha\ln\left(1+a_0/a_N(R)\right)}.
+S_{{\tau,\mathrm{{req}}}}(R)=
+\frac{{V_{{\rm obs}}(R)/V_N(R)-1}}{{\alpha\ln\!\left(1+a_0/a_N(R)\right)}}.
 \]
 Here $S_{{\tau,\mathrm{{req}}}}$ is the value that would be required for the operational form above to absorb the local residual. This is an inverse residual-absorption diagnostic. It is descriptive and endpoint-conditioned. It uses the measured endpoint and therefore is not a predictive field reconstruction, not independent evidence for a physical theory, and not a validation of the projection ansatz. Its role is only to ask what kind of future predictive rule would be needed: a galaxy-level constant, a radial function, an acceleration function, or an environment-coupled function.
 
@@ -1508,7 +1512,7 @@ S_TAU_COMPARISON_ROWS
 
 \section{{Small-residual controls}}
 
-The same diagnostic can be read from the opposite direction. The lowest-quartile TPG/projection RMS objects form a small-residual control set of 12 galaxies, with median projection RMS $0.099854397$ and median required $S_\tau=1.126924435$. These objects ask why the TPG/projection baseline can remain close to the measured curve, rather than why it fails.
+The same diagnostic can be read from the opposite direction. The lowest-quartile TPG/projection RMS objects form a small-residual control set of 12 galaxies, with median projection RMS $0.100$ and median required $S_\tau=1.127$. These objects ask why the TPG/projection baseline can remain close to the measured curve, rather than why it fails.
 
 The audit gives a cautious answer. One object is classified as a possible local-capture case, where the local TPG/projection baseline may already absorb the dominant local projection-sensitive structure. Three objects are better described as cases where the broader low-acceleration family tracks the measurement well. The remaining eight small-residual objects still carry unresolved radial or external residual structure. Thus good TPG agreement is useful control context, not validation. These rows must remain paired with the high-residual candidates in any future source-native endpoint test.
 
@@ -1530,9 +1534,9 @@ RMOND is retained only as a roadmap comparator. The current packet does not cont
 
 \section{{Post-repair status and next gate}}
 
-After the initial seed construction, one repaired branch, DDO168, was rescored under frozen rules as a ladder-consistency example rather than as a primary endpoint. The repaired DDO168 input layer removes the previous mass-closure caveat and gives a single-object specificity-support result: empirical RAR-like remains the best low-acceleration score, but fixed TPG lies within the frozen tie tolerance of the best low-acceleration baseline, with $\Delta_{\rm TPG-best}=0.001509618$ in RMS-log units. The Newtonian baryonic score is worse than fixed TPG by $0.089064802$, and the inverse required-$S_\tau$ diagnostic remains strongly radial, with Pearson $r=0.927628669$.
+After the initial seed construction, one repaired branch, DDO168, was rescored under frozen rules as a ladder-consistency example rather than as a primary endpoint. The repaired DDO168 input layer removes the previous mass-closure caveat and gives a single-object specificity-support result: empirical RAR-like remains the best low-acceleration score, but fixed TPG lies within the frozen tie tolerance of the best low-acceleration baseline, with $\Delta_{{\rm TPG-best}}=0.0015$ in RMS-log units. The Newtonian baryonic score is worse than fixed TPG by $0.0891$, and the inverse required-$S_\tau$ diagnostic remains strongly radial, with Pearson $r=0.928$.
 
-This result is useful because it places DDO168 beside visible anchors and controls rather than treating it as an isolated success. DDO126 is a positive fixed-TPG public endpoint, DDO50 is a quiet Newtonian-best control with near-zero required-$S_\tau$, DDO154 is a near-one control/countercontrol, and NGC2366 is a caveated lower-amplitude radial candidate. DDO168 therefore strengthens the candidate ladder as a specificity-support example. It is not validation evidence by itself, and it does not select TPG over RAR/MOND as a gravity model.
+This result is useful because it places DDO168 beside visible anchors and controls rather than treating it as an isolated success. DDO126 is a positive fixed-TPG public endpoint, DDO50 is a quiet Newtonian-best control with near-zero required-$S_\tau$, DDO154 is a near-one control/\allowbreak countercontrol, and NGC2366 is a caveated lower-amplitude radial candidate. DDO168 therefore strengthens the candidate ladder as a specificity-support example. It is not validation evidence by itself, and it does not select TPG over RAR/MOND as a gravity model.
 
 The paper can now be written as a narrow candidate-registry paper with a frozen local negative result for the declared projection contrast. The eight-object clean endpoint remains a complementary candidate/control branch, but another rescore of the same labels cannot raise the claim. A stronger result requires a source-frozen external matched-tracer endpoint with an explicit common velocity convention and without treating a kinematically selected cohort as independent blind validation.
 
@@ -1571,7 +1575,7 @@ The original residual association is an unconditional prevalidation result. We t
 
 For each residual family we use the same five-dimensional block: RMS, outer/inner ratio, radius correlation, low-acceleration mean, and fraction above the fixed 0.15 threshold. Predictions are produced by repeated stratified five-fold cross-validation. Three regularization strengths, $C\in\{{0.03,0.3,3\}}$, are reported without selecting the best one. The key specificity comparison first supplies the MOND/RAR-common descriptor
 \[
-Z_{\rm std}={1\over2}(Z_{\rm MOND}+Z_{\rm RAR})
+Z_{{\rm std}}=\frac{{1}}{{2}}(Z_{{\rm MOND}}+Z_{{\rm RAR}})
 \]
 and then asks whether the projection contrast
 \[
@@ -1601,6 +1605,69 @@ The morphology representation itself is now part of that freeze. Let $\Phi_k$ be
 
 The most useful interpretation is modest. TPG success controls show where the local projection baseline is already adequate. TPG divergence follow-ups show where the residual has structure that might encode missing observer/environment-sensitive information, but these are exactly the cases where ordinary systematics can also enter. A candidate becomes interesting only when three facts hold together: the TPG residual diverges in a structured radial way, the divergence is not shared by all low-acceleration baselines, and the object has a plausible projection-sensitive residual pattern that is not reducible to distance, inclination, beam smearing, or non-circular motion.
 
+\section{{Upstream Interface and Canonical Three-Pillar Bridge}}
+\label{{sec:upstream-interface}}
+
+% BEGIN OBSERVER UPDATE 20260914
+\subsection{{Observer Realization: Inherited Results and Physical Boundary}}
+\label{{sec:observer-update-20260914}}
+The current observer programme distinguishes a conditional mathematical
+construction from an occupied physical measuring system. The source order
+remains base plus one universal seed, stabilized morphological response,
+observer--source restriction, shared descriptor, and resolved terminal
+readouts. Neither a detector nor an empirical residual constructs the parent
+body backwards. Dynamics below concern downstream subsystems only.
+
+Technical Paper TD-II (\emph{{Body-to-Readout Derivation}}) owns the following
+results. The existing joint source action fixes static and frequency-dependent
+response together. Variation of the BRAC potential couples to the field
+square; a linear field coupling is a distinct comparator unless derived by
+expansion about an occupied background. Fixed canonical means select a unique
+coherent state in a finite positive harmonic packet only if there is no excess
+fluctuation energy. This is a free/asymptotic preparation statement, not the
+ground state of an interacting detector. For the existing coupled harmonic
+pair, the joint ground is pure but either local subsystem is mixed, with its
+covariance fixed by the complete joint Hamiltonian.
+
+These are conditional derivations and internal numerical checks. The actual
+observer--source context, physical preparation process, kinetic/energy
+calibration and stable operational resolution remain unproved. The existing
+ORA-T1 selector conditionally chooses stable quantizers when the occupied
+context, admissible partition family and positive closure barrier are supplied;
+it does not establish those physical premises. A computed ground state is not
+a preparation mechanism, and a covariance or optimal abstract measurement is
+not an implemented stable quantizer $Q_{{OS}}$.
+
+\paragraph{{Ownership and use.}}
+Technical Paper TD-II (\emph{{Body-to-Readout Derivation}}) carries the consolidated
+contact, state, and covariance mathematics, while Foundation Papers IV, V, and VI
+retain physical-selection, clock-descent, and quantum-readout ownership,
+respectively. This paper imports only the consequences within its scope. No
+observational dataset, baseline, frozen coefficient, score, or empirical
+conclusion is revised by this update.
+
+\paragraph{{Consequence for this paper.}}
+For galactic inference, these observer constructions do not derive a rotation-curve correction or identify a measured residual as a parent effect. Existing endpoint freezes and scores are unchanged.
+% END OBSERVER UPDATE 20260914
+
+% BEGIN STATE UPDATE 20260918
+\subsection{{Source Identification and Forward-Access Boundary}}
+The observer audit separates a conditional forward construction from physical source selection. A frozen body, occupied observer incidence, preparation, complete instrument, and stable resolution can determine records without selecting those inputs from Nature. Equal effects do not fix postmeasurement states, and symmetry within a chosen interaction family does not exclude other symmetric couplings.
+
+\paragraph{{Dependency and claim ownership.}}
+Foundation VI and Technical Paper TD-II (\emph{{Body-to-Readout Derivation}}) own the finite instrument/access proof; Foundation IV and TD-0 retain physical source selection; Foundation V, the temporal synthesis, and the seed--body companion own the gradient/inertial distinction. Canonical assumptions, countermodels, and calibration audits are archived at \url{{https://github.com/tau-core-research/tau-core-theory/blob/main/docs/tau_rqm_instrument_to_record_bridge_001.md}}. No physical seed, Nature occupation, or programme-exclusive observation is established by this interface, and all empirical endpoint definitions and scores remain unchanged.
+% END STATE UPDATE 20260918
+
+% BEGIN PAIR READOUT UPDATE 20260927
+\paragraph{{Imported result (CPR1).}}
+\href{{https://github.com/tau-core-research/tau-core-higgs-module-paper4/blob/main/paper4_full_derivation/full_derivation.pdf#nameddest=cpr1}}{{Paper 4, \emph{{Full Derivation Ledger for the Branch A Higgs Module}}}}, section ``Conditional source preparation and time-resolved access,'' Theorem CPR1(b,c), v1.0 (2026-09-28), is the sole proof owner.
+The imported access-specific result is not a galaxy rotation law or an empirical correction. The frozen galactic construction and every endpoint score remain unchanged; this finite quantum model cannot identify a galactic residual as a parent effect.
+Physical preparation, detector/clock calibration and stable $Q_{{OS}}$ remain assumptions; no Tau-exclusive observation follows.
+% END PAIR READOUT UPDATE 20260927
+
+\subsection{{Canonical Three-Pillar Reduction (2026-11-14)}}
+In the consolidated Three-Pillar canonical reduction of the upstream programme (Theorems U1--U4, F1--F4, \texttt{{COV-DIR}}, and \texttt{{HOMOG-K4}}), the symmetric $K_4$/Clifford projector lock uniquely fixes the seed ratio $r_{{\mathrm{{seed}}}} = 1/4$ and the orbital/collective logarithmic readout coefficient $\alpha_{{\mathrm{{OCSR}}}} = \frac{{5\sqrt{{3}}}}{{24}} \approx 0.360844$ with $k = 0$ free continuous parameters, leaving only the single ontic existence postulate \texttt{{POST-OCC-NU1}} (\texttt{{EAS-SNPR-N1}}). While this upstream reduction situates the inherited empirical benchmark $\alpha = 0.360$ within the $k = 0$ projector framework, all frozen Paper~3 candidate-triage diagnostics, retrospective proper-score outcomes, and non-validation claim boundaries remain strictly unchanged.
+
 \section{{Conclusion}}
 
 This paper establishes a reproducible candidate-search framework rather than merely proposing one. It carries forward the discipline learned from Papers 1 and 2: freeze the endpoint, compare against MOND/RAR baselines, name the systematics, and avoid promoting a diagnostic pattern into physical evidence. The repaired DDO168 branch, the external-support branch, and the DDO126/DDO50 candidate-ladder lock organize the residual candidates into a falsifiable target set. The retrospective audit adds a narrow negative result: the declared projection contrast supplies no stable positive predictive increment in the frozen 45-galaxy A/C packet. It does not establish that all projection-sensitive rotation information is absent.
@@ -1618,8 +1685,8 @@ The EDGE--CALIFA, LITTLE THINGS and PHANGS continuations have now been run far e
         r"r_{m,gi}=\left|\log V_{{\rm obs},gi}-\log V_{m,gi}\right|,",
     )
     tex = tex.replace(
-        r"{\rm RMS}_{m,g}=\sqrt{1\over N_g}\sum_i r_{m,gi}^2}.",
-        r"{\rm RMS}_{m,g}=\sqrt{{1\over N_g}\sum_i r_{m,gi}^2}.",
+        r"{\rm RMS}_{m,g}=\sqrt{\frac{1}{N_g}\sum_i r_{m,gi}^2}.",
+        r"{\rm RMS}_{{m,g}}=\sqrt{\frac{1}{N_g}\sum_i r_{{m,gi}}^2}.",
     )
     tex = tex.replace(
         r"\min\left({\rm RMS}_{\rm MOND},g},{\rm RMS}_{\rm RAR},g}\right).",
@@ -1634,13 +1701,17 @@ The EDGE--CALIFA, LITTLE THINGS and PHANGS continuations have now been run far e
         r"\Delta_{{\rm TPG-low},g}=",
     )
     tex = tex.replace(
-        r"\section{Required S_tau diagnostic}",
-        r"\section{Required $S_\tau$ diagnostic}",
+        r"\Delta_{\rm TPG-best}=",
+        r"\Delta_{{\rm TPG-best}}=",
     )
     tex = tex.replace(
         r"S_{\tau,\mathrm{req}(R)=",
         r"S_{\tau,\mathrm{req}}(R)=",
     )
+    tex = tex.replace(
+        r"r_{\mathrm{seed}",
+        r"r_{\mathrm{seed}}",
+    ).replace(r"r_{\mathrm{seed}}}", r"r_{\mathrm{seed}}")
     tex = tex.replace("SHORTLIST_ROWS", latex_table_shortlist(shortlist))
     tex = tex.replace("STRESS_ROWS", latex_stress_rows(stress))
     tex = tex.replace("S_TAU_COMPARISON_ROWS", latex_s_tau_comparison_rows(s_tau_comparison))
@@ -1654,10 +1725,6 @@ The EDGE--CALIFA, LITTLE THINGS and PHANGS continuations have now been run far e
         "AUDIT_DELTA_BRIER",
         f"{audit['primary_unique_projection_delta_brier_improvement']:+.3f}",
     )
-    # Source-owned publication update, kept during legacy regeneration.
-    if "% BEGIN OBSERVER UPDATE 20260914" not in tex:
-        block = (SOURCE / "observer_update_20260914.tex").read_text(encoding="utf-8")
-        tex = tex.replace(r"\end{document}", block + "\n" + r"\end{document}")
     (SOURCE / "main.tex").write_text(tex, encoding="utf-8")
 
 
@@ -1694,20 +1761,51 @@ def write_manifest(pdf_status: str) -> None:
 
 
 def compile_pdf() -> str:
-    if shutil.which("tectonic") is None:
+    import os
+    env = os.environ.copy()
+    tinytex_bin = "/Users/jolcsak/Library/TinyTeX/bin/universal-darwin"
+    if Path(tinytex_bin).exists() and tinytex_bin not in env.get("PATH", ""):
+        env["PATH"] = f"{tinytex_bin}:{env.get('PATH', '')}"
+    if shutil.which("tectonic", path=env.get("PATH")) is not None:
+        log = SOURCE / "tectonic_build.log"
+        result = subprocess.run(
+            ["tectonic", "main.tex"],
+            cwd=SOURCE,
+            env=env,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            check=False,
+        )
+        log.write_text(result.stdout, encoding="utf-8")
+        return "ready" if result.returncode == 0 else "blocked_compile_failed"
+    pdflatex = shutil.which("pdflatex", path=env.get("PATH"))
+    bibtex = shutil.which("bibtex", path=env.get("PATH"))
+    if pdflatex is None:
         return "blocked_tectonic_not_installed"
-    log = SOURCE / "tectonic_build.log"
-    result = subprocess.run(
-        ["tectonic", "main.tex"],
-        cwd=SOURCE,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        text=True,
-        check=False,
-    )
-    log.write_text(result.stdout, encoding="utf-8")
-    if result.returncode != 0:
-        return "blocked_compile_failed"
+    for cmd in [
+        [pdflatex, "-interaction=nonstopmode", "-halt-on-error", "main.tex"],
+        [bibtex, "main"] if bibtex else None,
+        [pdflatex, "-interaction=nonstopmode", "-halt-on-error", "main.tex"],
+        [pdflatex, "-interaction=nonstopmode", "-halt-on-error", "main.tex"],
+    ]:
+        if cmd is None:
+            continue
+        res = subprocess.run(
+            cmd,
+            cwd=SOURCE,
+            env=env,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            check=False,
+        )
+        if res.returncode != 0:
+            return "blocked_compile_failed"
+    for ext in (".aux", ".out", ".blg"):
+        aux_file = SOURCE / f"main{ext}"
+        if aux_file.exists():
+            aux_file.unlink()
     return "ready"
 
 

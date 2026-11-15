@@ -2,22 +2,22 @@
   "date": "2026-09-27",
   "ledger": [
     [
-      "scalar/Dirac rates",
+      "CPR1(a)--(c)",
+      "Paper 4 full derivation only",
+      "conditional resonant RWA / declared Markov loss",
+      "not Nature selection"
+    ],
+    [
+      "numerical input",
       "P4 common-source assembly",
-      "canonical ungauged scalar and stipulated Dirac module; g=1 benchmark",
-      "no physical species or occupation"
+      "archived 2026-09-27 controls below",
+      "not newly reproduced measurements"
     ],
     [
-      "relative coherence and access",
-      "P4; Foundation VI; TD-II",
-      "isolated resonant RWA, ideal access or declared Markov loss",
-      "finite-window visibility, not detector selection"
-    ],
-    [
-      "physical realization",
-      "Foundation IV; TD-0; Foundation V",
-      "preparation, reservoir, calibration and Q_OS open",
-      "no Nature or empirical promotion"
+      "import",
+      "other manuscripts",
+      "versioned CPR1 locator",
+      "no independent proof ownership"
     ]
   ],
   "source_sha256": {
@@ -582,5 +582,17 @@
   },
   "manuscripts": [
     "paper3_submission_source/main.tex"
-  ]
+  ],
+  "canonical_result": {
+    "id": "CPR1",
+    "version": "1.0",
+    "date": "2026-09-28",
+    "owner_repository": "tau-core-higgs-module-paper4",
+    "owner_source": "paper4_full_derivation/full_derivation.tex",
+    "label": "thm:cpr1",
+    "pdf_url": "https://github.com/tau-core-research/tau-core-higgs-module-paper4/blob/main/paper4_full_derivation/full_derivation.pdf#nameddest=cpr1",
+    "proof_sha256": "8b438fb14541da06596dbdea5ab0652e06354d394376903a8397c0ca7e6ea18a"
+  },
+  "ownership_updated": "2026-09-28",
+  "proof_owner_manuscript": null
 }
